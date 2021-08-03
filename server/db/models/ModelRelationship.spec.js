@@ -14,17 +14,6 @@ describe('Testing Model Associations', () => {
             await theAnt.addOrder(shortOrder);
             const orders = await theAnt.getOrders();
             expect(orders.map(order => order.total)).to.deep.equal(['400.21', '32.02']);
-            // // const theGee = User.create({ username: 'angie', email: 'angie@gmail.com'});
-            // // const theDrian = User.create({ username: 'adrian', email: 'daydreaming@gmail.com'});
-            // const bear = await Product.create({ name: 'blanched almond bear', price: 54.00 });
-            // const nobear = await Product.create({ name: 'almond bear', price: 6.00, description: 'it\'s not a blanched almond bear' });
-            // const antOrder = await Order.addProduct(bear, nobear);
-            // // const tallOrder = await Order.create({ total: 400.21 });
-
-            // // const shortOrder = await Order.create({total: 32.02});
-            // await theAnt.addOrders(antOrder);
-            // const total = await theAnt.getOrders().map((product) => product.price);
-            // expect(total).to.deep.equal(60.00);
         })
     })
     it('An order can be added to some user', async () => {
@@ -42,17 +31,24 @@ describe('Testing Model Associations', () => {
     it('An order can have many products', async () => {
         const tallOrder = await Order.create();
         const bear = await Product.create({ name: 'blanched almond bear', price: 54.00 });
-        const nobear = await Product.create({ name: 'almond bear', price: 6.43, description: 'it\'s not a blanched almond bear' });
-        // await tallOrder.update(bear);
-        await tallOrder.addProducts(bear);
-        await tallOrder.updateTotal(bear);
-        await tallOrder.addProducts(nobear);
-        await tallOrder.updateTotal(nobear);
+        const nobear = await Product.create({ name: 'almond bear', price: 6.43, description: 'it\'s not a blanched almond colored bear' });
+        await tallOrder.update(bear);
+        await tallOrder.update(nobear);
+        // => ensuring that update can accurate update the total and update tallOrder at the same time <=
         expect(tallOrder.total).to.equal(60.43);
+        const products = await tallOrder.getProducts();
+        expect(products.map(product => product.name)).to.deep.equal(['blanched almond bear', 'almond bear']);
     })
-    // it('A product can belong to many order', async () => {
+    it('A product can belong to many order', async () => {
+        const smallOrder = await Order.create();
+        const alsoSmallOrder = await Order.create();
+        const dragon = await Product.create({ name: 'elvarg', price: 83.00 });
+        await smallOrder.update(dragon);
+        await alsoSmallOrder.update(dragon);
+        const allOrdersOfDragons = await dragon.getOrders();
+        expect(allOrdersOfDragons.map(order => order.total)).to.deep.equal(['83.00', '83.00']);
 
-    // })
+    })
 });
 
 // Examine our database index file, Order.belongsTo(User, { as: 'Customer' });
