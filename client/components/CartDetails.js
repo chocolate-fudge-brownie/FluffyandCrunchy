@@ -3,12 +3,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
-import { getCartProducts } from '../store/cart';
+import { getCartProducts, removeProductFromCart } from '../store/cart';
 
 // Define component
 class CartPreview extends React.Component {
   componentDidMount() {
     this.props.getCartProducts();
+  }
+
+  handleRemove(id) {
+    this.props.removeProductFromCart(id);
   }
 
   render() {
@@ -25,6 +29,9 @@ class CartPreview extends React.Component {
               <p>{product.name}</p>
             </Link>
             <p>{product.price}</p>
+            <button onClick={() => this.handleRemove(product.id)}>
+              Remove From Cart
+            </button>
           </div>
         ))}
       </div>
@@ -35,7 +42,6 @@ class CartPreview extends React.Component {
 // Connect Redux store's state to props
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id,
     cart: state.cart,
   };
 };
@@ -44,6 +50,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getCartProducts: () => dispatch(getCartProducts()),
+    removeProductFromCart: () => dispatch(removeProductFromCart()),
   };
 };
 
