@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {models: { Product} }= require('../db')
+const {models: { Product } }= require('../db')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -69,6 +69,8 @@ router.delete('/:id', async (req, res, next) => {
     next(error);
   }
 })
+
+
 
 
 module.exports = router;
