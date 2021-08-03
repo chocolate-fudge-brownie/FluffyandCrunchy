@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const { models: { User }} = require('../db')
-module.exports = router
+const { models: { User, Order }} = require('../db')
+
 
 router.get('/', async (req, res, next) => {
   try {
@@ -16,3 +16,17 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id, {include: Order});
+    if(user){
+      res.status(200).json(user)
+    } else {
+      res.status(404).send("User not found")
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+module.exports = router
