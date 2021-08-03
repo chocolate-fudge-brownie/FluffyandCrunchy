@@ -11,12 +11,8 @@ class CartPreview extends React.Component {
     this.props.getCartProducts();
   }
 
-  handleRemove(id) {
-    this.props.removeProductFromCart(id);
-  }
-
   render() {
-    const { cart } = this.props;
+    const { cart, removeProductFromCart } = this.props;
 
     return (
       <div>
@@ -29,8 +25,8 @@ class CartPreview extends React.Component {
               <p>{product.name}</p>
             </Link>
             <p>{product.price}</p>
-            <button onClick={() => this.handleRemove(product.id)}>
-              Remove From Cart
+            <button onClick={() => removeProductFromCart(product.id)}>
+              Remove from Cart
             </button>
           </div>
         ))}
