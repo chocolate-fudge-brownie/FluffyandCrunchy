@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
 import { _getProduct, getProduct } from '../store/singleProduct';
+// _getProduct is not exported...
 
 // Define component
 class SingleProduct extends React.Component {
   componentDidMount() {
-    this.props.getProduct(this.props.match.params.robotId);
+    this.props.getProduct(this.props.match.params.id);
   }
 
   componentWillUnmount() {
