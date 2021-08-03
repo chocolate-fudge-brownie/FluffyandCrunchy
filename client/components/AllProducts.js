@@ -3,12 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
-// import { fetchProducts } from '../store/'
+import { getProducts } from '../store/products';
 
 // Define component
 class AllProducts extends React.Component {
   componentDidMount() {
-    // this.props.fetchProducts();
+    this.props.getProducts();
   }
 
   render() {
@@ -37,7 +37,7 @@ const mapState = (state) => {
 // Connect Redux store's action/thunk creators to props
 const mapDispatch = (dispatch) => {
   return {
-    // fetchProducts: () => dispatch(fetchProducts()),
+    getProducts: () => dispatch(getProducts()),
   };
 };
 
