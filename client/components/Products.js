@@ -6,13 +6,13 @@ import { connect } from 'react-redux';
 import { getProducts } from '../store/products';
 
 // Define component
-class AllProducts extends React.Component {
+class Products extends React.Component {
   componentDidMount() {
     this.props.getProducts();
   }
 
   render() {
-    const products = this.props.products;
+    const { products } = this.props;
     return (
       <div>
         {products.map((product) => (
@@ -42,4 +42,4 @@ const mapDispatch = (dispatch) => {
 };
 
 // Export redux-connected component
-export default connect(mapState, mapDispatch)(AllProducts);
+export default connect(mapState, mapDispatch)(Products);
