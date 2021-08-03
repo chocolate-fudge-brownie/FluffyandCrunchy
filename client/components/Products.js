@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
 import { getProducts } from '../store/products';
+import { addProductToCart } from '../store/cart';
 
 // Define component
 class Products extends React.Component {
@@ -13,7 +14,7 @@ class Products extends React.Component {
   }
 
   render() {
-    const { products } = this.props;
+    const { products, addProductToCart } = this.props;
     return (
       <div>
         {products.map((product) => (
@@ -25,6 +26,9 @@ class Products extends React.Component {
               <p>{product.name}</p>
             </Link>
             <p>{product.price}</p>
+            <button onClick={() => addProductToCart(product)}>
+              Add to Cart
+            </button>
           </div>
         ))}
       </div>
@@ -43,6 +47,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProducts: () => dispatch(getProducts()),
+    addProductToCart: (product) => dispatch(addProductToCart(product)),
   };
 };
 
