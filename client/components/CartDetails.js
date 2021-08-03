@@ -1,5 +1,6 @@
 // Import modules
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
