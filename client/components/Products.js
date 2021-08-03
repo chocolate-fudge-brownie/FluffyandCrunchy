@@ -18,10 +18,10 @@ class Products extends React.Component {
       <div>
         {products.map((product) => (
           <div key={product.id}>
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/products/${product.id}`}>
               <img src={product.imageUrl} />
             </Link>
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/products/${product.id}`}>
               <p>{product.name}</p>
             </Link>
             <p>{product.price}</p>
