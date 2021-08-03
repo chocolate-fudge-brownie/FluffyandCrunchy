@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
 import { getProduct } from '../store/singleProduct';
+import { addProductToCart } from '../store/cart';
 
 // Define component
 class SingleProduct extends React.Component {
@@ -12,7 +13,7 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    const { product } = this.props;
+    const { product, addProductToCart } = this.props;
 
     if (product.id !== this.props.match.params.id) return <div>Loading...</div>;
 
@@ -22,6 +23,7 @@ class SingleProduct extends React.Component {
         <p>{product.name}</p>
         <p>${product.price}</p>
         <p>Description: {product.description}</p>
+        <button onClick={() => addProductToCart(product)}>Add to Cart</button>
       </div>
     );
   }
@@ -38,6 +40,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProduct: (productId) => dispatch(getProduct(productId)),
+    addProductToCart: (product) => dispatch(addProductToCart(product)),
   };
 };
 
