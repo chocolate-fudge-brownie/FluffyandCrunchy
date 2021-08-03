@@ -40,7 +40,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProduct: (productId) => dispatch(getProduct(productId)),
-    addProductToCart: (productId) => dispatch(addProductToCart(productId)),
+    addProductToCart: (product) => dispatch(addProductToCart(product)),
   };
 };
 
