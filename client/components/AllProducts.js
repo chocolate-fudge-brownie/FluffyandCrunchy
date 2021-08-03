@@ -12,7 +12,7 @@ class AllProducts extends React.Component {
   }
 
   render() {
-    const products = this.props.prodcuts;
+    const products = this.props.products;
     return (
       <div>
         {products.map((product) => (
