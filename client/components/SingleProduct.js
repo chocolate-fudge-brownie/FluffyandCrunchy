@@ -3,8 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
-import { _getProduct, getProduct } from '../store/singleProduct';
-// _getProduct is not exported...
+import { getProduct } from '../store/singleProduct';
 
 // Define component
 class SingleProduct extends React.Component {
@@ -12,14 +11,10 @@ class SingleProduct extends React.Component {
     this.props.getProduct(this.props.match.params.id);
   }
 
-  componentWillUnmount() {
-    this.props.resetProduct();
-  }
-
   render() {
     const { product } = this.props;
 
-    if (!product.id) return <div>Loading...</div>;
+    if (product.id !== this.props.match.params.id) return <div>Loading...</div>;
 
     return (
       <div>
@@ -43,7 +38,6 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProduct: (productId) => dispatch(getProduct(productId)),
-    resetProduct: () => dispatch(_getProduct({})),
   };
 };
 
