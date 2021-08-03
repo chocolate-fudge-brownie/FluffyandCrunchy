@@ -1,5 +1,6 @@
 // Import modules
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
@@ -17,8 +18,12 @@ class Products extends React.Component {
       <div>
         {products.map((product) => (
           <div key={product.id}>
-            <img src={product.imageUrl} />
-            <p>{product.name}</p>
+            <Link to={`/product/${product.id}`}>
+              <img src={product.imageUrl} />
+            </Link>
+            <Link to={`/product/${product.id}`}>
+              <p>{product.name}</p>
+            </Link>
             <p>{product.price}</p>
           </div>
         ))}
