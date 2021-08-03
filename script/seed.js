@@ -16,6 +16,8 @@ async function seed() {
     User.create({ username: 'murphy', password: '123' }),
   ])
 
+  
+
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
   return {
