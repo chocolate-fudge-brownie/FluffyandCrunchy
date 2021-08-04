@@ -6,16 +6,21 @@ const User = require('./models/User');
 const Product = require('./models/Product');
 const Order = require('./models/Order');
 
-//associations could go here!
-
+// associations could go here!
+// fix
 User.hasMany(Order);
 Order.belongsTo(User, { as: 'Customer' });
 
 Order.belongsToMany(Product, { through: 'OrderLine' });
 Product.belongsToMany(Order, { through: 'OrderLine' });
 
+// through table - OrderLine - should have its own model and fields. => price, quantity.
+// 'OrderLine' model will append properties to the join table.
 
 
+// Checking Out
+
+// guest - > can have guest access the checkout route, should have an effect on quantity of products, make an order..as if the user were logged in. user.id -> null
 module.exports = {
   db,
   models: {
