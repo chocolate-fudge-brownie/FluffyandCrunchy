@@ -4,7 +4,7 @@
 
 const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART';
 const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART';
-const GET_CART_PRODUCTS = 'GET_CARD_PRODUCTS';
+const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS';
 const CLEAR_STORAGE = 'CLEAR_STORAGE';
 
 /**
@@ -14,19 +14,19 @@ export const _clearStorage = () => ({
     type: CLEAR_STORAGE,
 });
 
-export const _addProductToCart = (product) => ({
+export const _addProductToCart = (cart) => ({
     type: ADD_PRODUCT_TO_CART,
-    product,
+    cart,
 });
 
-export const _removeProductFromCart = (products) => ({
+export const _removeProductFromCart = (cart) => ({
     type: REMOVE_PRODUCT_FROM_CART,
-    products,
+    cart,
 });
 
-export const _getCartProducts = (products) => ({
+export const _getCartProducts = (cart) => ({
     type: GET_CART_PRODUCTS,
-    products,
+    cart,
 });
 
 /**
@@ -34,58 +34,59 @@ export const _getCartProducts = (products) => ({
  */
 
 export const clearStorage = () => (dispatch) => {
-    window.localStorage.clear();
+    window.localStorage.removeItem('cart');
     dispatch(_clearStorage());
 };
 
-export const addProductToCart = (product) => (dispatch) => {
-    if (!window.localStorage.getItem('products')) {
-        window.localStorage.setItem('products', JSON.stringify([]));
+export const addProductToCart = (id, quantity) => (dispatch) => {
+    let cart = JSON.parse(window.localStorage.getItem('cart'));
+    let stringId = String(id);
+
+    if (!cart) {
+        window.localStorage.setItem('cart', JSON.stringify({ [id]: quantity }));
+    } else {
+        if (Object.keys(cart).includes(stringId)) {
+            cart[stringId] += quantity;
+        } else {
+            cart[stringId] = quantity;
+        }
+        window.localStorage.setItem('cart', JSON.stringify(cart));
     }
-    window.localStorage.setItem(
-        'products',
-        JSON.stringify([
-            ...JSON.parse(window.localStorage.getItem('products')),
-            product,
-        ])
-    );
-    dispatch(_addProductToCart(product));
+    dispatch(_addProductToCart(cart));
 };
 
 export const getCartProducts = () => (dispatch) => {
-    if (!window.localStorage.getItem('products')) {
-        window.localStorage.setItem('products', JSON.stringify([]));
-    }
-    dispatch(
-        _getCartProducts(JSON.parse(window.localStorage.getItem('products')))
-    );
+    const cart = JSON.parse(window.localStorage.getItem('cart'));
+    dispatch(_getCartProducts(cart));
 };
 
 export const removeProductFromCart = (id) => (dispatch) => {
-    if (!window.localStorage.getItem('products')) {
-        window.localStorage.setItem('products', JSON.stringify([]));
-    }
-    const products = JSON.parse(window.localStorage.getItem('products'));
+    let cart = JSON.parse(window.localStorage.getItem('cart'));
+    if (cart) {
+        cart[id] = Math.max(cart[id] - 1, 0);
 
-    dispatch(
-        _removeProductFromCart(products.filter((product) => product.id !== id))
-    );
+        if (cart[id] <= 0) {
+            delete cart[id];
+        }
+        window.localStorage.setItem('cart', JSON.stringify(cart));
+        dispatch(_removeProductFromCart(cart));
+    }
 };
 
 /**
  * REDUCER
  */
 
-export default function (state = [], action) {
+export default function (state = {}, action) {
     switch (action.type) {
         case GET_CART_PRODUCTS:
-            return action.products;
+            return action.cart;
         case ADD_PRODUCT_TO_CART:
-            return [...state, action.product];
+            return action.cart;
         case REMOVE_PRODUCT_FROM_CART:
-            return action.products;
+            return action.cart;
         case CLEAR_STORAGE:
-            return [];
+            return {};
         default:
             return state;
     }
