@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const {models: { Product } }= require('../db')
+const {requireToken, isAdmin} = require( './gatekeepingMiddleware')
 
 router.get('/', async (req, res, next) => {
   try {
     let products = await Product.findAll();
-    res.status(200).json(products);
+    res.json(products);
   } catch (error) {
     next(error);
   }
@@ -16,7 +17,7 @@ router.get('/:id', async (req, res, next) => {
       let productId = req.params.id;
       let product = await Product.findByPk(productId);
       if(product){
-        res.status(200).json(product)
+        res.json(product)
       } else {
         res.status(404).send("Product Not Found")
        // throw new Error("Product Not Found");
@@ -26,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const product = await Product.create(req.body);
     res.status(201).json(product);
@@ -35,14 +36,14 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
       let newProduct = req.body;
       let {id} = req.params;
       let  product = await Product.findByPk(id);
       if(product){
         let updatedProduct = await product.update(newProduct);
-        res.status(200).json(updatedProduct);
+        res.json(updatedProduct);
       } else {
 
         res.status(404).send("Product Not Found")
@@ -55,7 +56,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
       const product = await Product.findByPk(req.params.id);
       if(product){

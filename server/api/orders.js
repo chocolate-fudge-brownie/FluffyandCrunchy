@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const {models: { Order }} = require('../db');
+const {requireToken, isAdmin} = require( './gatekeepingMiddleware')
 
 router.get('/', async (req, res, next) => {
   try{
     let orders = await Order.findAll();
-    res.status(200).json(orders)
+    res.json(orders)
   } catch(error){
     next(error);
   }
@@ -15,7 +16,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     let order = await Order.findByPk(req.params.id);
     if(order){
-      res.status(200).json(order);
+      res.json(order);
     } else {
       res.status(404).send("Order not found")
     }
@@ -25,24 +26,24 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     let order = req.body;
     let nOrder = Order.create(order);
-    res.status(200).json(nOrder);
+    res.status(201).json(nOrder);
   } catch (error) {
     next(error)
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
     let newOrder = req.body;
     let {id} = req.params;
     let  order = await Order.findByPk(id);
     if(order){
       let updatedOrder = await order.update(newOrder);
-      res.status(200).json(updatedOrder);
+      res.json(updatedOrder);
     } else {
 
       res.status(404).send("Order Not Found")
@@ -54,13 +55,18 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
- const order = await Order.findByPk(req.params.id);
-      if(order){
-        await order.destroy();
-       res.status(202).send(order);
-      } else {
-        res.status(404).send("Order not found")
-      }
+router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
+  try{
+    const order = await Order.findByPk(req.params.id);
+    if(order){
+      await order.destroy();
+     res.status(202).send(order);
+    } else {
+      res.status(404).send("Order not found")
+    }
+  } catch (error) {
+    next(error)
+  }
+
 })
 module.exports = router;
