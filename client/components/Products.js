@@ -26,7 +26,7 @@ class Products extends React.Component {
               <p>{product.name}</p>
             </Link>
             <p>${product.price}</p>
-            <button onClick={() => addProductToCart(product)}>
+            <button onClick={() => addProductToCart(product.id, 1)}>
               Add to Cart
             </button>
           </div>
@@ -47,7 +47,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProducts: () => dispatch(getProducts()),
-    addProductToCart: (product) => dispatch(addProductToCart(product)),
+    addProductToCart: (productId, quantity) =>
+      dispatch(addProductToCart(productId, quantity)),
   };
 };
 
