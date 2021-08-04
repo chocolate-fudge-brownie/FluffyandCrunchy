@@ -3,11 +3,11 @@ const db = require('../db');
 
 const Order = db.define('order', {
     total: {
-        type: Sequelize.DECIMAL(13, 2),
+        type: Sequelize.INTEGER,
         validate: {
-            min: 0.00,
+            min: 0,
         },
-        defaultValue: 0.00
+        defaultValue: 0
     },
     isPaid: {
         type: Sequelize.BOOLEAN,
@@ -22,11 +22,9 @@ const Order = db.define('order', {
 
 Order.prototype.update = async function(product) {
     await this.addProducts(product);
-    this.total = parseFloat(this.total);
-    this.total += parseFloat(product.price);
+    this.total += product.price;
     await this.save();
     return this.total;   
 }
-
 
 module.exports = Order;

@@ -35,11 +35,11 @@ const User = db.define('user', {
   },
   // Consider removing da wallet
   wallet: {
-    type: Sequelize.DECIMAL(13, 2),
+    type: Sequelize.INTEGER,
     validate: {
-        min: 0.00,
+        min: 0,
     },
-    defaultValue: 500.00
+    defaultValue: 500
   }
 })
 

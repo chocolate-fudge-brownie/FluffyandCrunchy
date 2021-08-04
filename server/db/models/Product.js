@@ -9,11 +9,10 @@ const Product = db.define('product', {
             notEmpty: true
         }
     },
-    // Change Decimal to integer.
     price: {
-        type: Sequelize.DECIMAL(13, 2),
+        type: Sequelize.INTEGER,
         validate: {
-            min: 0.00,
+            min: 0,
         }
     },
     quantity: {
@@ -34,5 +33,3 @@ const Product = db.define('product', {
 });
 
 module.exports = Product;
-
-// Sequelize.DECIMAL(13,2) supports a maximum value of -> $99,999,999,999.99
