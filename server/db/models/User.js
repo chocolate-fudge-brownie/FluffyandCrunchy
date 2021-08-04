@@ -20,10 +20,6 @@ const User = db.define('user', {
     unique: true,
     validate: {
       isEmail: true
-    },
-    allowNull: false,
-    validate: {
-      notEmpty: true
     }
   },
   password: {
