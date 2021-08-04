@@ -7,9 +7,9 @@ const Product = require('./models/Product');
 const Order = require('./models/Order');
 
 // associations could go here!
-// fix
-User.hasMany(Order);
-Order.belongsTo(User, { as: 'Customer' });
+
+Order.belongsTo(User, { foreignKey: 'customerId', as: 'Customer' }); 
+User.hasMany(Order, {foreignKey: 'customerId'});
 
 Order.belongsToMany(Product, { through: 'OrderLine' });
 Product.belongsToMany(Order, { through: 'OrderLine' });
