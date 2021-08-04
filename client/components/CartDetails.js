@@ -19,7 +19,7 @@ class CartPreview extends React.Component {
       <div>
         {cart.map((product) => (
           <div key={product.id}>
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/products/${product.id}`}>
               <img src={product.imageUrl} />
             </Link>
             <Link to={`/products/${product.id}`}>
