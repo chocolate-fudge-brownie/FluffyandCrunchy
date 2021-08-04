@@ -1,11 +1,17 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
+// Import modules
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+// Import Redux action & thunk creators
+import { logout } from '../store';
+import { clearStorage } from '../store/cart';
+
+const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
-    <h1>FS-App-Template</h1>
+    <Link to={isLoggedIn ? '/home' : '/'}>
+      <h1>{'Fluffy & Crunchy'}</h1>
+    </Link>
     <nav>
       {isLoggedIn ? (
         <div>
@@ -22,26 +28,31 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
+      <div>
+        <Link to="/products">Products</Link>
+        <Link to="/cart">Cart</Link>
+      </div>
     </nav>
     <hr />
   </div>
-)
+);
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+    isLoggedIn: !!state.auth.id,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+      dispatch(logout());
+      dispatch(clearStorage());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);

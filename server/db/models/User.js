@@ -10,10 +10,34 @@ const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      isEmail: true
+    },
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   password: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
+  },
+  admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  wallet: {
+    type: Sequelize.DECIMAL(13, 2),
+    validate: {
+        min: 0.00,
+    },
+    defaultValue: 500.00
   }
 })
 
