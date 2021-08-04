@@ -9,10 +9,18 @@ const Product = db.define('product', {
             notEmpty: true
         }
     },
+    // Change Decimal to integer.
     price: {
         type: Sequelize.DECIMAL(13, 2),
         validate: {
             min: 0.00,
+        }
+    },
+    quantity: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        validate: {
+            min: 0
         }
     },
     description: {

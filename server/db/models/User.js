@@ -33,6 +33,7 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+  // Consider removing da wallet
   wallet: {
     type: Sequelize.DECIMAL(13, 2),
     validate: {

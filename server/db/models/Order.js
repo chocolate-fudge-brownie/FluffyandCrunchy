@@ -8,8 +8,16 @@ const Order = db.define('order', {
             min: 0.00,
         },
         defaultValue: 0.00
+    },
+    isPaid: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 })
+// cart -> Order w/ isPaid false.
+// user is created, unpaid order is created ?
+// sequelize hooks..
+// provide an afterCreate hook for new users.. empty cart/order
 
 Order.prototype.update = async function(product) {
     await this.addProducts(product);
@@ -18,10 +26,6 @@ Order.prototype.update = async function(product) {
     await this.save();
     return this.total;   
 }
-// Order.prototype.updateTotal = function(product) {
-//     this.total = parseFloat(this.total);
-//     this.total += parseFloat(product.price);
-//     return this.total;
-// }
+
 
 module.exports = Order;
