@@ -28,14 +28,6 @@ const User = db.define('user', {
   admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-  },
-  // Consider removing da wallet
-  wallet: {
-    type: Sequelize.INTEGER,
-    validate: {
-        min: 0,
-    },
-    defaultValue: 500
   }
 })
 
