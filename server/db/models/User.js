@@ -17,12 +17,9 @@ const User = db.define('user', {
   },
   email: {
     type: Sequelize.STRING,
+    unique: true,
     validate: {
       isEmail: true
-    },
-    allowNull: false,
-    validate: {
-      notEmpty: true
     }
   },
   password: {
@@ -31,13 +28,6 @@ const User = db.define('user', {
   admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-  },
-  wallet: {
-    type: Sequelize.DECIMAL(13, 2),
-    validate: {
-        min: 0.00,
-    },
-    defaultValue: 500.00
   }
 })
 
@@ -58,8 +48,9 @@ User.prototype.generateToken = function() {
 /**
  * classMethods
  */
+
 User.authenticate = async function({ username, password }){
-    const user = await this.findOne({where: { username }})
+    const user = await this.findOne({ where: { username } })
     if (!user || !(await user.correctPassword(password))) {
       const error = Error('Incorrect username/password');
       error.status = 401;
