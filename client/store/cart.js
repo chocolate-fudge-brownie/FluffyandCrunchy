@@ -33,6 +33,12 @@ export const _getCartProducts = (products) => ({
  * THUNK CREATORS
  */
 // Implement an object for fast lookup (given id and quantity).
+
+export const clearStorage = () => (dispatch) => {
+    window.localStorage.clear();
+    dispatch(_clearStorage());
+};
+
 export const addProductToCart = (product) => (dispatch) => {
     if (!window.localStorage.getItem('products')) {
         window.localStorage.setItem('products', JSON.stringify([]));
