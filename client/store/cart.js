@@ -5,10 +5,14 @@
 const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART';
 const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART';
 const GET_CART_PRODUCTS = 'GET_CARD_PRODUCTS';
+const CLEAR_STORAGE = 'CLEAR_STORAGE';
 
 /**
  * ACTION CREATORS
  */
+export const _clearStorage = () => ({
+    type: CLEAR_STORAGE,
+});
 
 export const _addProductToCart = (product) => ({
     type: ADD_PRODUCT_TO_CART,
@@ -75,6 +79,8 @@ export default function (state = [], action) {
             return [...state, action.product];
         case REMOVE_PRODUCT_FROM_CART:
             return action.products;
+        case CLEAR_STORAGE:
+            return [];
         default:
             return state;
     }
