@@ -8,6 +8,7 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
+import CartDetails from './components/CartDetails';
 
 // Import Redux functions
 import { me } from './store';
@@ -28,6 +29,9 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
+            <Route path="/products" exact component={Products} />
+            <Route path="/products/:id" component={SingleProduct} />
+            <Route path="/cart" component={CartDetails} />
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -35,8 +39,10 @@ class Routes extends Component {
             <Route path="/" exact component={Products} />
             <Route path="/products" exact component={Products} />
             <Route path="/products/:id" component={SingleProduct} />
+            <Route path="/cart" component={CartDetails} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Redirect to="/" />
           </Switch>
         )}
       </div>
