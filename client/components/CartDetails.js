@@ -4,20 +4,30 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
+import { getProducts } from '../store/products';
 import { getCartProducts, removeProductFromCart } from '../store/cart';
 
 // Define component
 class CartPreview extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.getProducts();
     this.props.getCartProducts();
   }
 
   render() {
-    const { cart, removeProductFromCart } = this.props;
+    const { products, cart, removeProductFromCart } = this.props;
+
+    let cartProducts = [];
+    for (let productId in cart) {
+      cartProducts = [
+        ...cartProducts,
+        ...products.filter((product) => product.id === Number(productId)),
+      ];
+    }
 
     return (
       <div>
-        {cart.map((product) => (
+        {cartProducts.map((product) => (
           <div key={product.id}>
             <Link to={`/products/${product.id}`}>
               <img src={product.imageUrl} />
@@ -26,6 +36,7 @@ class CartPreview extends React.Component {
               <p>{product.name}</p>
             </Link>
             <p>{product.price}</p>
+            <p>Quantity: {cart[product.id]}</p>
             <button onClick={() => removeProductFromCart(product.id)}>
               Remove from Cart
             </button>
@@ -39,6 +50,7 @@ class CartPreview extends React.Component {
 // Connect Redux store's state to props
 const mapState = (state) => {
   return {
+    products: state.products,
     cart: state.cart,
   };
 };
@@ -46,6 +58,7 @@ const mapState = (state) => {
 // Connect Redux store's action/thunk creators to props
 const mapDispatch = (dispatch) => {
   return {
+    getProducts: () => dispatch(getProducts()),
     getCartProducts: () => dispatch(getCartProducts()),
     removeProductFromCart: (productId) =>
       dispatch(removeProductFromCart(productId)),
