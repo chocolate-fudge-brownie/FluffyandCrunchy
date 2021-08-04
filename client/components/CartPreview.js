@@ -1,5 +1,6 @@
 // Import modules
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
@@ -18,7 +19,7 @@ class CartPreview extends React.Component {
       <div>
         {cart.map((product) => (
           <div key={product.id}>
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/products/${product.id}`}>
               <img src={product.imageUrl} />
             </Link>
           </div>

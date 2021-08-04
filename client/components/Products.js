@@ -25,7 +25,7 @@ class Products extends React.Component {
             <Link to={`/products/${product.id}`}>
               <p>{product.name}</p>
             </Link>
-            <p>{product.price}</p>
+            <p>${product.price}</p>
             <button onClick={() => addProductToCart(product)}>
               Add to Cart
             </button>

@@ -15,7 +15,8 @@ class SingleProduct extends React.Component {
   render() {
     const { product, addProductToCart } = this.props;
 
-    if (product.id !== this.props.match.params.id) return <div>Loading...</div>;
+    if (product.id !== Number(this.props.match.params.id))
+      return <div>Loading...</div>;
 
     return (
       <div>

@@ -9,7 +9,9 @@ import { clearStorage } from '../store/cart';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
-    <h1>FS-App-Template</h1>
+    <Link to={isLoggedIn ? '/home' : '/'}>
+      <h1>{'Fluffy & Crunchy'}</h1>
+    </Link>
     <nav>
       {isLoggedIn ? (
         <div>
@@ -26,6 +28,10 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
+      <div>
+        <Link to="/products">Products</Link>
+        <Link to="/cart">Cart</Link>
+      </div>
     </nav>
     <hr />
   </div>
