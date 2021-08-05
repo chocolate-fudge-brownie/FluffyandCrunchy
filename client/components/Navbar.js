@@ -8,10 +8,15 @@ import { logout } from "../store";
 import { clearStorage } from "../store/cart";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
-    <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#c79e5f"}}>
+    <nav
+        className="navbar navbar-expand-lg navbar-light"
+        style={{ backgroundColor: "#c79e5f" }}
+    >
         <div className="container-fluid">
             <Link to={isLoggedIn ? "/home" : "/"}>
-                <h1 className="navbar-brand" id="main-header">FLUFFY & CRUNCHY</h1>
+                <h1 className="navbar-brand" id="main-header">
+                    FLUFFY & CRUNCHY
+                </h1>
             </Link>
             <button
                 className="navbar-toggler"
@@ -34,7 +39,11 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" onCLick={handleClick}>
+                                <a
+                                    className="nav-link"
+                                    href="#"
+                                    onClick={handleClick}
+                                >
                                     Logout
                                 </a>
                             </li>
@@ -45,7 +54,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
                                 <Link to="/login">
                                     <a className="nav-link">
                                         Login
-                                        <i class="bi bi-box-arrow-right"></i>
+                                        <i className="bi bi-box-arrow-right"></i>
                                     </a>
                                 </Link>
                             </li>
@@ -53,7 +62,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
                                 <Link to="/signup">
                                     <a className="nav-link">
                                         Sign Up
-                                        <i class="bi bi-check-circle"></i>
+                                        <i className="bi bi-check-circle"></i>
                                     </a>
                                 </Link>
                             </li>
@@ -62,7 +71,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
                     <li className="nav-item">
                         <Link to="/products">
                             <a className="nav-link">
-                                Products<i class="bi bi-bag"></i>
+                                Products<i className="bi bi-bag"></i>
                             </a>
                         </Link>
                     </li>
