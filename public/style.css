@@ -2,12 +2,19 @@ img {
     width: 200px;
 }
 
+.container-fluid > a {
+    text-decoration: none;
+}
+
 #navbarNavDropdown {
     justify-content: flex-end;
 }
 
 .navbar {
     margin-bottom: 30px;
+    background-color: #b5915a;
+    background-image: url("https://www.transparenttextures.com/patterns/clean-textile.png");
+    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
 .row {
