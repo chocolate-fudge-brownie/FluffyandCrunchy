@@ -53,15 +53,23 @@ describe('Testing Model Associations', () => {
     it.only('Creating a user associates that user with an empty cart (unpaid order)', async () => {
         // creating a user creates an empty cart with 0 total and isPaid equal to false
         const user = await User.create({ username: 'Chukwudi', password: 'password', admin: false });
+        let cart = await User.peekCart(user);        
+        expect(cart.total).to.equal(0);
+    })
+    it.only('Can create add multiple products to the Cart', async () => {
+        const user = await User.create({ username: 'Chukwudi', password: 'password', admin: false });
+        let cart = await User.peekCart(user);        
+        console.log(cart);
+
         const fluffs = await Product.create({ name: 'fluffs', price: 450 });
         const crunchies = await Product.create({ name: 'crunchies', price: 200 });
-        await User.peekCart(user);
-        let cart = await user.getCart();
-        console.log(cart);
-        await cart.priceUpdate(fluffs);
-        await cart.priceUpdate(crunchies);
+        
+        await user.addProductToCart(fluffs);
+        await user.addProductToCart(crunchies);
+
         cart = await User.peekCart(user);
         console.log(cart);
+        expect(cart.total).to.equal(650);       
     })
 });
 
