@@ -3,6 +3,7 @@ const db = require('../db')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const axios = require('axios');
+const Order = require('./Order');
 
 const SALT_ROUNDS = 5;
 
@@ -74,7 +75,25 @@ User.findByToken = async function(token) {
     throw error
   }
 }
-
+User.peekCart = async function(user) {
+  // only works because username is unique, should only be one Cart (Order with isPaid false)
+  try {
+    if(!user) throw new Error('failed to pass in a user as an argument');
+    const { username } = user;
+    const data = await User.findOne({
+      where: { username },
+      include: {
+        model: Order,
+        where: {
+          isPaid: false
+        }
+    }});
+    const cart = data.orders[0];
+    return cart.dataValues;    
+  } catch (err) {
+    console.log(err);
+  }
+}
 /**
  * hooks
  */
@@ -88,3 +107,8 @@ const hashPassword = async(user) => {
 User.beforeCreate(hashPassword)
 User.beforeUpdate(hashPassword)
 User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)))
+User.afterCreate(async (user) => {
+  await user.createOrder();
+})
+
+/* after create hook for associating a new user with an unpaid order */
