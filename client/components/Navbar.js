@@ -8,10 +8,10 @@ import { logout } from "../store";
 import { clearStorage } from "../store/cart";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#c79e5f"}}>
         <div className="container-fluid">
             <Link to={isLoggedIn ? "/home" : "/"}>
-                <h1 className="navbar-brand">FLUFFY & CRUNCHY</h1>
+                <h1 className="navbar-brand" id="main-header">FLUFFY & CRUNCHY</h1>
             </Link>
             <button
                 className="navbar-toggler"
