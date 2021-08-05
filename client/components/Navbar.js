@@ -1,58 +1,99 @@
 // Import modules
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 // Import Redux action & thunk creators
-import { logout } from '../store';
-import { clearStorage } from '../store/cart';
+import { logout } from "../store";
+import { clearStorage } from "../store/cart";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    <Link to={isLoggedIn ? '/home' : '/'}>
-      <h1>{'Fluffy & Crunchy'}</h1>
-    </Link>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid">
+            <Link to={isLoggedIn ? "/home" : "/"}>
+                <h1 className="navbar-brand">FLUFFY & CRUNCHY</h1>
+            </Link>
+            <button
+                className="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul className="navbar-nav">
+                    {isLoggedIn ? (
+                        <>
+                            <li className="nav-item">
+                                <Link to="/home">
+                                    <a className="nav-link">Home</a>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" onCLick={handleClick}>
+                                    Logout
+                                </a>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li className="nav-item">
+                                <Link to="/login">
+                                    <a className="nav-link">
+                                        Login
+                                        <i class="bi bi-box-arrow-right"></i>
+                                    </a>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/signup">
+                                    <a className="nav-link">
+                                        Sign Up
+                                        <i class="bi bi-check-circle"></i>
+                                    </a>
+                                </Link>
+                            </li>
+                        </>
+                    )}
+                    <li className="nav-item">
+                        <Link to="/products">
+                            <a className="nav-link">
+                                Products<i class="bi bi-bag"></i>
+                            </a>
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/cart">
+                            <a className="nav-link">
+                                Cart <i className="bi bi-cart2"></i>
+                            </a>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
         </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-      <div>
-        <Link to="/products">Products</Link>
-        <Link to="/cart">Cart</Link>
-      </div>
     </nav>
-    <hr />
-  </div>
 );
-
 /**
  * CONTAINER
  */
 const mapState = (state) => {
-  return {
-    isLoggedIn: !!state.auth.id,
-  };
+    return {
+        isLoggedIn: !!state.auth.id,
+    };
 };
 
 const mapDispatch = (dispatch) => {
-  return {
-    handleClick() {
-      dispatch(logout());
-      dispatch(clearStorage());
-    },
-  };
+    return {
+        handleClick() {
+            dispatch(logout());
+            dispatch(clearStorage());
+        },
+    };
 };
 
 export default connect(mapState, mapDispatch)(Navbar);
