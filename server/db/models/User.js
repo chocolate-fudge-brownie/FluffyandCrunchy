@@ -20,8 +20,7 @@ const User = db.define('user', {
     unique: true,
     validate: {
       isEmail: true
-    },
-  
+    }
   },
   password: {
     type: Sequelize.STRING,
