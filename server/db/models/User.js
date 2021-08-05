@@ -17,16 +17,16 @@ const User = db.define('user', {
   },
   email: {
     type: Sequelize.STRING,
+    unique: true,
     validate: {
-      isEmail: true
+      isEmail: true,
+      notEmpty: true
     },
     allowNull: false,
-    validate: {
-      notEmpty: true
-    }
   },
   password: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    
   },
   admin: {
     type: Sequelize.BOOLEAN,
