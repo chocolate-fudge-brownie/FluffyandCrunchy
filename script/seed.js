@@ -16,21 +16,18 @@ async function seed() {
   const userArray = [
     {username: 'jay',
      password: 'jay101',
-     email: 'jayfresh@nice.com',
-     wallet: 1000.00
+     email: 'jayfresh@nice.com'
     },
     {
       username: 'Mai',
      password: 'mai123',
      email: 'mailovely@unicornsandrainbows.com',
-     wallet: 1700.00
     },
     {
       username: 'arnold',
      password: '12345',
      email: 'arnold@theterminator.com',
-     admin: false
-    },
+     },
     {
       username: 'jessica',
      password: 'jbunnies123',
@@ -59,25 +56,21 @@ async function seed() {
       username: 'isaac',
      password: 'abc123',
      email: 'isaac123@k12primary.com',
-     wallet: 1000.00
-    },
+     },
     {
       username: 'zeke',
      password: 'hardOne23',
      email: 'zekeWrestles@wrestlingOne.com',
-     wallet: 1200.00
-    },
+     },
     {
       username: 'melissa',
      password: 'ilikecats',
      email: 'catluvah@feloniusfelines.com',
-     wallet: 2000.00
-    },
+     },
     {
       username: 'mandy',
      password: 'xyz890',
      email: 'mandy@ceoCalls.com',
-     wallet: 3000.00
     },
     {
       username: 'angie',
@@ -101,43 +94,36 @@ async function seed() {
       username: 'jimmy',
      password: 'jimmy345',
      email: 'james@workstoomuch.com',
-     wallet: 750.00
     },
     {
       username: 'offset',
      password: 'offsetMigos',
      email: 'offset@migos.com',
-     wallet: 10000.00
-    },
+     },
     {
      username: 'scottie',
      password: 'pippen33',
      email: 'spippen@startingover.com',
-     wallet: 5000.00
     },
     {
      username: 'mj',
      password: 'notmj23',
      email: 'mj@dontcallmeair.com',
-     wallet: 1000.00
     },
     {
      username: 'lebron',
      password: 'callmeKing23',
      email: 'lbj@kingjames.com',
-     wallet: 5000.00
     },
     {
      username: 'cindy',
      password: 'cindy123',
      email: 'cindy@example.co',
-     wallet: 900.00
     },
     {
       username: 'amy',
      password: 'amy123',
      email: 'amy@example.com',
-     wallet: 800.00
     },
     {
       username: 'randy',
@@ -169,7 +155,6 @@ async function seed() {
      username: 'oliver',
      password: 'iamthregreenarrow',
      email: 'oqueen@queenindustries.com',
-     wallet: 100000.00
     },
     {
      username: 'chris',
@@ -180,13 +165,11 @@ async function seed() {
      username: 'diana',
      password: 'dprince1984 ',
      email: 'dprince@jlamerica.com',
-     wallet: 10000.00
     },
     {
      username: 'isiah',
      password: 'imetthecriteria',
      email: 'ithomas@nodreamteam.com',
-     wallet: 1500.00
     },
     {
       username: 'bud',
