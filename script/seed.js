@@ -13,19 +13,196 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
 
+  const userArray = [
+    {username: 'jay',
+     password: 'jay101',
+     email: 'jayfresh@nice.com'
+    },
+    {
+      username: 'Mai',
+     password: 'mai123',
+     email: 'mailovely@unicornsandrainbows.com',
+    },
+    {
+      username: 'arnold',
+     password: '12345',
+     email: 'arnold@theterminator.com',
+     },
+    {
+      username: 'jessica',
+     password: 'jbunnies123',
+     email: 'jbunniesh@ilovebunnies.com',
+     admin: true,
+    },
+    {
+      username: 'joe',
+     password: 'joeomnipotent',
+     email: 'joe@airhockey.com',
+     admin: true
+    },
+    {
+      username: 'sarah',
+     password: 'coolbreeze',
+     email: 'sarah@bananas.com',
+     admin: true,
+    },
+    {
+      username: 'sarahjean',
+     password: 'SJ2nice',
+     email: 'sj@thefreshest.com',
+     admin: true,
+     },
+    {
+      username: 'isaac',
+     password: 'abc123',
+     email: 'isaac123@k12primary.com',
+     },
+    {
+      username: 'zeke',
+     password: 'hardOne23',
+     email: 'zekeWrestles@wrestlingOne.com',
+     },
+    {
+      username: 'melissa',
+     password: 'ilikecats',
+     email: 'catluvah@feloniusfelines.com',
+     },
+    {
+      username: 'mandy',
+     password: 'xyz890',
+     email: 'mandy@ceoCalls.com',
+    },
+    {
+      username: 'angie',
+     password: 'angie10M',
+     email: 'angie@millionairegames.com',
+     admin: true,
+     },
+    {
+      username: 'adrian',
+     password: 'adriancodes',
+     email: 'adrian@advancedcoder.com',
+     admin: true,
+    },
+    {
+      username: 'chuck',
+     password: 'chuckMusic3000',
+     email: 'chuck@chuck3000.com',
+     admin: true,
+    },
+    {
+      username: 'jimmy',
+     password: 'jimmy345',
+     email: 'james@workstoomuch.com',
+    },
+    {
+      username: 'offset',
+     password: 'offsetMigos',
+     email: 'offset@migos.com',
+     },
+    {
+     username: 'scottie',
+     password: 'pippen33',
+     email: 'spippen@startingover.com',
+    },
+    {
+     username: 'mj',
+     password: 'notmj23',
+     email: 'mj@dontcallmeair.com',
+    },
+    {
+     username: 'lebron',
+     password: 'callmeKing23',
+     email: 'lbj@kingjames.com',
+    },
+    {
+     username: 'cindy',
+     password: 'cindy123',
+     email: 'cindy@example.co',
+    },
+    {
+      username: 'amy',
+     password: 'amy123',
+     email: 'amy@example.com',
+    },
+    {
+      username: 'randy',
+     password: 'randy123',
+     email: 'randy@example.com',
+     },
+    {
+     username: 'andrea',
+     password: 'andrea123',
+     email: 'andrea@example.com',
+
+    },
+    {
+     username: 'simone',
+     password: 'simonelovehugs',
+     email: 'simone@ineedhugs.com',
+    },
+    {
+     username: 'aja',
+     password: 'ajathegoat',
+     email: 'awilson@goatstatus.com',
+     },
+    {
+      username: 'kdurant',
+     password: 'kdtrey3',
+     email: 'kdurant@ballers.com',
+    },
+    {
+     username: 'oliver',
+     password: 'iamthregreenarrow',
+     email: 'oqueen@queenindustries.com',
+    },
+    {
+     username: 'chris',
+     password: 'hitemwiththeflex',
+     email: 'cp3@ballers.com',
+    },
+    {
+     username: 'diana',
+     password: 'dprince1984 ',
+     email: 'dprince@jlamerica.com',
+    },
+    {
+     username: 'isiah',
+     password: 'imetthecriteria',
+     email: 'ithomas@nodreamteam.com',
+    },
+    {
+      username: 'bud',
+     password: 'airbud123',
+     email: 'airbud@noplushes.com',
+     },
+    {
+      username: 'cody',
+      password: '123',
+      email: 'cody@example.com'
+    },
+    {
+      username: 'murphy',
+      password: '123',
+      email: 'murphy@example.com',
+    }
+  ]
+
   // Creating Users
-  const users = await Promise.all([
+
+  const users = await Promise.all(userArray.map(user => User.create(user)));
+  /* const users = await Promise.all([
     User.create({
       username: 'cody',
       password: '123',
       email: 'cody@example.com',
-    }),
+    }),=
     User.create({
       username: 'murphy',
       password: '123',
       email: 'murphy@example.com',
     }),
-  ]);
+  ]); */
 
   // Creating Products
   const products = await Promise.all([
