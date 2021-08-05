@@ -1,25 +1,21 @@
-body {
-  font-family: sans-serif;
-}
-
-a {
-  text-decoration: none;
-}
-
-label {
-  display: block;
-}
-
-nav a {
-  display: inline-block;
-  margin: 1em;
-}
-
-form div {
-  margin: 1em;
-  display: inline-block;
-}
-
 img {
-  width: 200px;
+    width: 200px;
+}
+
+#navbarNavDropdown {
+    justify-content: flex-end;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
+
+.row {
+    justify-content: center;
+}
+
+body {
+    background-color: #612d00;
+    background-image: url("https://www.transparenttextures.com/patterns/fabric-plaid.png");
+    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
