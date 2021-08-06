@@ -22,5 +22,5 @@ Order.prototype.priceUpdate = async function(product) {
     return { order: this.dataValues, price: this.total }  
 }
 
-
 module.exports = Order;
+
