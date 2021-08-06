@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /**
  * ACTION TYPES
  */
@@ -39,29 +41,49 @@ export const clearStorage = () => (dispatch) => {
     dispatch(_clearStorage());
 };
 
-export const addProductToCart = (id, quantity) => (dispatch) => {
+export const mergeCart = () => async (dispatch) => {
     let cart = JSON.parse(window.localStorage.getItem('cart'));
-    let stringId = String(id);
-
     if (!cart) {
-        window.localStorage.setItem('cart', JSON.stringify({ [id]: quantity }));
-    } else {
-        if (Object.keys(cart).includes(stringId)) {
-            cart[stringId] += quantity;
-        } else {
-            cart[stringId] = quantity;
-        }
-        window.localStorage.setItem('cart', JSON.stringify(cart));
+        window.localStorage.setItem('cart', JSON.stringify({}));
+        cart = JSON.parse(window.localStorage.getItem('cart'));
     }
-    dispatch(_addProductToCart(cart));
+    const { data } = await axios.get('/api/orders');
+    const mergedCart = { ...cart, ...data };
+    window.localStorage.setItem('cart', mergedCart);
+    dispatch(_getCartProducts(mergedCart));
 };
+
+export const addProductToCart =
+    (productId, quantity, userId) => async (dispatch) => {
+        let cart = JSON.parse(window.localStorage.getItem('cart'));
+        let stringId = String(productId);
+
+        if (!cart) {
+            window.localStorage.setItem(
+                'cart',
+                JSON.stringify({ [productId]: quantity })
+            );
+        } else {
+            if (Object.keys(cart).includes(stringId)) {
+                cart[stringId] += quantity;
+            } else {
+                cart[stringId] = quantity;
+            }
+            window.localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        const {
+            data: { orderId },
+        } = await axios.get(`/api/users/${userId}`);
+        await axios.put(`/api/orders/${orderId}`, productId);
+        dispatch(_addProductToCart(cart));
+    };
 
 export const getCartProducts = () => (dispatch) => {
     const cart = JSON.parse(window.localStorage.getItem('cart'));
     dispatch(_getCartProducts(cart));
 };
 
-export const removeProductFromCart = (id) => (dispatch) => {
+export const removeProductFromCart = (id) => async (dispatch) => {
     let cart = JSON.parse(window.localStorage.getItem('cart'));
     if (cart) {
         cart[id] = Math.max(cart[id] - 1, 0);
@@ -71,7 +93,13 @@ export const removeProductFromCart = (id) => (dispatch) => {
         }
         window.localStorage.setItem('cart', JSON.stringify(cart));
         dispatch(_removeProductFromCart(cart));
+        await axios.put('/api/orders', cart);
     }
+};
+
+export const checkOut = (cart) => async (dispatch) => {
+    await axios.put('/api/orders', { ...cart, isPaid: true });
+    dispatch(clearStorage());
 };
 
 /**

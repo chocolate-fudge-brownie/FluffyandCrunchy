@@ -33,8 +33,8 @@ describe('Testing Model Associations', () => {
         const bear = await Product.create({ name: 'blanched almond bear', price: 54 });
         const nobear = await Product.create({ name: 'almond bear', price: 6, description: 'it\'s not a blanched almond colored bear' });
         await tallOrder.priceUpdate(bear);
-        const info = await tallOrder.priceUpdate(nobear);
-        console.log(info.order, '\n', info.price);
+        /* const info = await tallOrder.priceUpdate(nobear);
+           console.log(info.order, '\n', info.price); */
         // => ensuring that update can accurately update the total and update tallOrder at the same time <=
         expect(tallOrder.total).to.equal(60);
         const products = await tallOrder.getProducts();
@@ -49,6 +49,27 @@ describe('Testing Model Associations', () => {
         const allOrdersOfDragons = await dragon.getOrders();
         expect(allOrdersOfDragons.map(order => order.total)).to.deep.equal([83, 83]);
 
+    })
+    it.only('Creating a user associates that user with an empty cart (unpaid order)', async () => {
+        // creating a user creates an empty cart with 0 total and isPaid equal to false
+        const user = await User.create({ username: 'Chukwudi', password: 'password', admin: false });
+        let cart = await User.peekCart(user);        
+        expect(cart.total).to.equal(0);
+    })
+    it.only('Can create add multiple products to the Cart', async () => {
+        const user = await User.create({ username: 'Chukwudi', password: 'password', admin: false });
+        let cart = await User.peekCart(user);        
+        console.log(cart);
+
+        const fluffs = await Product.create({ name: 'fluffs', price: 450 });
+        const crunchies = await Product.create({ name: 'crunchies', price: 200 });
+        
+        await user.addProductToCart(fluffs);
+        await user.addProductToCart(crunchies);
+
+        cart = await User.peekCart(user);
+        console.log(cart);
+        expect(cart.total).to.equal(650);       
     })
 });
 

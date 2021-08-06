@@ -8,39 +8,39 @@ import { getCartProducts } from '../store/cart';
 
 // Define component
 class CartPreview extends React.Component {
-  componentDidMount() {
-    this.props.getCartProducts();
-  }
+    componentDidMount() {
+        this.props.getCartProducts();
+    }
 
-  render() {
-    const { cart } = this.props;
+    render() {
+        const { cart } = this.props;
 
-    return (
-      <div>
-        {cart.map((product) => (
-          <div key={product.id}>
-            <Link to={`/products/${product.id}`}>
-              <img src={product.imageUrl} />
-            </Link>
-          </div>
-        ))}
-      </div>
-    );
-  }
+        return (
+            <div>
+                {cart.map((product) => (
+                    <div key={product.id}>
+                        <Link to={`/products/${product.id}`}>
+                            <img src={product.imageUrl} />
+                        </Link>
+                    </div>
+                ))}
+            </div>
+        );
+    }
 }
 
 // Connect Redux store's state to props
 const mapState = (state) => {
-  return {
-    cart: state.cart,
-  };
+    return {
+        cart: state.cart,
+    };
 };
 
 // Connect Redux store's action/thunk creators to props
 const mapDispatch = (dispatch) => {
-  return {
-    getCartProducts: () => dispatch(getCartProducts()),
-  };
+    return {
+        getCartProducts: () => dispatch(getCartProducts()),
+    };
 };
 
 // Export redux-connected component

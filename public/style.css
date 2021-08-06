@@ -1,5 +1,6 @@
 img {
-    width: 200px;
+    width: 500px;
+    height: 500px;
 }
 
 .container-fluid > a {
@@ -10,10 +11,31 @@ img {
     justify-content: flex-end;
 }
 
+#single-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+#card-header {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: center;
+    align-items: center;
+}
+
+#single-card-component {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .navbar {
     margin-bottom: 30px;
     background-color: #b5915a;
-    background-image: url("https://www.transparenttextures.com/patterns/clean-textile.png");
+    background-image: url('https://www.transparenttextures.com/patterns/clean-textile.png');
     /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
@@ -22,7 +44,7 @@ img {
 }
 
 .main-form {
-    border-color: "#6e3900";
+    border-color: '#6e3900';
     border-width: 4px;
     padding: 30px;
     border-style: dashed;
@@ -34,6 +56,6 @@ img {
 
 body {
     background-color: #612d00;
-    background-image: url("https://www.transparenttextures.com/patterns/fabric-plaid.png");
+    background-image: url('https://www.transparenttextures.com/patterns/fabric-plaid.png');
     /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }

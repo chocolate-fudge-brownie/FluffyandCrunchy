@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-// The OrderLine through table will not have an ID by default
-
 const OrderLine = db.define('OrderLine', {
     id: {
         type: Sequelize.INTEGER,
