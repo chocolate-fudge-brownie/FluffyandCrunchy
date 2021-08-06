@@ -34,7 +34,11 @@ class CartPreview extends React.Component {
         return (
             <>
                 {cartProducts.map((product) => (
-                    <div className="card mb-3" style={{ maxWidth: '540px' }}>
+                    <div
+                        key={product.id}
+                        className="card mb-3"
+                        style={{ maxWidth: '540px' }}
+                    >
                         <div className="row g-0">
                             <div className="col-md-4">
                                 <img
