@@ -244,8 +244,13 @@ const orderArray = [
   }
 
 ]
+  const [product1, product2] = products
   const orders = await Promise.all(orderArray.map(order => Order.create(order)));
 const [order1, order2, order3, order4, order5] = orders;
+
+await order1.addProduct(product1)
+await order2.addProduct(product2)
+await order3.setProducts([product1, product2]);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);

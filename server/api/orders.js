@@ -69,15 +69,33 @@ router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
   }
 
 })
-
-router.get('/orders/:orderId/products/:productId', async (req, res, next) => {
+router.get('/:id/products', async (req,res, next) => {
   try{
-      let {orderId, productId} = req.params;
-      let order = await Order.findByPk(orderId, {include: Product});
-      console.log('Order: ', order)
-
-  }catch(error){
+    let {id} = req.params;
+    let order = await Order.findByPk(id, {include: Product})
+    let {products} = order;
+    res.json(products)
+  } catch (error){
     next(error)
   }
 })
+router.get('/:id/products/:productId', async (req, res, next) => {
+  try{
+      let {id, productId} = req.params;
+      let order = await Order.findByPk(id, {include: Product});
+      let {products} = order.dataValues;
+      let filteredProduct = filterProductsById(products, productId);
+      res.json(filteredProduct)
+
+  } catch(error){
+    next(error)
+  }
+})
+
+const filterProductsById = (arr, id) => {
+    id = parseInt(id);
+    return arr.map(element => element.dataValues)
+              .find(element => element.id === id)
+}
+
 module.exports = router;
