@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {models: { Order }} = require('../db');
+const {models: { Order, Product }} = require('../db');
 const {requireToken, isAdmin} = require( './gatekeepingMiddleware')
 
 router.get('/', requireToken, isAdmin, async (req, res, next) => {
@@ -14,7 +14,7 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    let order = await Order.findByPk(req.params.id);
+    let order = await Order.findByPk(req.params.id, {include: Product});
     if(order){
       res.json(order);
     } else {
@@ -68,5 +68,16 @@ router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
     next(error)
   }
 
+})
+
+router.get('/orders/:orderId/products/:productId', async (req, res, next) => {
+  try{
+      let {orderId, productId} = req.params;
+      let order = await Order.findByPk(orderId, {include: Product});
+      console.log('Order: ', order)
+
+  }catch(error){
+    next(error)
+  }
 })
 module.exports = router;
