@@ -1,8 +1,8 @@
-const router = require('express').Router()
 const { models: { User, Order }} = require('../db')
+const {isAdmin, requireToken} = require('./gatekeepingMiddleware')
 
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', requireToken, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {include: Order});
     if(user){
@@ -30,3 +30,4 @@ router.get('/:id', async (req, res, next) => {
 })
 
 module.exports = router
+
