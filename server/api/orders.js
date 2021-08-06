@@ -33,18 +33,18 @@ router.get('/:id', async (req, res, next) => {
 router.get('/:userId/cart', async (req, res, next) => {
   try {
     // Get cart id
-    const [dbCart] = await Order.findAll({
+    const [cartOrder] = await Order.findAll({
       where: {
         customerId: req.params.userId,
         isPaid: false,
       },
     });
 
-    if (dbCart) {
+    if (cartOrder) {
       // Get cart details in orderline by cart id
       const cartProducts = await OrderLine.findAll({
         where: {
-          orderId: dbCart.id,
+          orderId: cartOrder.id,
         },
       });
 
@@ -68,20 +68,20 @@ router.get('/:userId/cart', async (req, res, next) => {
 router.put('/:userId/cart', async (req, res, next) => {
   try {
     // Get cart id
-    const [dbCart] = await Order.findAll({
+    const [cartOrder] = await Order.findAll({
       where: {
         customerId: req.params.userId,
         isPaid: false,
       },
     });
 
-    if (dbCart) {
-      // Add products to cart
+    if (cartOrder) {
+      // Add products to cart {1: 2, 2: 1}
       const localCart = req.body; // { [productId]: quantity }
       await Promise.all(
         Object.keys(localCart).map(async (productId) => {
           const product = await Product.findByPk(productId);
-          await dbCart.addProduct(product, {
+          await cartOrder.addProduct(product, {
             through: {
               quantity: localCart[productId],
               price: product.price,

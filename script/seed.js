@@ -252,11 +252,6 @@ async function seed() {
 
   /* Try to add order for users */
   const localCart = { 1: 1, 2: 2, 3: 3 };
-  //   const testUser = users[0];
-  //   const orders = await testUser.getOrders({
-  //     where: { isPaid: false },
-  //   });
-
   const orders = await Order.findAll({
     where: {
       customerId: 2,
