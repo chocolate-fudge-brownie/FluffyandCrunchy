@@ -47,29 +47,36 @@ export const mergeCart = () => async (dispatch) => {
         window.localStorage.setItem('cart', JSON.stringify({}));
         cart = JSON.parse(window.localStorage.getItem('cart'));
     }
-    const { data } = await axios.get('/api/order');
+    const { data } = await axios.get('/api/orders');
     const mergedCart = { ...cart, ...data };
     window.localStorage.setItem('cart', mergedCart);
     dispatch(_getCartProducts(mergedCart));
 };
 
-export const addProductToCart = (id, quantity) => async (dispatch) => {
-    let cart = JSON.parse(window.localStorage.getItem('cart'));
-    let stringId = String(id);
+export const addProductToCart =
+    (productId, quantity, userId) => async (dispatch) => {
+        let cart = JSON.parse(window.localStorage.getItem('cart'));
+        let stringId = String(productId);
 
-    if (!cart) {
-        window.localStorage.setItem('cart', JSON.stringify({ [id]: quantity }));
-    } else {
-        if (Object.keys(cart).includes(stringId)) {
-            cart[stringId] += quantity;
+        if (!cart) {
+            window.localStorage.setItem(
+                'cart',
+                JSON.stringify({ [productId]: quantity })
+            );
         } else {
-            cart[stringId] = quantity;
+            if (Object.keys(cart).includes(stringId)) {
+                cart[stringId] += quantity;
+            } else {
+                cart[stringId] = quantity;
+            }
+            window.localStorage.setItem('cart', JSON.stringify(cart));
         }
-        window.localStorage.setItem('cart', JSON.stringify(cart));
-    }
-    await axios.put('/api/order', cart);
-    dispatch(_addProductToCart(cart));
-};
+        const {
+            data: { orderId },
+        } = await axios.get(`/api/users/${userId}`);
+        await axios.put(`/api/orders/${orderId}`, productId);
+        dispatch(_addProductToCart(cart));
+    };
 
 export const getCartProducts = () => (dispatch) => {
     const cart = JSON.parse(window.localStorage.getItem('cart'));
@@ -86,12 +93,12 @@ export const removeProductFromCart = (id) => async (dispatch) => {
         }
         window.localStorage.setItem('cart', JSON.stringify(cart));
         dispatch(_removeProductFromCart(cart));
-        await axios.put('/api/order', cart);
+        await axios.put('/api/orders', cart);
     }
 };
 
 export const checkOut = (cart) => async (dispatch) => {
-    await axios.put('/api/order', { ...cart, isPaid: true });
+    await axios.put('/api/orders', { ...cart, isPaid: true });
     dispatch(clearStorage());
 };
 

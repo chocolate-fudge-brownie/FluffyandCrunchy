@@ -53,7 +53,9 @@ class CartPreview extends React.Component {
                 <button
                     onClick={() => checkOut(cart)}
                     className="btn btn-success"
-                ></button>
+                >
+                    CHECKOUT
+                </button>
             </div>
         );
     }
