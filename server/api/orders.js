@@ -3,7 +3,7 @@ const router = express.Router();
 const {models: { Order }} = require('../db');
 const {requireToken, isAdmin} = require( './gatekeepingMiddleware')
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try{
     let orders = await Order.findAll();
     res.json(orders)
