@@ -1,4 +1,3 @@
-const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
@@ -41,3 +40,5 @@ app.use((err, req, res, next) => {
   console.error(err.stack)
   res.status(err.status || 500).send(err.message || 'Internal server error.')
 })
+
+

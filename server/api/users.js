@@ -1,4 +1,3 @@
-const router = require('express').Router()
 const { models: { User, Order }} = require('../db')
 const {isAdmin, requireToken} = require('./gatekeepingMiddleware')
 
@@ -31,3 +30,4 @@ router.get('/:id', requireToken, async (req, res, next) => {
 })
 
 module.exports = router
+
