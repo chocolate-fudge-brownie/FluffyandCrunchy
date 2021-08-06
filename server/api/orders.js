@@ -1,9 +1,10 @@
+
 const express = require('express');
 const router = express.Router();
-const {models: { Order }} = require('../db');
+const {models: { Order, Product }} = require('../db');
 const {requireToken, isAdmin} = require( './gatekeepingMiddleware')
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try{
     let orders = await Order.findAll();
     res.json(orders)
@@ -14,7 +15,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    let order = await Order.findByPk(req.params.id);
+    let order = await Order.findByPk(req.params.id, {include: Product});
     if(order){
       res.json(order);
     } else {
@@ -69,4 +70,34 @@ router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
   }
 
 })
+router.get('/:id/products', async (req,res, next) => {
+  try{
+    let {id} = req.params;
+    let order = await Order.findByPk(id, {include: Product})
+    let {products} = order;
+    res.json(products)
+  } catch (error){
+    next(error)
+  }
+})
+router.get('/:id/products/:productId', async (req, res, next) => {
+  try{
+      let {id, productId} = req.params;
+      let order = await Order.findByPk(id, {include: Product});
+      let {products} = order.dataValues;
+      let filteredProduct = filterProductsById(products, productId);
+      res.json(filteredProduct)
+
+  } catch(error){
+    next(error)
+  }
+})
+
+const filterProductsById = (arr, id) => {
+    id = parseInt(id);
+    return arr.map(element => element.dataValues)
+              .find(element => element.id === id)
+}
+
 module.exports = router;
+
