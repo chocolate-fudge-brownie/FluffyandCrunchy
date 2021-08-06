@@ -32,31 +32,54 @@ class CartPreview extends React.Component {
         }
 
         return (
-            <div>
+            <>
                 {cartProducts.map((product) => (
-                    <div key={product.id}>
-                        <Link to={`/products/${product.id}`}>
-                            <img src={product.imageUrl} />
-                        </Link>
-                        <Link to={`/products/${product.id}`}>
-                            <p>{product.name}</p>
-                        </Link>
-                        <p>{product.price}</p>
-                        <p>Quantity: {cart[product.id]}</p>
-                        <button
-                            onClick={() => removeProductFromCart(product.id)}
-                        >
-                            Remove from Cart
-                        </button>
+                    <div
+                        key={product.id}
+                        className="card mb-3"
+                        style={{ maxWidth: '540px' }}
+                    >
+                        <div className="row g-0">
+                            <div className="col-md-4">
+                                <img
+                                    src={product.imageUrl}
+                                    className="img-fluid rounded-start"
+                                />
+                            </div>
+                            <div className="col-md-8">
+                                <div className="card-body">
+                                    <h5 className="card-title">
+                                        {product.name}
+                                    </h5>
+                                    <p className="card-text">
+                                        Price ${product.price}
+                                    </p>
+                                    <p className="card-text">
+                                        <small className="text-muted">
+                                            Quantity: {cart[product.id]}
+                                        </small>
+                                    </p>
+                                    <button
+                                        className="btn btn-warning"
+                                        onClick={() =>
+                                            removeProductFromCart(product.id)
+                                        }
+                                    >
+                                        Remove from Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 ))}
+
                 <button
                     onClick={() => checkOut(cart)}
                     className="btn btn-success"
                 >
                     CHECKOUT
                 </button>
-            </div>
+            </>
         );
     }
 }
