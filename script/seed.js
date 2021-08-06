@@ -223,8 +223,33 @@ async function seed() {
     }),
   ]);
 
+//Creating Orders
+const orderArray = [
+  {
+    total: 500
+  },
+  {
+    total: 200
+  },
+  {
+    total: 300,
+    isPaid: true
+  },
+  {
+    total: 1000
+  },
+  {
+    total: 150,
+    isPaid: true
+  }
+
+]
+  const orders = await Promise.all(orderArray.map(order => Order.create(order)));
+const [order1, order2, order3, order4, order5] = orders;
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
+  console.log(`seeded ${orders.length} orders`);
   console.log(`seeded successfully`);
   return {
     users: {
@@ -252,30 +277,9 @@ async function runSeed() {
     console.log('db connection closed');
   }
 }
-//Creating Orders
-const orderArray = [
-  {
-    total: 500
-  },
-  {
-    total: 200
-  },
-  {
-    total: 300,
-    isPaid: true
-  },
-  {
-    total: 1000
-  },
-  {
-    total: 150,
-    isPaid: true
-  }
 
-]
 
-const orders = await Promise.all(orderArray.map(order => Order.create(order)));
-const [order1, order2, order3, order4, order5] = orders;
+
 
 
 /*
