@@ -4,6 +4,7 @@ const {
   db,
   models: { User, Product },
 } = require('../server/db');
+const Order = require('../server/db/models/Order');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -153,7 +154,7 @@ async function seed() {
     },
     {
      username: 'oliver',
-     password: 'iamthregreenarrow',
+     password: 'iamthegreenarrow',
      email: 'oqueen@queenindustries.com',
     },
     {
@@ -251,6 +252,31 @@ async function runSeed() {
     console.log('db connection closed');
   }
 }
+//Creating Orders
+const orderArray = [
+  {
+    total: 500
+  },
+  {
+    total: 200
+  },
+  {
+    total: 300,
+    isPaid: true
+  },
+  {
+    total: 1000
+  },
+  {
+    total: 150,
+    isPaid: true
+  }
+
+]
+
+const orders = await Promise.all(orderArray.map(order => Order.create(order)));
+const [order1, order2, order3, order4, order5] = orders;
+
 
 /*
   Execute the `seed` function, IF we ran this module directly (`node seed`).
