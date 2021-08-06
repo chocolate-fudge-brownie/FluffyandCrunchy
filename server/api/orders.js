@@ -1,30 +1,104 @@
 const express = require('express');
 const router = express.Router();
-const {models: { Order }} = require('../db');
-const {requireToken, isAdmin} = require( './gatekeepingMiddleware')
+const {
+  models: { Order, Product, OrderLine },
+} = require('../db');
+const { requireToken, isAdmin } = require('./gatekeepingMiddleware');
 
+// serve all orders of that user
 router.get('/', async (req, res, next) => {
-  try{
+  try {
     let orders = await Order.findAll();
-    res.json(orders)
-  } catch(error){
+    res.json(orders);
+  } catch (error) {
     next(error);
   }
-})
+});
 
+// serve single order of that order id
 router.get('/:id', async (req, res, next) => {
   try {
     let order = await Order.findByPk(req.params.id);
-    if(order){
+    if (order) {
       res.json(order);
     } else {
-      res.status(404).send("Order not found")
+      res.status(404).send('Order not found');
     }
-
   } catch (error) {
-      next(error)
+    next(error);
   }
-})
+});
+
+// Get cart of that user id
+router.get('/:userId/cart', async (req, res, next) => {
+  try {
+    // Get cart id
+    const [dbCart] = await Order.findAll({
+      where: {
+        customerId: req.params.userId,
+        isPaid: false,
+      },
+    });
+
+    if (dbCart) {
+      // Get cart details in orderline by cart id
+      const cartProducts = await OrderLine.findAll({
+        where: {
+          orderId: dbCart.id,
+        },
+      });
+
+      // Map product id & quantity to cart { [productId]: quantity }
+      const cart = {};
+      cartProducts.forEach((product) => {
+        cart[product.productId] = product.quantity;
+      });
+
+      // Send cart to client
+      res.json(cart);
+    } else {
+      res.status(404).send('Cart not found');
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Update cart of that user id
+router.put('/:userId/cart', async (req, res, next) => {
+  try {
+    // Get cart id
+    const [dbCart] = await Order.findAll({
+      where: {
+        customerId: req.params.userId,
+        isPaid: false,
+      },
+    });
+
+    if (dbCart) {
+      // Add products to cart
+      const localCart = req.body; // { [productId]: quantity }
+      await Promise.all(
+        Object.keys(localCart).map(async (productId) => {
+          const product = await Product.findByPk(productId);
+          await dbCart.addProduct(product, {
+            through: {
+              quantity: localCart[productId],
+              price: product.price,
+            },
+          });
+        })
+      );
+
+      // Send cart to client
+      res.json();
+    } else {
+      res.status(404).send('Cart not found');
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post('/', requireToken, isAdmin, async (req, res, next) => {
   try {
@@ -32,41 +106,38 @@ router.post('/', requireToken, isAdmin, async (req, res, next) => {
     let nOrder = Order.create(order);
     res.status(201).json(nOrder);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 router.put('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
     let newOrder = req.body;
-    let {id} = req.params;
-    let  order = await Order.findByPk(id);
-    if(order){
+    let { id } = req.params;
+    let order = await Order.findByPk(id);
+    if (order) {
       let updatedOrder = await order.update(newOrder);
       res.json(updatedOrder);
     } else {
-
-      res.status(404).send("Order Not Found")
+      res.status(404).send('Order Not Found');
       // throw new Error("order Not Found")
     }
-
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
-  try{
+  try {
     const order = await Order.findByPk(req.params.id);
-    if(order){
+    if (order) {
       await order.destroy();
-     res.status(202).send(order);
+      res.status(202).send(order);
     } else {
-      res.status(404).send("Order not found")
+      res.status(404).send('Order not found');
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-
-})
+});
 module.exports = router;
