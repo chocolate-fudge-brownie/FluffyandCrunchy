@@ -89,14 +89,17 @@ router.put('/cart/:userId', requireToken, async (req, res, next) => {
   }
 });
 
-router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
+// DELETE /api/orders/cart/:userId
+// Empty cart order of single user (user only)
+router.delete('/cart/:userId', requireToken, async (req, res, next) => {
   try {
-    const order = await Order.findByPk(req.params.id);
-    if (order) {
-      await order.destroy();
-      res.status(202).send(order);
+    const { user } = req;
+
+    if (user.id === Number(req.params.userId)) {
+      let updatedCart = await user.updateCart({});
+      res.status(201).json(updatedCart);
     } else {
-      res.status(404).send('Order not found');
+      res.status(403).send('Not Authorized');
     }
   } catch (error) {
     next(error);

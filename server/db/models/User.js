@@ -115,6 +115,7 @@ User.findByToken = async function (token) {
     throw error;
   }
 };
+
 User.peekCart = async function (user) {
   try {
     if (!user) throw new Error('failed to pass in a user as an argument');
@@ -125,9 +126,11 @@ User.peekCart = async function (user) {
     console.log(err);
   }
 };
+
 /**
  * hooks
  */
+
 const hashPassword = async (user) => {
   //in case the password has been changed, we want to encrypt it with bcrypt
   if (user.changed('password')) {
