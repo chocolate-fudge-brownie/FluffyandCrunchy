@@ -262,8 +262,6 @@ async function seed() {
     NOTE:  const product = await Product.findByPk(1) will find the product whose id is equal to 1.
     NOTE:  await dbCart.addProduct(product, ) adding that product to the Order with isPaid = false, Order's join table with Product allows us to use 
     through property
-
-
   */
   const localCart = { 1: 1, 2: 2, 3: 3 }; 
 /*
@@ -277,7 +275,6 @@ These are equivalent - I'm going to use my methods for testing
       isPaid: false,
     },
   });
-
   const dbCart = orders[0];
   console.log(dbCart);
 */
