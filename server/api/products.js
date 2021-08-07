@@ -1,16 +1,8 @@
-// Import modules
-const express = require('express');
-
-// Import gatekeeping middlewares
+const router = require('express').Router();
 const { requireToken, isAdmin } = require('./gatekeepingMiddleware');
-
-// Import models
 const {
   models: { Product },
 } = require('../db');
-
-// Create sub-router mounted on /api/products
-const router = express.Router();
 
 // GET /api/products
 // GET all products
