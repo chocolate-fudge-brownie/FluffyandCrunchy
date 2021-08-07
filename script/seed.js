@@ -251,7 +251,8 @@ async function seed() {
 
   // helper functions
 
-  // SETS QUERY LIMIT
+  // SETS QUERY LIMIT - can change how many pokemon we want seeded into the database simply by increasing or decreasing this number.
+  // NOTE: The more pokemon objects we create, the longer the seed will take. 50 -> ~5-7 seconds, 100 -> ~20-30 seconds
   const QUERY_LIMIT = 50;
 
   // returns 50 pokemon objects with name and url
@@ -294,7 +295,7 @@ async function seed() {
       description
     }
   }
-  
+
   // main pokemon object generator function
   async function generatePokemonObjects() {
     const pokemonNames = await getNames();
