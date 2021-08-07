@@ -3,7 +3,6 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Product = require('./Product');
-const OrderLine = require('./OrderLine');
 
 const SALT_ROUNDS = 5;
 
