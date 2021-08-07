@@ -11,6 +11,30 @@ img {
     justify-content: flex-end;
 }
 
+<<<<<<< HEAD
+=======
+#single-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+#card-header {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: center;
+    align-items: center;
+}
+
+#single-card-component {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+>>>>>>> 1deebfb87ee56a55019124a1414a28385578fed5
 .navbar {
     margin-bottom: 30px;
     background-color: #b5915a;
