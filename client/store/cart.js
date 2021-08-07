@@ -146,7 +146,7 @@ export const removeProductFromCart =
     }
   };
 
-// Empty local cart when user log out
+// Clear local cart
 export const clearStorage = () => async (dispatch) => {
   try {
     window.localStorage.setItem('cart', JSON.stringify({}));
@@ -156,9 +156,27 @@ export const clearStorage = () => async (dispatch) => {
   }
 };
 
-export const checkOut = (cart) => async (dispatch) => {
+export const checkOut = (userId) => async (dispatch) => {
   try {
-    await axios.put('/api/orders', { ...cart, isPaid: true });
+    // do nothing if cart is empty
+    const cart = JSON.parse(window.localStorage.getItem('cart'));
+    if (Object.keys(cart).length === 0) return;
+
+    // user checkout
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      await axios.put(`/api/orders/checkout/${userId}`, null, {
+        headers: {
+          authorization: token,
+        },
+      });
+
+      // visitor checkout
+    } else {
+      await axios.post(`/api/orders/checkout`, cart);
+    }
+
+    // clear local cart
     dispatch(clearStorage());
   } catch (err) {
     console.log(err);

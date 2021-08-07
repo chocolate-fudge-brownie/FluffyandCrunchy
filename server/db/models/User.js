@@ -58,17 +58,18 @@ User.prototype.getCart = async function () {
 User.prototype.updateCart = async function (localCart) {
   const cart = await this.getCart();
 
-  // Get cart products based on local cart
+  // get cart products based on local cart
   const cartProducts = await Promise.all(
     Object.keys(localCart).map(async (productId) => {
       return await Product.findByPk(productId);
     })
   );
 
-  // Reset cart products
+  // reset cart products, so that products that no longer exist in local cart
+  // will also be deleted from database cart
   await cart.setProducts(cartProducts);
 
-  // Set cart products quantity & price
+  // set cart products quantity & price
   let updatedCart = await this.getCart();
   await Promise.all(
     Object.keys(localCart).map(async (productId) => {
@@ -82,8 +83,22 @@ User.prototype.updateCart = async function (localCart) {
     })
   );
 
+  // update cart order total price
   updatedCart = await this.getCart();
   return await updatedCart.priceUpdate();
+};
+
+User.prototype.checkoutCart = async function () {
+  const cart = await this.getCart();
+
+  // change cart order to paid order
+  if (cart.total > 0) {
+    cart.isPaid = true;
+    await cart.save();
+
+    // create another empty unpaid order as the new cart for the user
+    await this.createOrder();
+  }
 };
 
 /**
