@@ -15,7 +15,7 @@ const requireToken = async (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
   if (!req.user.admin) {
-    return res.status(403).send('Not Authorized.');
+    return res.status(403).send('Not Authorized');
   } else {
     next();
   }
