@@ -24,7 +24,7 @@ class SingleProduct extends React.Component {
                     <div className="col-md-4">
                         <img
                             src={product.imageUrl}
-                            class="img-fluid rounded-start"
+                            className="img-fluid rounded-start"
                             alt="..."
                         />
                     </div>
