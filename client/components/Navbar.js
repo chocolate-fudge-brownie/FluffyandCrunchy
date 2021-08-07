@@ -138,7 +138,16 @@ class Navbar extends React.Component {
                           src={product.imageUrl}
                           className="cart-preview-image"
                         />
-                        {product.name}
+                        <p>
+                          <strong className="cart-name">{product.name}</strong>
+                        </p>
+                        <p>
+                          <strong>Amount: </strong> {cart[product.id]}
+                        </p>
+                        <p>
+                          <strong>Total price: </strong>$
+                          {cart[product.id] * product.price}
+                        </p>
                       </div>
                     </li>
                   ))}
