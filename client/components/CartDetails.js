@@ -18,7 +18,10 @@ import OrderConfirmation from './OrderConfirmation';
 class CartPreview extends React.Component {
   constructor() {
     super();
-    this.state = { checkedOut: false };
+    this.state = {
+      checkedOut: false,
+      isLoading: true,
+    };
     this.handleCheckout = this.handleCheckout.bind(this);
   }
 
@@ -27,6 +30,13 @@ class CartPreview extends React.Component {
     this.props.getCartProducts();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.products !== this.props.products) {
+      this.setState({ isLoading: false });
+    }
+  }
+
+  // get all products info in the cart & calculate total items & price
   handleCart(products, cart) {
     let cartProducts = [];
     let totalItems = 0;
@@ -49,13 +59,17 @@ class CartPreview extends React.Component {
   }
 
   render() {
+    const { isLoading, checkedOut } = this.state;
     const { userId, products, cart, removeFromCart } = this.props;
+
+    if (isLoading) return <p>Loading...</p>;
+    if (checkedOut) return <OrderConfirmation />;
+
     const [cartProducts, totalItems, totalPrice] = this.handleCart(
       products,
       cart
     );
 
-    if (this.state.checkedOut) return <OrderConfirmation />;
     if (totalItems === 0) return <p>Your cart is empty</p>;
 
     return (
