@@ -5,8 +5,8 @@ const {
   models: { User, Product },
 } = require('../server/db');
 const Order = require('../server/db/models/Order');
-const faker = require('faker');
-const axios = require('axios');
+const PokemonSeed = require('./pokeSeed');
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -248,70 +248,11 @@ async function seed() {
       description: 'an adorabale koala',
     })
   ]);
+  // --------------------------------------- pokeSeed --------------------------------------- //
+  const pokeSeed = new PokemonSeed(1);
+  await pokeSeed.generatePokemonProducts(products);
+  // --------------------------------------- pokeSeed --------------------------------------- //
 
-  class PokemonSeed {
-    constructor(queryLimit) {
-      this.QUERY_LIMIT = queryLimit;
-    }
-    get queryLimit() {
-      return this.QUERY_LIMIT;
-    }
-    // returns 50 pokemon objects with name and url
-    async getNames() {
-      try {
-        const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=${this.queryLimit}`);
-        return data.results;
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    // returns an description given an id
-    async getDescription(id) {
-      try {
-        const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}/`);
-        const englishEntry = data.flavor_text_entries
-                              .filter((description) => description.language.name === "en")[0].flavor_text;
-        return englishEntry;
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getImageUrl(id) {
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-    };
-    // returns a random price
-    randomPrice() {
-      return Math.floor(faker.commerce.price());
-    };
-    // factory function to generate pokemon objects
-    factoryPokemon(name, price, imageUrl, description) {
-      return {
-        name,
-        price,
-        imageUrl,
-        description,
-      };
-    };
-    async generatePokemonObjects() {
-      const pokemonNames = await this.getNames();
-      for(let i = 1; i <= this.queryLimit; i++) {
-        const name = pokemonNames[i - 1].name;
-        const imageUrl = this.getImageUrl(i); 
-        const description = await this.getDescription(i);
-        const pokemonProduct = this.factoryPokemon(name, this.randomPrice(), imageUrl, description);
-        products.push(await Promise.resolve(Product.create(pokemonProduct)));
-      }   
-    }
-  }
-
-  // actually seeds and appends pokemon objects to the database, needs a QUERY LIMIT
-  // NOTE: The more pokemon objects we create, the longer the seed will take. 50 -> ~5-7 seconds, 100 -> ~20-30 seconds
-  const pokeSeed = new PokemonSeed(25);
-  await pokeSeed.generatePokemonObjects();
-   
-  /*  
-  
-  */
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   /* Try to add order for users */
