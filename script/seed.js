@@ -246,276 +246,24 @@ async function seed() {
       imageUrl:
         'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
       description: 'an adorabale koala',
-    }),
-    Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),    
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
-      Product.create({
-        name: 'koala',
-        price: Math.floor(faker.commerce.price()),
-        imageUrl:
-          'https://cdn.shopify.com/s/files/1/0251/3719/products/60ba366a346b75f363ddec2bdb81d338_grande.jpg?v=1611788303',
-        description: 'an adorabale koala',
-      }),
+    })
   ]);
 
-  console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${products.length} products`);
   // helper functions
 
+  // SETS QUERY LIMIT
   const QUERY_LIMIT = 50;
+
   // returns 50 pokemon objects with name and url
   const getNames = async () => {
     try {
       const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=${QUERY_LIMIT}`);
-      console.log(data.results);
       return data.results;      
     } catch (err) {
       console.log(err)
     }
   }
+
   // returns an description given an id
   const getDescription = async (id) => {
     try {
@@ -526,28 +274,44 @@ async function seed() {
       console.log(err);
     }
   }
+
   // returns imageUrl
   const getImageUrl = (id) => {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
   }
+
+  // returns a random price
+  const randomPrice = () => {
+    return Math.floor(faker.commerce.price());
+  }
+
   // factory function to generate pokemon objects
-  const factoryPokemon = (name, imageUrl, description) => {
+  const factoryPokemon = (name, price, imageUrl, description) => {
     return {
       name,
+      price,
       imageUrl,
       description
     }
   }
-  const pokemonObject = [];
-  const pokemonNames = await getNames();
-  for(let i = 1; i <= QUERY_LIMIT; i++) {
-    // the i - 1 is to fix the off by one. look at getNames function
-    const name = pokemonNames[i - 1].name;
-    const imageUrl = getImageUrl(i); 
-    const description = await getDescription(i);
-    pokemonObject.push(factoryPokemon(name, imageUrl, description));
+  
+  // main pokemon object generator function
+  async function generatePokemonObjects() {
+    const pokemonNames = await getNames();
+    for(let i = 1; i <= QUERY_LIMIT; i++) {
+      const name = pokemonNames[i - 1].name;
+      const imageUrl = getImageUrl(i); 
+      const description = await getDescription(i);
+      const pokemonProduct = factoryPokemon(name, randomPrice(), imageUrl, description);
+      products.push(await Promise.resolve(Product.create(pokemonProduct)));
+    }   
   }
-  console.log(pokemonObject);
+  
+  // actually seeds and appends pokemon objects to the database
+  await generatePokemonObjects();
+
+  console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${products.length} products`);
   /* Try to add order for users */
   const localCart = { 1: 1, 2: 2, 3: 3 };
   const orders = await Order.findAll({
