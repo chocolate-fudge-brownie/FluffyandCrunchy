@@ -15,8 +15,8 @@ const Order = db.define('order', {
     }
 })
 
-Order.prototype.priceUpdate = async function(product) {
-    await this.addProducts(product);
+Order.prototype.updateCart = async function(product, options) {
+    await this.addProducts(product, options);
     this.total += product.price;
     await this.save();
     return { order: this.dataValues, price: this.total }  

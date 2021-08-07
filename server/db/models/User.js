@@ -60,7 +60,7 @@ User.prototype.getCart = async function () {
 }
 User.prototype.addProductToCart = async function (product) {
   const cart = await this.getCart();
-  await cart.priceUpdate(product);
+  await cart.updateCart(product);
 }
 /**
  * classMethods
@@ -124,15 +124,15 @@ User.afterCreate(async (user) => {
   - Parameters: a user instance
   - Return Value: the order object whose isPaid value is set to False. We will refer to this as the cart. Recall, there is only one cart per user, but a user can have many orders.
   - NOTICE: Inside the cart object is a products array that contains all of the products associated with the cart.
-  - Previously, I used my own priceUpdate() method on the Order Model to add a product to the cart.
+  - Previously, I used my own updateCart() method on the Order Model to add a product to the cart.
   - example: 
           // creating a user creates an empty cart with 0 total and isPaid equal to false
           const user = await User.create({ username: 'Chukwudi', password: 'password', admin: false });
           const fluffs = await Product.create({ name: 'fluffs', price: 450 });
           const crunchies = await Product.create({ name: 'crunchies', price: 200 });
           let cart = await user.getCart();
-          await cart.priceUpdate(fluffs);
-          await cart.priceUpdate(crunchies);
+          await cart.updateCart(fluffs);
+          await cart.updateCart(crunchies);
           cart = await User.peekCart(user);
 [#1]      console.log(cart);
   - You can also destructure the products out of the return object from peekCart()
@@ -211,6 +211,6 @@ User.afterCreate(async (user) => {
 
  - Note the fact that user.getCart() is essentially the same as user.getOrders() magic method
  - The only difference is now we are returning a singular cart and not an array of orders.
- - Note, getCart() is still returning an order. This means we can call the priceUpdate() instance method to update the total.
- - Take a look at the priceUpdate instance method on the Order model. This method returns the order object and the new price.
+ - Note, getCart() is still returning an order. This means we can call the updateCart() instance method to update the total.
+ - Take a look at the updateCart instance method on the Order model. This method returns the order object and the new price.
 */

@@ -256,19 +256,36 @@ async function seed() {
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   /* Try to add order for users */
-  const localCart = { 1: 1, 2: 2, 3: 3 };
+  // through adds information to the join table. add quantity based on localCart[productId]
+  /*
+    NOTE:  Object.keys(localCart) returns an array with 1, 2, 3 as those are the keys in the localCart object.
+    NOTE:  const product = await Product.findByPk(1) will find the product whose id is equal to 1.
+    NOTE:  await dbCart.addProduct(product, ) adding that product to the Order with isPaid = false, Order's join table with Product allows us to use 
+    through property
+
+
+  */
+  const localCart = { 1: 1, 2: 2, 3: 3 }; 
+/*
+These are equivalent - I'm going to use my methods for testing
+  const user = await User.findByPk(3);
+  console.log(await user.getCart());
+---------------------------------------------------------------- 
   const orders = await Order.findAll({
     where: {
-      customerId: 2,
+      customerId: 3,
       isPaid: false,
     },
   });
 
   const dbCart = orders[0];
+  console.log(dbCart);
+*/
+
   await Promise.all(
     Object.keys(localCart).map(async (productId) => {
       const product = await Product.findByPk(productId);
-      await dbCart.addProduct(product, {
+      await dbCart.updateCart(product, {
         through: {
           quantity: localCart[productId],
           price: product.price,
@@ -276,7 +293,8 @@ async function seed() {
       });
     })
   );
-
+  // recall that updateCart is the method I created, it will use addProduct underneath the hood while also updating the running total in the cart.
+  console.log(dbCart);
   const cartProducts = await dbCart.getProducts();
   console.log(cartProducts);
 
