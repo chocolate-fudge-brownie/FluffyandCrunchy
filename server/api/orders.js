@@ -56,17 +56,13 @@ router.get('/:orderId', requireToken, async (req, res, next) => {
 });
 
 // GET /api/orders/cart/:userId
-// Get cart order of single user (user only)
+// Get cart of single user (user only)
 router.get('/cart/:userId', requireToken, async (req, res, next) => {
   try {
-    if (req.user.id === Number(req.params.userId)) {
-      const user = await User.findByPk(req.params.userId);
-      if (user) {
-        const cartOrder = await user.getCart();
-        res.json(cartOrder);
-      } else {
-        res.status(404).send('User Not Found');
-      }
+    const { user } = req;
+    if (user.id === Number(req.params.userId)) {
+      const cart = await user.getCart();
+      res.json(cart);
     } else {
       res.status(403).send('Not Authorized');
     }
@@ -75,63 +71,18 @@ router.get('/cart/:userId', requireToken, async (req, res, next) => {
   }
 });
 
-// Update cart of that user id
-router.put('/:userId/cart', async (req, res, next) => {
+// PUT /api/orders/cart/:userId
+// Update cart order of single user (user only)
+router.put('/cart/:userId', requireToken, async (req, res, next) => {
   try {
-    // Get cart id
-    const [cartOrder] = await Order.findAll({
-      where: {
-        customerId: req.params.userId,
-        isPaid: false,
-      },
-    });
+    const { user } = req;
+    const cart = req.body; // {[productId]: quantity}
 
-    if (cartOrder) {
-      // Add products to cart {1: 2, 2: 1}
-      const localCart = req.body; // { [productId]: quantity }
-      await Promise.all(
-        Object.keys(localCart).map(async (productId) => {
-          const product = await Product.findByPk(productId);
-          await cartOrder.addProduct(product, {
-            through: {
-              quantity: localCart[productId],
-              price: product.price,
-            },
-          });
-        })
-      );
-
-      // Send cart to client
-      res.json();
+    if (user.id === Number(req.params.userId)) {
+      let updatedCart = await user.updateCart(cart);
+      res.status(201).json(updatedCart);
     } else {
-      res.status(404).send('Cart not found');
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/', requireToken, isAdmin, async (req, res, next) => {
-  try {
-    let order = req.body;
-    let nOrder = Order.create(order);
-    res.status(201).json(nOrder);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.put('/:id', requireToken, isAdmin, async (req, res, next) => {
-  try {
-    let newOrder = req.body;
-    let { id } = req.params;
-    let order = await Order.findByPk(id);
-    if (order) {
-      let updatedOrder = await order.update(newOrder);
-      res.json(updatedOrder);
-    } else {
-      res.status(404).send('Order Not Found');
-      // throw new Error("order Not Found")
+      res.status(403).send('Not Authorized');
     }
   } catch (error) {
     next(error);

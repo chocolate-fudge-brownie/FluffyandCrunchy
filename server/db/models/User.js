@@ -3,6 +3,7 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Product = require('./Product');
+const OrderLine = require('./OrderLine');
 
 const SALT_ROUNDS = 5;
 
@@ -55,10 +56,37 @@ User.prototype.getCart = async function () {
   return cart;
 };
 
-User.prototype.addProductToCart = async function (product) {
+User.prototype.updateCart = async function (localCart) {
   const cart = await this.getCart();
-  await cart.priceUpdate(product);
+
+  // Get cart products based on local cart
+  const cartProducts = await Promise.all(
+    Object.keys(localCart).map(async (productId) => {
+      return await Product.findByPk(productId);
+    })
+  );
+
+  // Reset cart products
+  await cart.setProducts(cartProducts);
+
+  // Set cart products quantity & price
+  let updatedCart = await this.getCart();
+  await Promise.all(
+    Object.keys(localCart).map(async (productId) => {
+      const product = await Product.findByPk(productId);
+      await updatedCart.addProduct(product, {
+        through: {
+          quantity: localCart[productId],
+          price: product.price,
+        },
+      });
+    })
+  );
+
+  updatedCart = await this.getCart();
+  return await updatedCart.priceUpdate();
 };
+
 /**
  * classMethods
  */
