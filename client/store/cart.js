@@ -12,8 +12,10 @@ const CLEAR_STORAGE = 'CLEAR_STORAGE';
 /**
  * ACTION CREATORS
  */
-export const _clearStorage = () => ({
-  type: CLEAR_STORAGE,
+
+export const _getCartProducts = (cart) => ({
+  type: GET_CART_PRODUCTS,
+  cart,
 });
 
 export const _addProductToCart = (cart) => ({
@@ -26,80 +28,159 @@ export const _removeProductFromCart = (cart) => ({
   cart,
 });
 
-export const _getCartProducts = (cart) => ({
-  type: GET_CART_PRODUCTS,
-  cart,
+export const _clearStorage = () => ({
+  type: CLEAR_STORAGE,
 });
 
 /**
  * THUNK CREATORS
  */
-// Implement an object for fast lookup (given id and quantity).
 
-export const clearStorage = () => (dispatch) => {
-  window.localStorage.removeItem('cart');
-  dispatch(_clearStorage());
-};
+// Implement cart as an object for fast lookup: {[productId]: quantity}
 
-export const mergeCart = () => async (dispatch) => {
-  let cart = JSON.parse(window.localStorage.getItem('cart'));
-  if (!cart) {
-    window.localStorage.setItem('cart', JSON.stringify({}));
-    cart = JSON.parse(window.localStorage.getItem('cart'));
-  }
-  const { data } = await axios.get('/api/orders');
-  const mergedCart = { ...cart, ...data };
-  window.localStorage.setItem('cart', mergedCart);
-  dispatch(_getCartProducts(mergedCart));
-};
-
-export const addProductToCart =
-  (productId, quantity, userId) => async (dispatch) => {
+// Get cart from local storage
+export const getCartProducts = () => async (dispatch) => {
+  try {
     let cart = JSON.parse(window.localStorage.getItem('cart'));
-    let stringId = String(productId);
+    if (!cart) cart = {};
+    window.localStorage.setItem('cart', JSON.stringify(cart));
+    dispatch(_getCartProducts(cart));
+  } catch (err) {
+    console.log(err);
+  }
+};
 
+// Merge carts from local storage & database when user log in
+export const mergeCart = (userId) => async (dispatch) => {
+  try {
+    let cart = JSON.parse(window.localStorage.getItem('cart'));
+    if (!cart) cart = {};
+    const token = window.localStorage.getItem('token');
+    const { data: dbCart } = await axios.get(`/api/orders/cart/${userId}`, {
+      headers: {
+        authorization: token,
+      },
+    });
+
+    // dbCart is an order object {orderid, total, products:[{product}...]}
+    // so we have to transfer it to {[productId]: quantity}
+    let savedCart = {};
+    dbCart.products.forEach((product) => {
+      savedCart[product.id] = product.OrderLine.quantity;
+    });
+
+    // merge local cart with database cart
+    const mergedCart = { ...cart, ...savedCart };
+
+    // save merged cart in both local & database
+    window.localStorage.setItem('cart', JSON.stringify(mergedCart));
+    await axios.put(`/api/orders/cart/${userId}`, mergedCart, {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch(_getCartProducts(mergedCart));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// Add product to local cart & Update database cart accordingly
+export const addProductToCart = (productId, userId) => async (dispatch) => {
+  try {
+    let cart = JSON.parse(window.localStorage.getItem('cart'));
     if (!cart) {
-      window.localStorage.setItem(
-        'cart',
-        JSON.stringify({ [productId]: quantity })
-      );
+      window.localStorage.setItem('cart', JSON.stringify({ [productId]: 1 }));
     } else {
+      let stringId = String(productId);
       if (Object.keys(cart).includes(stringId)) {
-        cart[stringId] += quantity;
+        cart[stringId] += 1;
       } else {
-        cart[stringId] = quantity;
+        cart[stringId] = 1;
       }
       window.localStorage.setItem('cart', JSON.stringify(cart));
     }
-    const {
-      data: { orderId },
-    } = await axios.get(`/api/users/${userId}`);
-    await axios.put(`/api/orders/${orderId}`, productId);
-    dispatch(_addProductToCart(cart));
-  };
 
-export const getCartProducts = () => (dispatch) => {
-  const cart = JSON.parse(window.localStorage.getItem('cart'));
-  dispatch(_getCartProducts(cart));
-};
-
-export const removeProductFromCart = (id) => async (dispatch) => {
-  let cart = JSON.parse(window.localStorage.getItem('cart'));
-  if (cart) {
-    cart[id] = Math.max(cart[id] - 1, 0);
-
-    if (cart[id] <= 0) {
-      delete cart[id];
+    // update database cart if user is logged in
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      await axios.put(`/api/orders/cart/${userId}`, cart, {
+        headers: {
+          authorization: token,
+        },
+      });
     }
-    window.localStorage.setItem('cart', JSON.stringify(cart));
-    dispatch(_removeProductFromCart(cart));
-    await axios.put('/api/orders', cart);
+    dispatch(_addProductToCart(cart));
+  } catch (err) {
+    console.log(err);
   }
 };
 
-export const checkOut = (cart) => async (dispatch) => {
-  await axios.put('/api/orders', { ...cart, isPaid: true });
-  dispatch(clearStorage());
+// Remove product from local cart & Update dabase cart accordingly
+export const removeProductFromCart =
+  (productId, userId) => async (dispatch) => {
+    try {
+      let cart = JSON.parse(window.localStorage.getItem('cart'));
+      if (cart) {
+        cart[productId] = Math.max(cart[productId] - 1, 0);
+
+        if (cart[productId] <= 0) {
+          delete cart[productId];
+        }
+        window.localStorage.setItem('cart', JSON.stringify(cart));
+
+        // update database cart if user is logged in
+        const token = window.localStorage.getItem('token');
+        if (token) {
+          await axios.put(`/api/orders/cart/${userId}`, cart, {
+            headers: {
+              authorization: token,
+            },
+          });
+        }
+
+        dispatch(_removeProductFromCart(cart));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+// Clear local cart
+export const clearStorage = () => async (dispatch) => {
+  try {
+    window.localStorage.setItem('cart', JSON.stringify({}));
+    dispatch(_clearStorage());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const checkOut = (userId) => async (dispatch) => {
+  try {
+    // do nothing if cart is empty
+    const cart = JSON.parse(window.localStorage.getItem('cart'));
+    if (Object.keys(cart).length === 0) return;
+
+    // user checkout
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      await axios.put(`/api/orders/checkout/${userId}`, null, {
+        headers: {
+          authorization: token,
+        },
+      });
+
+      // visitor checkout
+    } else {
+      await axios.post(`/api/orders/checkout`, cart);
+    }
+
+    // clear local cart
+    dispatch(clearStorage());
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 /**
