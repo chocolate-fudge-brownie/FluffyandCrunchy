@@ -82,15 +82,19 @@ class CartPreview extends React.Component {
           >
             <div className="row g-0">
               <div className="col-md-4">
-                <img
-                  src={product.imageUrl}
-                  className="img-fluid rounded-start"
-                />
+                <Link to={`/products/${product.id}`}>
+                  <img
+                    src={product.imageUrl}
+                    className="img-fluid rounded-start"
+                  />
+                </Link>
               </div>
               <div className="col-md-8">
                 <div className="card-body">
-                  <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text">Price ${product.price}</p>
+                  <Link to={`/products/${product.id}`}>
+                    <h5 className="card-title">{product.name}</h5>
+                  </Link>
+                  <p className="card-text">Price: ${product.price}</p>
                   <p className="card-text">
                     <small className="text-muted">
                       Quantity: {cart[product.id]}
