@@ -7,6 +7,11 @@ img {
   font-size: 25px;
 }
 
+.search-image {
+  width: 70px;
+  height: 70px;
+}
+
 .container-fluid > a {
   text-decoration: none;
 }
@@ -42,9 +47,19 @@ img {
   align-items: center;
 }
 
+#search-form {
+  display: flex;
+}
+
 #single-card-component {
   margin-left: auto;
   margin-right: auto;
+}
+
+.search-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .navbar {
