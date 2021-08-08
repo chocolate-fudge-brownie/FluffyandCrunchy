@@ -13,7 +13,7 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    const { product, addProductToCart } = this.props;
+    const { userId, product, addProductToCart } = this.props;
 
     if (product.id !== Number(this.props.match.params.id))
       return <div>Loading...</div>;
@@ -33,13 +33,11 @@ class SingleProduct extends React.Component {
               <h5 className="card-title">{product.name}</h5>
               <p className="card-text">{product.description}</p>
               <p className="card-text">
-                <small className="text-muted">
-                  Product Price: ${product.price}
-                </small>
+                <small className="text-muted">Price: ${product.price}</small>
               </p>
               <button
                 className="btn btn-success"
-                onClick={() => addProductToCart(product.id, 1)}
+                onClick={() => addProductToCart(product.id, userId)}
               >
                 Add to Cart
               </button>
@@ -54,6 +52,7 @@ class SingleProduct extends React.Component {
 // Connect Redux store's state to props
 const mapState = (state) => {
   return {
+    userId: state.auth.id,
     product: state.singleProduct,
   };
 };
@@ -62,8 +61,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProduct: (productId) => dispatch(getProduct(productId)),
-    addProductToCart: (productId, quantity) =>
-      dispatch(addProductToCart(productId, quantity)),
+    addProductToCart: (productId, userId) =>
+      dispatch(addProductToCart(productId, userId)),
   };
 };
 
