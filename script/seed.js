@@ -211,107 +211,107 @@ async function seed() {
     {
       name: 'Red Bird',
       price: 10,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/2/2e/Red_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170712'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/2/2e/Red_Bird.jpg'
   },
   {
     name: 'Blue Bird',
       price: 20,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/b8/Blue_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170741'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/2/2e/Red_Bird.jpg'
   },
   {
     name: 'Hal Bird',
       price: 70,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/68/New_Hal.jpeg/revision/latest/scale-to-width-down/160?cb=20160325001608'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/68/New_Hal.jpeg'
   },
   {
     name: 'Big Brother Bird',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/65/Big_Brother_Bird.jpg/revision/latest/scale-to-width-down/500?cb=20120115171001'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/65/Big_Brother_Bird.jpg'
   },
   {
     name: 'Yellow Bird',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/8/83/Yellow_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170813'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/8/83/Yellow_Bird.jpg'
   },
   {
     name: 'Black Bird',
       price: 50,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/31/Black_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170839'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/31/Black_Bird.jpg'
   },
   {
     name: 'White Bird',
       price: 40,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/f/fe/White_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170912'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/f/fe/White_Bird.jpg'
   },
   {
     name: 'Green Bird',
       price: 60,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/53/New_Green_Bird.png/revision/latest/scale-to-width-down/305?cb=201205172208392'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/53/New_Green_Bird.png'
   },
   {
     name: 'Orange Bird',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/7/70/113209.jpg/revision/latest/scale-to-width-down/225?cb=20120506010945'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/7/70/113209.jpg'
   },
   {
     name: 'Angry Orange Bird',
       price: 10,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/6a/113211.jpg/revision/latest/scale-to-width-down/500?cb=20120315222116'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/6a/113211.jpg'
   },
   {
     name: 'Mighty Eagle',
       price: 25,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/a/a7/Mighty_Eagle.jpg/revision/latest/scale-to-width-down/500?cb=20120115171030'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/a/a7/Mighty_Eagle.jpg'
   },
   {
     name: 'King Pig',
       price: 33,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/d/db/King_Pig.jpg/revision/latest/scale-to-width-down/480?cb=20121214062649'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/d/db/King_Pig.jpg'
   },
   {
     name: 'Stelia',
       price: 22,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/1/10/%24T2eC16dHJGQE9noMbUZ-BQkcf%283F%2Cw~~60_3.JPG/revision/latest/scale-to-width-down/600?cb=20121102003518'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/1/10/%24T2eC16dHJGQE9noMbUZ-BQkcf%283F%2Cw~~60_3.JPG'
   },
   {
     name: 'Foreman Pig',
       price: 44,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/36/Moustache_Pig.jpg/revision/latest/scale-to-width-down/480?cb=20120115191340'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/36/Moustache_Pig.jpg'
   },
   {
-    name: 'Moustache Pig',
+    name: 'Female Pig',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/36/Moustache_Pig.jpg/revision/latest/scale-to-width-down/480?cb=20120115191340'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/2/25/IMG_3036.JPG'
   },
   {
     name: 'Helmet Pig',
       price: 55,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/b4/Helmet_Pig.jpg/revision/latest/scale-to-width-down/480?cb=20120115171142'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/b4/Helmet_Pig.jpg'
   },
   {
     name: 'Minion Pig',
       price: 40,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/bf/Plush_greenpig.jpg/revision/latest/scale-to-width-down/200?cb=20120920040710'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/bf/Plush_greenpig.jpg'
   },
   {
     name: 'Postman Pig',
       price: 20,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/5c/Angry-birds-pigs-traveler-2_98248_zoom.jpg/revision/latest/scale-to-width-down/500?cb=20111212213927'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/5c/Angry-birds-pigs-traveler-2_98248_zoom.jpg'
   },
   {
     name: 'Chef Pig',
       price: 15,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/39/PIGCHEF.jpg/revision/latest/scale-to-width-down/504?cb=20120818085700'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/39/PIGCHEF.jpg'
   },
   {
     name: 'Construction Pig',
       price: 25,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/34/PIGWORK.jpg/revision/latest/scale-to-width-down/479?cb=20120217225228'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/34/PIGWORK.jpg'
   },
   {
     name: 'Cowboy Hat Pig',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/5e/PIGBOY.jpg/revision/latest/scale-to-width-down/479?cb=20120212140417'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/5e/PIGBOY.jpg'
   },
   {
     name: 'Kirby',
