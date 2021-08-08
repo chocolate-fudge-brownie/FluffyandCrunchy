@@ -551,10 +551,56 @@ async function seed() {
   const products = products1.concat(products2);
 
   // --------------------------------------- pokeSeed --------------------------------------- //
-  const pokeSeed = new PokemonSeed(10);
+  const pokeSeed = new PokemonSeed(1);
   await pokeSeed.generatePokemonProducts(products);
   // --------------------------------------- pokeSeed --------------------------------------- //
 
+  // Creating Paid Orders For Users
+
+  // Generating Random Unique Integers to represent what a localCart may look like, based on argument value
+
+  // Given a product.length of 6. Math.floor gives us numbers from 0 to 5, so we will add 1 so we ensure that it is 1 to 6 - DOCS
+  // const randomId = Math.floor(Math.random() * products.length) + 1; - DOCS
+  // NOTE: if maxProductsLength is greater than products.length we will get an infinite loop as we will never reach the case where the set.size(),
+  // which is AT MOST equal to products.length, is equal maxProductsLength which is necessary for the loop to break
+  // We use a set to avoid duplicate inputs, yet to be honest, we could've used an array since we are checking for uniqueness before appending anyways
+  const generateLocalCart = (maxProductsLength) => {
+    const set = new Set();
+    const localCart = {};
+    if (maxProductsLength > products.length) {
+      return new Error(
+        `input size for generateLocalCart must be less than or equal to the amount of products seeded. Amount of products seeded => ${products.length}`
+      );
+    }
+    while (set.size < maxProductsLength) {
+      const randomId = Math.ceil(Math.random() * products.length);
+      if(!set.has(randomId)) {
+        set.add(randomId);
+        localCart[randomId] = Math.ceil(Math.random() * 10);
+      } 
+    }
+    return localCart;
+  }
+  // .updateCart() and .checkoutCart()
+  const handleLocalCart = async (user, localCart) => {
+    try {
+      await user.updateCart(localCart);
+      await user.checkoutCart();      
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  // creates 5 orders of length 5 on every user
+  const seedOrdersToUsers = async () =>  {
+    await Promise.all(users.map(async (user) => {
+      const randomLength = 5;
+      for(let i = 0; i < randomLength; i++) {
+        const localCart = generateLocalCart(randomLength);
+        await handleLocalCart(user, localCart);
+      }
+    }));
+  }
+  await seedOrdersToUsers();
   // Defining Orders
   const orderArray = [
     {
@@ -580,11 +626,12 @@ async function seed() {
   const orders = await Promise.all(
     orderArray.map((order) => Order.create(order))
   );
-  const [order1, order2, order3, order4, order5] = orders;
+  const [order1, order2] = orders;
 
   await order1.addProduct(product1);
   await order2.addProduct(product2);
-  await order3.setProducts([product1, product2]);
+  await order1.visitorCheckout(generateLocalCart(3));
+  await order2.visitorCheckout(generateLocalCart(2));
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);

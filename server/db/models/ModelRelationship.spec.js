@@ -33,9 +33,6 @@ describe('Testing Model Associations', () => {
         const bear = await Product.create({ name: 'blanched almond bear', price: 54 });
         const nobear = await Product.create({ name: 'almond bear', price: 6, description: 'it\'s not a blanched almond colored bear' });
         await tallOrder.updateCart(bear);
-        /* const info = await tallOrder.updateCart(nobear);
-           console.log(info.order, '\n', info.price); */
-        // => ensuring that update can accurately update the total and update tallOrder at the same time <=
         expect(tallOrder.total).to.equal(60);
         const products = await tallOrder.getProducts();
         expect(products.map(product => product.name)).to.deep.equal(['blanched almond bear', 'almond bear']);
