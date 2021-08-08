@@ -64,13 +64,14 @@ export const mergeCart = (userId) => async (dispatch) => {
 
     // dbCart is an order object {orderid, total, products:[{product}...]}
     // so we have to transfer it to {[productId]: quantity}
-    let savedCart = {};
+    // and merge with local cart
+    let mergedCart = { ...cart };
     dbCart.products.forEach((product) => {
-      savedCart[product.id] = product.OrderLine.quantity;
+      const id = product.id;
+      const qty = product.OrderLine.quantity;
+      if (mergedCart[id]) mergedCart[id] += qty;
+      else mergedCart[id] = qty;
     });
-
-    // merge local cart with database cart
-    const mergedCart = { ...cart, ...savedCart };
 
     // save merged cart in both local & database
     window.localStorage.setItem('cart', JSON.stringify(mergedCart));
