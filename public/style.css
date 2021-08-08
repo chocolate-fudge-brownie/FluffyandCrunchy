@@ -7,6 +7,10 @@ img {
   font-size: 25px;
 }
 
+.alert {
+  margin-top: 10px;
+}
+
 .search-image {
   width: 70px;
   height: 70px;
