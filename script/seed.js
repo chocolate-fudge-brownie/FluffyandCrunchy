@@ -211,257 +211,308 @@ async function seed() {
     {
       name: 'Red Bird',
       price: 10,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/2/2e/Red_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170712'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/2/2e/Red_Bird.jpg',
+      description: 'The classic Red Angry Bird'
   },
   {
     name: 'Blue Bird',
       price: 20,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/b8/Blue_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170741'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/2/2e/Red_Bird.jpg',
+      description: 'Made of quality material, rich cotton blend, and a nice blue hue'
   },
   {
     name: 'Hal Bird',
       price: 70,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/68/New_Hal.jpeg/revision/latest/scale-to-width-down/160?cb=20160325001608'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/68/New_Hal.jpeg',
+      description: 'Enhanced with imported cotton and the finest material, this Hal Bird is a collector\'s item.'
   },
   {
     name: 'Big Brother Bird',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/65/Big_Brother_Bird.jpg/revision/latest/scale-to-width-down/500?cb=20120115171001'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/65/Big_Brother_Bird.jpg',
+      description: '9" inch plush Big Borther Angry Bird'
   },
   {
     name: 'Yellow Bird',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/8/83/Yellow_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170813'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/8/83/Yellow_Bird.jpg',
+      description: 'Watch you loved ones eyes swell with joy when you present them with this illustrious yellow angry bird.'
   },
   {
     name: 'Black Bird',
       price: 50,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/31/Black_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170839'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/31/Black_Bird.jpg',
+      description: 'This cute, adorable angry bird is all the rage. Get yours while supplies last'
   },
   {
     name: 'White Bird',
       price: 40,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/f/fe/White_Bird.jpg/revision/latest/scale-to-width-down/480?cb=20120115170912'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/f/fe/White_Bird.jpg',
+      description:  'One of the rarest birds in our Angry birds collection. Bring this bird home and make him a part of our collection.'
   },
   {
     name: 'Green Bird',
       price: 60,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/53/New_Green_Bird.png/revision/latest/scale-to-width-down/305?cb=201205172208392'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/53/New_Green_Bird.png',
+      description: 'Special made, only for St. Patricks Day, Very few made world wide.'
   },
   {
     name: 'Orange Bird',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/7/70/113209.jpg/revision/latest/scale-to-width-down/225?cb=20120506010945'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/7/70/113209.jpg',
+      description: 'a cute, adorable Angry Bird'
   },
   {
     name: 'Angry Orange Bird',
       price: 10,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/6a/113211.jpg/revision/latest/scale-to-width-down/500?cb=20120315222116'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/6/6a/113211.jpg',
+      description: 'An expressive take on the orange Angry Bird.'
   },
   {
     name: 'Mighty Eagle',
       price: 25,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/a/a7/Mighty_Eagle.jpg/revision/latest/scale-to-width-down/500?cb=20120115171030'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/a/a7/Mighty_Eagle.jpg',
+      description: 'an Angry Bird version of the American Bald Eagle.'
   },
   {
     name: 'King Pig',
       price: 33,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/d/db/King_Pig.jpg/revision/latest/scale-to-width-down/480?cb=20121214062649'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/d/db/King_Pig.jpg',
+      description: 'The kingdom of Pigs is being invaded and only one pig stands in the way of complete annihilation. The King Pig is here. Get yours today.'
   },
   {
     name: 'Stelia',
       price: 22,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/1/10/%24T2eC16dHJGQE9noMbUZ-BQkcf%283F%2Cw~~60_3.JPG/revision/latest/scale-to-width-down/600?cb=20121102003518'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/1/10/%24T2eC16dHJGQE9noMbUZ-BQkcf%283F%2Cw~~60_3.JPG',
+      description: 'a soft illustrious comfortable plush toy from our Angry birds collection'
   },
   {
     name: 'Foreman Pig',
       price: 44,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/36/Moustache_Pig.jpg/revision/latest/scale-to-width-down/480?cb=20120115191340'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/36/Moustache_Pig.jpg',
+      description: 'One of our Construction Pigs from our Angry Birds Collection. Often called Moustache Pig.'
   },
   {
-    name: 'Moustache Pig',
+    name: 'Female Pig',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/36/Moustache_Pig.jpg/revision/latest/scale-to-width-down/480?cb=20120115191340'
-  },
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/2/25/IMG_3036.JPG',
+      description: 'A Valentine\'s Day special. Brighten the day of that special loved one with this wonderful gift.'
+      },
   {
     name: 'Helmet Pig',
       price: 55,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/b4/Helmet_Pig.jpg/revision/latest/scale-to-width-down/480?cb=20120115171142'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/b4/Helmet_Pig.jpg',
+      description: 'A construction worker pig from our Angry Birds Collection.'
   },
   {
     name: 'Minion Pig',
       price: 40,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/bf/Plush_greenpig.jpg/revision/latest/scale-to-width-down/200?cb=20120920040710'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/b/bf/Plush_greenpig.jpg',
+      description: 'a wonderful rare pig from our Angry Birds Collection'
   },
   {
     name: 'Postman Pig',
       price: 20,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/5c/Angry-birds-pigs-traveler-2_98248_zoom.jpg/revision/latest/scale-to-width-down/500?cb=20111212213927'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/5c/Angry-birds-pigs-traveler-2_98248_zoom.jpg',
+      description: 'Watch the smile of your mail carrier with this Postman Pig from our Angry Birds Collection'
   },
   {
     name: 'Chef Pig',
       price: 15,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/39/PIGCHEF.jpg/revision/latest/scale-to-width-down/504?cb=20120818085700'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/39/PIGCHEF.jpg',
+      description: 'We cook up the savings with this rare Chef Pig'
   },
   {
     name: 'Construction Pig',
       price: 25,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/34/PIGWORK.jpg/revision/latest/scale-to-width-down/479?cb=20120217225228'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/3/34/PIGWORK.jpg',
+      description: 'The most recognized of our Angry Birds Construction Collection. This pig will bring years of joy to any Angry Birds Collector'
   },
   {
     name: 'Cowboy Hat Pig',
       price: 30,
-      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/5e/PIGBOY.jpg/revision/latest/scale-to-width-down/479?cb=20120212140417'
+      imageUrl:  'https://static.wikia.nocookie.net/angrybirds/images/5/5e/PIGBOY.jpg',
+      description: 'Angry Birds Western Collection, a must have for burgeoning plush toy collectors'
   },
   {
     name: 'Kirby',
       price: 40,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807346/original/sanei-kirby-adventure-all-star-collection-kp01-5-5_-kirby-stuffed-plush-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807346/original/sanei-kirby-adventure-all-star-collection-kp01-5-5_-kirby-stuffed-plush-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'From the land of Nintendo comes this delightful plush toy'
   },
   {
     name: 'Super Mario',
       price: 70,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807366/original/super-mario-plush-8_-mario-soft-stuffed-plush-toy-_japanese-import_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807366/original/super-mario-plush-8_-mario-soft-stuffed-plush-toy-_japanese-import_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'Relive the glory years of Nintendo with Nintendo\'s flagship super hero, Super Mario'
   },
   {
     name: 'Cheep Cheep',
       price: 100,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807364/original/-little-buddy-toys-nintendo-official-super-mario-cheep-cheep-plush-6_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807364/original/-little-buddy-toys-nintendo-official-super-mario-cheep-cheep-plush-6_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'Vintage, exclusive Cheep Cheep. One of a kind, in mint condition.'
   },
   {
     name: 'Mimikyu',
       price: 30,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807352/original/pok_mon-mimikyu-plush-stuffed-animal-toy-8_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807352/original/pok_mon-mimikyu-plush-stuffed-animal-toy-8_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'Rare, imported plush toy.  High quality material. Handcrafted.'
   },
   {
     name: 'Minecraft Happy Explorer Golden Helmet Zombie',
       price: 20,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807358/original/jinx-minecraft-happy-explorer-gold-helmet-zombie-plush-stuffed-toy-_multi-color-7_-tall_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807358/original/jinx-minecraft-happy-explorer-gold-helmet-zombie-plush-stuffed-toy-_multi-color-7_-tall_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'Special plush toy for the Minecraft lover in your family'
   },
   {
     name: 'Donkey Kong',
       price: 80,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807372/original/donkey-kong-classic-11-5_-plush-toy-nintendo-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807372/original/donkey-kong-classic-11-5_-plush-toy-nintendo-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'A cute, adorable depiction of Nintendo other flagship video game series.'
   },
   {
     name: 'Luigi',
       price: 90,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807371/original/fairzoo-super-mario-plush-luiqi-mario-soft-stuffed-plush-toy-green-20_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807371/original/fairzoo-super-mario-plush-luiqi-mario-soft-stuffed-plush-toy-green-20_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'What is Mario without Luigi. This plush toy is a fan favorite. Get yours today.'
   },
   {
     name: 'Minecraft Steve',
       price: 75,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807360/original/jinx-minecraft-steve-plush-stuffed-toy-_multi-color-12_-tall_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807360/original/jinx-minecraft-steve-plush-stuffed-toy-_multi-color-12_-tall_-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'One of the few Minecraft plush toys  in our collection but also one of the most highly sough after'
   },
   {
     name: 'MegaMan',
       price: 50,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807345/original/great-eastern-mega-man-10-7_-mega-man-plush-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807345/original/great-eastern-mega-man-10-7_-mega-man-plush-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'highly sought after MegaMan plush toy.'
   },
   {
     name: 'Square Enix 2B',
       price: 25,
-      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807351/original/square-enix-nier-automata-2b-_yorha-no-2-type-b_-mini-plush-figure-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2'
+      imageUrl:  'https://imgix.ranker.com/user_node_img/50091/1001807351/original/square-enix-nier-automata-2b-_yorha-no-2-type-b_-mini-plush-figure-photo-u1?auto=format&fit=crop&fm=pjpg&w=650&q=60&dpr=2',
+      description: 'Soft plush toy from the video game Square Enix'
   },
   {
     name: 'Chococat',
       price: 30,
-      imageUrl:  'https://i.shgcdn.com/809872f8-59fe-45e6-9f9b-826995bda869/-/format/auto/-/preview/3000x3000/-/quality/lighter/'
+      imageUrl:  'https://i.shgcdn.com/809872f8-59fe-45e6-9f9b-826995bda869/-/format/auto/-/preview/3000x3000/-/quality/lighter/',
+      description: 'A cute adorable plush toy every child should have.'
   },
   {
     name: 'Pochacco',
       price: 25,
-      imageUrl:  'https://i.shgcdn.com/7b0bcdc4-a836-44a8-8800-e2c83303ddbb/-/format/auto/-/preview/3000x3000/-/quality/lighter/'
+      imageUrl:  'https://i.shgcdn.com/7b0bcdc4-a836-44a8-8800-e2c83303ddbb/-/format/auto/-/preview/3000x3000/-/quality/lighter/',
+      description: 'a cute and adorable plush toy'
   },
   {
     name: 'Team USA Hello Kitty Gold Medalist',
       price: 100,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/275964-Zoom.1_800x.jpg?v=1626908403'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/275964-Zoom.1_800x.jpg?v=1626908403',
+      description: "Celebrate the US accomplishements in the  2021 Olympic Games in Tokyo with this rare Hello Kitty Olympic edition plush toy"
   },
   {
     name: 'Hello Kitty Pastel',
       price: 50,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/02100-Zoom.a_800x.jpg?v=1606845634'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/02100-Zoom.a_800x.jpg?v=1606845634',
+      description: 'One of our most popular selections, this Hello Kitty plush will bring years of pleasure and delight to both the young and the young at heart.'
   },
   {
     name: 'Hello Kitty Supercute Nerd',
       price: 70,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/02086-Zoom.a_800x.jpg?v=1606845627'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/02086-Zoom.a_800x.jpg?v=1606845627',
+      description: 'Absolutely cute and rare.  A member of our Hello Kitty collection.'
   },
   {
     name: 'Dear Daniel',
       price: 30,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/71464-Zoom.1_800x.jpg?v=1624403138'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/71464-Zoom.1_800x.jpg?v=1624403138',
+      description: 'A wonderful plush toy that is handcrafted and made from the finest materials'
   },
   {
     name: 'Badtz-maru Ulzzang K-pop',
       price: 25,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/85773-Zoom.a_800x.jpg?v=1606846529'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/85773-Zoom.a_800x.jpg?v=1606846529',
+      description: 'Another K-Pop plush toy.  We house some of the rarest plush toys around.'
   },
   {
     name: 'Lala Ulzzang',
       price: 80,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/85762-Zoom.a_800x.jpg?v=1606846503'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/85762-Zoom.a_800x.jpg?v=1606846503',
+      description: 'One of the newest members of our K-Pop collection.'
   },
   {
     name: 'Hello Kitty & Mimmy',
       price: 70,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/005142-Zoom.2_800x.jpg?v=1611810023'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/005142-Zoom.2_800x.jpg?v=1611810023',
+      description: 'A rarity and a must have for any Hello Kitty collectors.'
   },
   {
     name: 'Kiki Ulzzang',
       price: 75,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/85761-Zoom.a_800x.jpg?v=1606846496'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/85761-Zoom.a_800x.jpg?v=1606846496',
+      description: 'One of our K-Pop selections. Very unique and very rare.'
   },
   {
     name: 'Hello Kitty Sports',
       price: 35,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/610321-202003.Zoom.1_800x.jpg?v=1602655486'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/610321-202003.Zoom.1_800x.jpg?v=1602655486',
+      description: 'Hello Kitty is going Varsity.  This Hello Kitty makes a great addition to any plush toy collection.'
   },
   {
     name: 'Aggretsuko Calm Ball',
       price: 120,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/25355-Zoom.a_800x.jpg?v=1606845929'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/25355-Zoom.a_800x.jpg?v=1606845929',
+      description: 'One of the rarest plush toys in our collection. Use this plush as a stress reliever, It is extremely soft and has a pillowy texture.'
   },
   {
     name: 'Lala Tasty Treats',
       price: 50,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/59833-Zoom.a_800x.jpg?v=1606846124'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/0416/8083/0620/products/59833-Zoom.a_800x.jpg?v=1606846124',
+      description: 'Rare plush toy that is made with the highest quality material'
   },
   {
     name: 'Big Bird',
       price: 15,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/1291/5963/products/416382_2_1024x1024.jpg?v=1560798997'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/1291/5963/products/416382_2_1024x1024.jpg?v=1560798997',
+      description: 'Relive your Sesame Street days with Big Bird, the big yellow bird with the bright personality'
   },
   {
     name: 'Elmo',
       price: 30,
-      imageUrl:  'https://cdn.shopify.com/s/files/1/1291/5963/products/B00GSUKXJE.01-A2PJJEAW2GV0DY.MAIN._SS1000_SCRMZZZZZZZ_1024x1024.jpeg?v=1466143375'
+      imageUrl:  'https://cdn.shopify.com/s/files/1/1291/5963/products/B00GSUKXJE.01-A2PJJEAW2GV0DY.MAIN._SS1000_SCRMZZZZZZZ_1024x1024.jpeg?v=1466143375',
+      description: 'In the early 2000s Elmo took the world by storm. Get your piece of Elmomania '
   },
   {
     name: 'Minnie Mouse',
       price: 80,
-      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1234041283327?fmt=webp&qlt=90&wid=1304&hei=1304'
+      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1234041283327?fmt=webp&qlt=90&wid=1304&hei=1304',
+      description: 'Disney has done it again with this rare exclusive Minnie Mouse plush toy. She is the toy that you never knew you needed.'
   },
   {
     name: 'Mickey Mouse',
       price: 90,
-      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1234041283326?fmt=webp&qlt=90&wid=1304&hei=1304'
+      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1234041283326?fmt=webp&qlt=90&wid=1304&hei=1304',
+      description: 'From the land of Disney comes this adorable plus depiction of Mickey Mouse'
   },
   {
     name: 'Winnie the Pooh',
       price: 75,
-      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1234041283325?fmt=webp&qlt=90&wid=1304&hei=1304'
+      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1234041283325?fmt=webp&qlt=90&wid=1304&hei=1304',
+      description: 'Christopher  Robin\'s best friend. Now he can be yours as well.'
   },
   {
     name: 'Pluto',
       price: 60,
-      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1231000442139?fmt=webp&qlt=90&wid=1304&hei=1304'
+      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1231000442139?fmt=webp&qlt=90&wid=1304&hei=1304',
+      description:'Our plush variation of the Disney favorite will have your heart fluttering with joy and excitement'
   },
   {
     name: 'Sisu Dragon',
       price: 70,
-      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1231105803110?fmt=webp&qlt=90&wid=1304&hei=1304'
+      imageUrl:  'https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/1231105803110?fmt=webp&qlt=90&wid=1304&hei=1304',
+      description: 'Our newest member from  the 2021 Disney movie Raya and the last dragon'
   }
 ];
 
