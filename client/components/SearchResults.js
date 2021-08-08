@@ -15,7 +15,7 @@ class SearchResults extends React.Component {
           <h3>
             Found {this.props.filter.length}{' '}
             {this.props.filter.length === 1 ? 'product' : 'products'} that
-            matches '{this.props.match.params.query}'
+            matches or includes '{this.props.match.params.query}'
           </h3>
         ) : null}
         {this.props.filter.length ? (
