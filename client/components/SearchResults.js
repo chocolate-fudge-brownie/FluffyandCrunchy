@@ -12,13 +12,15 @@ class SearchResults extends React.Component {
       <div className="search-filter">
         <h1>Search Results:</h1>
         {this.props.filter.length ? (
+          <h3>
+            Found {this.props.filter.length}{' '}
+            {this.props.filter.length === 1 ? 'product' : 'products'} that
+            matches '{this.props.match.params.query}'
+          </h3>
+        ) : null}
+        {this.props.filter.length ? (
           this.props.filter.map((product) => (
             <>
-              <h3>
-                Found {this.props.filter.length}{' '}
-                {this.props.filter.length === 1 ? 'product' : 'products'} that
-                matches '{this.props.match.params.query}'
-              </h3>
               <div
                 key={product.id}
                 className="card"
