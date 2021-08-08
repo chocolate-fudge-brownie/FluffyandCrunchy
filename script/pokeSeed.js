@@ -8,7 +8,7 @@ class PokemonSeed {
   get queryLimit() {
     return this.QUERY_LIMIT;
   }
-  // returns 50 pokemon objects with name and url
+  // returns n pokemon objects with name and url
   async getNames() {
     try {
       const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=${this.queryLimit}`);
