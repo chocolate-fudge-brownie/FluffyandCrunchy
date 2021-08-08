@@ -20,25 +20,23 @@ class SearchResults extends React.Component {
         ) : null}
         {this.props.filter.length ? (
           this.props.filter.map((product) => (
-            <>
-              <div
-                key={product.id}
-                className="card"
-                style={{ maxWidth: '370px' }}
-              >
-                <h5 className="card-header">{product.name}</h5>
-                <div className="card-body">
-                  <img
-                    className="search-image"
-                    src={product.imageUrl}
-                    alt={product.name}
-                  />
-                  <Link to={`/products/${product.id}`}>
-                    <button className="btn btn-primary">Details</button>
-                  </Link>
-                </div>
+            <div
+              key={product.id}
+              className="card"
+              style={{ maxWidth: '370px' }}
+            >
+              <h5 className="card-header">{product.name}</h5>
+              <div className="card-body">
+                <img
+                  className="search-image"
+                  src={product.imageUrl}
+                  alt={product.name}
+                />
+                <Link to={`/products/${product.id}`}>
+                  <button className="btn btn-primary">Details</button>
+                </Link>
               </div>
-            </>
+            </div>
           ))
         ) : (
           <h2>No products match: '{this.props.match.params.query}'</h2>
