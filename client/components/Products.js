@@ -14,7 +14,7 @@ class Products extends React.Component {
   }
 
   render() {
-    const { products, addProductToCart, getCartProducts } = this.props;
+    const { userId, products, addProductToCart, getCartProducts } = this.props;
     return (
       <div className="row row-cols-1 row-cols-md-3 g-4">
         {products.map((product) => (
@@ -31,7 +31,7 @@ class Products extends React.Component {
                 <button
                   className="btn btn-success"
                   onClick={() => {
-                    addProductToCart(product.id, 1);
+                    addProductToCart(product.id, userId);
                     getCartProducts();
                   }}
                 >
@@ -49,6 +49,7 @@ class Products extends React.Component {
 // Connect Redux store's state to props
 const mapState = (state) => {
   return {
+    userId: state.auth.id,
     products: state.products,
   };
 };
@@ -58,8 +59,8 @@ const mapDispatch = (dispatch) => {
   return {
     getCartProducts: () => dispatch(getCartProducts()),
     getProducts: () => dispatch(getProducts()),
-    addProductToCart: (productId, quantity) =>
-      dispatch(addProductToCart(productId, quantity)),
+    addProductToCart: (productId, userId) =>
+      dispatch(addProductToCart(productId, userId)),
   };
 };
 

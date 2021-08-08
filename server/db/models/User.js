@@ -1,9 +1,8 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
-const jwt = require('jsonwebtoken')
+const Sequelize = require('sequelize');
+const db = require('../db');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const axios = require('axios');
-const Order = require('./Order');
+const Product = require('./Product');
 
 const SALT_ROUNDS = 5;
 
@@ -13,119 +12,167 @@ const User = db.define('user', {
     unique: true,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
+      notEmpty: true,
+    },
   },
   email: {
     type: Sequelize.STRING,
     unique: true,
+    allowNull: false,
     validate: {
-      isEmail: true
-    }
+      notEmpty: true,
+      isEmail: true,
+    },
   },
   password: {
     type: Sequelize.STRING,
-
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
   },
   admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-  }
-})
+  },
+});
 
-module.exports = User
+module.exports = User;
 
 /**
  * instanceMethods
  */
-User.prototype.correctPassword = function(candidatePwd) {
+User.prototype.correctPassword = function (candidatePwd) {
   //we need to compare the plain version to an encrypted version of the password
   return bcrypt.compare(candidatePwd, this.password);
-}
+};
 
-User.prototype.generateToken = function() {
-  return jwt.sign({id: this.id}, process.env.JWT)
-}
+User.prototype.generateToken = function () {
+  return jwt.sign({ id: this.id }, process.env.JWT);
+};
 
 User.prototype.getCart = async function () {
-  const orders = await this.getOrders();
-  const customerId = orders[0].customerId;
-  const cart = await Order.findOne({
+  const [cart] = await this.getOrders({
     where: {
-      id: customerId,
-      isPaid: false
-    }
+      isPaid: false,
+    },
+    include: Product,
   });
   return cart;
-}
-User.prototype.addProductToCart = async function (product) {
+};
+
+User.prototype.updateCart = async function (localCart) {
   const cart = await this.getCart();
-  await cart.updateCart(product);
-}
+
+  // get cart products based on local cart
+  const cartProducts = await Promise.all(
+    Object.keys(localCart).map(async (productId) => {
+      return await Product.findByPk(productId);
+    })
+  );
+
+  // reset cart products, so that products that no longer exist in local cart
+  // will also be deleted from database cart
+  await cart.setProducts(cartProducts);
+
+  // set cart products quantity & price
+  let updatedCart = await this.getCart();
+  await Promise.all(
+    Object.keys(localCart).map(async (productId) => {
+      const product = await Product.findByPk(productId);
+      await updatedCart.addProduct(product, {
+        through: {
+          quantity: localCart[productId],
+          price: product.price,
+        },
+      });
+    })
+  );
+
+  // update cart order total price
+  updatedCart = await this.getCart();
+  return await updatedCart.priceUpdate();
+};
+
+User.prototype.checkoutCart = async function () {
+  const cart = await this.getCart();
+
+  // change cart order to paid order
+  if (cart.total > 0) {
+    cart.isPaid = true;
+    await cart.save();
+
+    // create another empty unpaid order as the new cart for the user
+    await this.createOrder();
+  }
+};
+
 /**
  * classMethods
  */
 
-User.authenticate = async function({ username, password }){
-    const user = await this.findOne({ where: { username } })
-    if (!user || !(await user.correctPassword(password))) {
-      const error = Error('Incorrect username/password');
-      error.status = 401;
-      throw error;
-    }
-    return user.generateToken();
+User.authenticate = async function ({ username, password }) {
+  const user = await this.findOne({ where: { username } });
+  if (!user || !(await user.correctPassword(password))) {
+    const error = Error('Incorrect username/password');
+    error.status = 401;
+    throw error;
+  }
+  return user.generateToken();
 };
 
-User.findByToken = async function(token) {
+User.findByToken = async function (token) {
   try {
-    const {id} = await jwt.verify(token, process.env.JWT)
-    const user = User.findByPk(id)
+    const { id } = await jwt.verify(token, process.env.JWT);
+    const user = User.findByPk(id);
     if (!user) {
-      throw 'nooo'
+      throw 'nooo';
     }
-    return user
+    return user;
   } catch (ex) {
-    const error = Error('bad token')
-    error.status = 401
-    throw error
+    const error = Error('bad token');
+    error.status = 401;
+    throw error;
   }
-}
-User.peekCart = async function(user) {
+};
+
+User.peekCart = async function (user) {
   try {
-    if(!user) throw new Error('failed to pass in a user as an argument');
+    if (!user) throw new Error('failed to pass in a user as an argument');
     const cart = await user.getCart();
     cart.dataValues['products'] = await cart.getProducts();
-    return cart.dataValues;    
+    return cart.dataValues;
   } catch (err) {
     console.log(err);
   }
-}
+};
+
 /**
  * hooks
  */
-const hashPassword = async(user) => {
+
+const hashPassword = async (user) => {
   //in case the password has been changed, we want to encrypt it with bcrypt
   if (user.changed('password')) {
     user.password = await bcrypt.hash(user.password, SALT_ROUNDS);
   }
-}
+};
 
-User.beforeCreate(hashPassword)
-User.beforeUpdate(hashPassword)
-User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)))
+User.beforeCreate(hashPassword);
+User.beforeUpdate(hashPassword);
+User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
 User.afterCreate(async (user) => {
   await user.createOrder();
-})
+});
 
 /* after create hook for associating a new user with an unpaid order */
-
 
 /* peekCart documentation - class method
   - Parameters: a user instance
   - Return Value: the order object whose isPaid value is set to False. We will refer to this as the cart. Recall, there is only one cart per user, but a user can have many orders.
   - NOTICE: Inside the cart object is a products array that contains all of the products associated with the cart.
-  - Previously, I used my own updateCart() method on the Order Model to add a product to the cart.
-  - example: 
+  - Previously, I used my own priceUpdate() method on the Order Model to add a product to the cart.
+  - example:
           // creating a user creates an empty cart with 0 total and isPaid equal to false
           const user = await User.create({ username: 'Chukwudi', password: 'password', admin: false });
           const fluffs = await Product.create({ name: 'fluffs', price: 450 });
@@ -167,7 +214,7 @@ User.afterCreate(async (user) => {
   - Since all of the orders have the same customer.. we can use orders[0].customerId to get the customerId of the first order. This customer ID will allow us to look up
   - the user in the next line.
   - This next line uses customerId and attempts to find the order which is related to the user (customerId) and has an isPaid value of false.. this is the cart.
-  - example: 
+  - example:
       User.prototype.getCart = async function () {
         const orders = await this.getOrders();
         const customerId = orders[0].customerId;
