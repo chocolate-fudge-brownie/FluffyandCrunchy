@@ -2,9 +2,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import history from '../history';
 
 // Import Redux action & thunk creators
 import { logout } from '../store';
+import { getProducts } from '../store/products';
 import { clearStorage, getCartProducts } from '../store/cart';
 
 class Navbar extends React.Component {
@@ -25,7 +27,8 @@ class Navbar extends React.Component {
     this.setState({ cartHover: false });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.getProducts();
     this.props.getCartProducts();
   }
 
@@ -39,6 +42,7 @@ class Navbar extends React.Component {
         ...products.filter((product) => product.id === Number(productId)),
       ];
     }
+
     return (
       <nav
         className="navbar navbar-expand-lg navbar-light"
@@ -101,13 +105,13 @@ class Navbar extends React.Component {
               <li className="nav-item">
                 <Link to="/products">
                   <p className="nav-link">
-                    Products<i className="bi bi-bag"></i>
+                    Products <i className="bi bi-bag"></i>
                   </p>
                 </Link>
               </li>
               <li
                 className="nav-item"
-                onClick={() => (window.location.href = '/cart')}
+                onClick={() => history.push('/cart')}
                 onMouseOver={() => this.mouseOver()}
                 onMouseOut={() => this.mouseRelease()}
               >
@@ -140,13 +144,13 @@ class Navbar extends React.Component {
                         />
                         <p>
                           <strong className="cart-name">{product.name}</strong>
-                        </p>
+                        </p>{' '}
+                        <p>Price: ${product.price}</p>
+                        <p>Quantity: {cart[product.id]}</p>
                         <p>
-                          <strong>Amount: </strong> {cart[product.id]}
-                        </p>
-                        <p>
-                          <strong>Total price: </strong>$
-                          {cart[product.id] * product.price}
+                          <strong>
+                            Total: ${cart[product.id] * product.price}
+                          </strong>
                         </p>
                       </div>
                     </li>
@@ -173,6 +177,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
+    getProducts: () => dispatch(getProducts()),
     getCartProducts: () => dispatch(getCartProducts()),
     handleClick() {
       dispatch(logout());
