@@ -11,23 +11,66 @@ import {
   removeProductFromCart,
 } from '../store/cart';
 
+// Import components
+import OrderConfirmation from './OrderConfirmation';
+
 // Define component
 class CartPreview extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      checkedOut: false,
+      isLoading: true,
+    };
+    this.handleCheckout = this.handleCheckout.bind(this);
+  }
+
   async componentDidMount() {
     await this.props.getProducts();
     this.props.getCartProducts();
   }
 
-  render() {
-    const { products, cart, removeProductFromCart, checkOut } = this.props;
-
-    let cartProducts = [];
-    for (let productId in cart) {
-      cartProducts = [
-        ...cartProducts,
-        ...products.filter((product) => product.id === Number(productId)),
-      ];
+  componentDidUpdate(prevProps) {
+    if (prevProps.products !== this.props.products) {
+      this.setState({ isLoading: false });
     }
+  }
+
+  // get all products info in the cart & calculate total items & price
+  handleCart(products, cart) {
+    let cartProducts = [];
+    let totalItems = 0;
+    let totalPrice = 0;
+    for (let productId in cart) {
+      const product = products.find(
+        (product) => product.id === Number(productId)
+      );
+      cartProducts.push(product);
+      totalItems += cart[productId];
+      totalPrice += product.price * cart[productId];
+    }
+    return [cartProducts, totalItems, totalPrice];
+  }
+
+  async handleCheckout() {
+    const { userId, checkOut } = this.props;
+    await checkOut(userId);
+    this.setState({ checkedOut: true });
+  }
+
+  render() {
+    const { isLoading, checkedOut } = this.state;
+    const { userId, products, cart, removeFromCart } = this.props;
+
+    if (isLoading) return <p>Loading...</p>;
+    if (checkedOut) return <OrderConfirmation />;
+
+    const [cartProducts, totalItems, totalPrice] = this.handleCart(
+      products,
+      cart
+    );
+
+    if (totalItems === 0) return <p>Your cart is empty</p>;
 
     return (
       <>
@@ -55,7 +98,7 @@ class CartPreview extends React.Component {
                   </p>
                   <button
                     className="btn btn-warning"
-                    onClick={() => removeProductFromCart(product.id)}
+                    onClick={() => removeFromCart(product.id, userId)}
                   >
                     Remove from Cart
                   </button>
@@ -65,7 +108,9 @@ class CartPreview extends React.Component {
           </div>
         ))}
 
-        <button onClick={() => checkOut(cart)} className="btn btn-success">
+        <p>Items: {totalItems}</p>
+        <p>Total Amount: ${totalPrice}</p>
+        <button onClick={this.handleCheckout} className="btn btn-success">
           CHECKOUT
         </button>
       </>
@@ -76,6 +121,7 @@ class CartPreview extends React.Component {
 // Connect Redux store's state to props
 const mapState = (state) => {
   return {
+    userId: state.auth.id,
     products: state.products,
     cart: state.cart,
   };
@@ -84,11 +130,11 @@ const mapState = (state) => {
 // Connect Redux store's action/thunk creators to props
 const mapDispatch = (dispatch) => {
   return {
-    checkOut: (cart) => dispatch(checkOut(cart)),
     getProducts: () => dispatch(getProducts()),
     getCartProducts: () => dispatch(getCartProducts()),
-    removeProductFromCart: (productId) =>
-      dispatch(removeProductFromCart(productId)),
+    removeFromCart: (productId, userId) =>
+      dispatch(removeProductFromCart(productId, userId)),
+    checkOut: (userId) => dispatch(checkOut(userId)),
   };
 };
 
