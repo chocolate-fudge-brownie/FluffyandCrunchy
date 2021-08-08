@@ -1,10 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const {
-  models: { User, Order },
-} = require('../db');
+const router = require('express').Router();
 const { isAdmin, requireToken } = require('./gatekeepingMiddleware');
+const {
+  models: { User },
+} = require('../db');
 
+// GET /api/users
+// GET all users (admin only)
 router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -19,13 +20,17 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-router.get('/:id', requireToken, async (req, res, next) => {
+// GET /api/users/:userId
+// GET single user (admin only)
+router.get('/:userId', requireToken, isAdmin, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id, { include: Order });
+    const user = await User.findByPk(req.params.userId, {
+      attributes: ['id', 'username'],
+    });
     if (user) {
       res.json(user);
     } else {
-      res.status(404).send('User not found');
+      res.status(404).send('User Not Found');
     }
   } catch (err) {
     next(err);
