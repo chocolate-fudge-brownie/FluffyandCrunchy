@@ -31,9 +31,9 @@ class PokemonSeed {
   getImageUrl(id) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
   }
-  // returns a random price
+  // returns a random price >= 1000
   randomPrice() {
-    return Math.floor(faker.commerce.price());
+    return Math.floor(faker.commerce.price(1000));
   }
   // factory function to generate pokemon objects
   factoryPokemon(name, price, imageUrl, description) {
