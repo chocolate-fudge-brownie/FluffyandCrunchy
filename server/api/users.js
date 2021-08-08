@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require('express');
 const router = express.Router();
 const {
@@ -34,7 +33,6 @@ router.get('/:id', requireToken, async (req, res, next) => {
 });
 
 module.exports = router;
-=======
 const router = require('express').Router();
 const { isAdmin, requireToken } = require('./gatekeepingMiddleware');
 const {
@@ -75,4 +73,3 @@ router.get('/:userId', requireToken, isAdmin, async (req, res, next) => {
 });
 
 module.exports = router;
->>>>>>> main

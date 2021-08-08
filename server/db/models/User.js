@@ -1,7 +1,6 @@
-<<<<<<< HEAD
-const Sequelize = require('sequelize')
-const db = require('../db')
-const jwt = require('jsonwebtoken')
+const Sequelize = require('sequelize');
+const db = require('../db');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const axios = require('axios');
 const Order = require('./Order');
@@ -14,39 +13,38 @@ const User = db.define('user', {
     unique: true,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
+      notEmpty: true,
+    },
   },
   email: {
     type: Sequelize.STRING,
     unique: true,
     validate: {
-      isEmail: true
-    }
+      isEmail: true,
+    },
   },
   password: {
     type: Sequelize.STRING,
-
   },
   admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-  }
-})
+  },
+});
 
-module.exports = User
+module.exports = User;
 
 /**
  * instanceMethods
  */
-User.prototype.correctPassword = function(candidatePwd) {
+User.prototype.correctPassword = function (candidatePwd) {
   //we need to compare the plain version to an encrypted version of the password
   return bcrypt.compare(candidatePwd, this.password);
-}
+};
 
-User.prototype.generateToken = function() {
-  return jwt.sign({id: this.id}, process.env.JWT)
-}
+User.prototype.generateToken = function () {
+  return jwt.sign({ id: this.id }, process.env.JWT);
+};
 
 User.prototype.getCart = async function () {
   const orders = await this.getOrders();
@@ -54,72 +52,71 @@ User.prototype.getCart = async function () {
   const cart = await Order.findOne({
     where: {
       id: customerId,
-      isPaid: false
-    }
+      isPaid: false,
+    },
   });
   return cart;
-}
+};
 User.prototype.addProductToCart = async function (product) {
   const cart = await this.getCart();
   await cart.priceUpdate(product);
-}
+};
 /**
  * classMethods
  */
 
-User.authenticate = async function({ username, password }){
-    const user = await this.findOne({ where: { username } })
-    if (!user || !(await user.correctPassword(password))) {
-      const error = Error('Incorrect username/password');
-      error.status = 401;
-      throw error;
-    }
-    return user.generateToken();
+User.authenticate = async function ({ username, password }) {
+  const user = await this.findOne({ where: { username } });
+  if (!user || !(await user.correctPassword(password))) {
+    const error = Error('Incorrect username/password');
+    error.status = 401;
+    throw error;
+  }
+  return user.generateToken();
 };
 
-User.findByToken = async function(token) {
+User.findByToken = async function (token) {
   try {
-    const {id} = await jwt.verify(token, process.env.JWT)
-    const user = User.findByPk(id)
+    const { id } = await jwt.verify(token, process.env.JWT);
+    const user = User.findByPk(id);
     if (!user) {
-      throw 'nooo'
+      throw 'nooo';
     }
-    return user
+    return user;
   } catch (ex) {
-    const error = Error('bad token')
-    error.status = 401
-    throw error
+    const error = Error('bad token');
+    error.status = 401;
+    throw error;
   }
-}
-User.peekCart = async function(user) {
+};
+User.peekCart = async function (user) {
   try {
-    if(!user) throw new Error('failed to pass in a user as an argument');
+    if (!user) throw new Error('failed to pass in a user as an argument');
     const cart = await user.getCart();
     cart.dataValues['products'] = await cart.getProducts();
-    return cart.dataValues;    
+    return cart.dataValues;
   } catch (err) {
     console.log(err);
   }
-}
+};
 /**
  * hooks
  */
-const hashPassword = async(user) => {
+const hashPassword = async (user) => {
   //in case the password has been changed, we want to encrypt it with bcrypt
   if (user.changed('password')) {
     user.password = await bcrypt.hash(user.password, SALT_ROUNDS);
   }
-}
+};
 
-User.beforeCreate(hashPassword)
-User.beforeUpdate(hashPassword)
-User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)))
+User.beforeCreate(hashPassword);
+User.beforeUpdate(hashPassword);
+User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
 User.afterCreate(async (user) => {
   await user.createOrder();
-})
+});
 
 /* after create hook for associating a new user with an unpaid order */
-
 
 /* peekCart documentation - class method
   - Parameters: a user instance
@@ -215,7 +212,6 @@ User.afterCreate(async (user) => {
  - Note, getCart() is still returning an order. This means we can call the priceUpdate() instance method to update the total.
  - Take a look at the priceUpdate instance method on the Order model. This method returns the order object and the new price.
 */
-=======
 const Sequelize = require('sequelize');
 const db = require('../db');
 const jwt = require('jsonwebtoken');
@@ -479,4 +475,3 @@ User.afterCreate(async (user) => {
  - Note, getCart() is still returning an order. This means we can call the priceUpdate() instance method to update the total.
  - Take a look at the priceUpdate instance method on the Order model. This method returns the order object and the new price.
 */
->>>>>>> main
