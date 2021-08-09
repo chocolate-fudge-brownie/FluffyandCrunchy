@@ -126,3 +126,7 @@ body {
   width: 100%;
   justify-content: space-evenly;
 }
+
+#homepage {
+  text-align: center;
+}
