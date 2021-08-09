@@ -43,6 +43,19 @@ img {
   height: 110px;
 }
 
+.cart-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#main-header {
+  color: #fffbdb;
+  font-weight: 1000;
+  font-size: 40px;
+  font-family: 'Just Another Hand', cursive;
+}
+
 #navbarNavDropdown {
   justify-content: flex-end;
 }
@@ -76,6 +89,10 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.navbar a {
+  text-decoration: none;
 }
 
 .navbar {

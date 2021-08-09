@@ -73,7 +73,7 @@ class CartPreview extends React.Component {
     );
 
     return (
-      <>
+      <div className="cart-details">
         <h1>Cart</h1>
         {totalItems === 0 ? (
           <div>
@@ -143,7 +143,7 @@ class CartPreview extends React.Component {
             </button>
           </div>
         )}
-      </>
+      </div>
     );
   }
 }
