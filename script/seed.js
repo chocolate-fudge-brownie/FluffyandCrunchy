@@ -6,6 +6,8 @@ const {
 } = require("../server/db");
 const Order = require("../server/db/models/Order");
 const PokemonSeed = require("./pokeSeed");
+const OrderSeed = require("./orderSeed");
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -555,96 +557,47 @@ async function seed() {
   await pokeSeed.generatePokemonProducts(products);
   // --------------------------------------- pokeSeed --------------------------------------- //
 
-
-  // Creating Paid Orders For Users
-  // NOTE: if maxProductsLength is greater than products.length we will get an infinite loop as we will never reach the case where the set.size(),
-  // which is AT MOST equal to products.length, is equal maxProductsLength which is necessary for the loop to break
-  // We use a set to avoid duplicate inputs, yet to be honest, we could've used an array since we are checking for uniqueness before appending anyways
-  const generateLocalCart = (maxProductsLength) => {
-    const set = new Set();
-    const localCart = {};
-    if (maxProductsLength > products.length) {
-      return new Error(
-        `input size for generateLocalCart must be less than or equal to the amount of products seeded. Amount of products seeded => ${products.length}`
-      );
-    }
-    while (set.size < maxProductsLength) {
-      const randomId = Math.ceil(Math.random() * products.length);
-      if(!set.has(randomId)) {
-        set.add(randomId);
-        localCart[randomId] = Math.ceil(Math.random() * 10);
-      } 
-    }
-    return localCart;
-  }
-
-  // .updateCart() and .checkoutCart()
-  const handleLocalCart = async (user, localCart) => {
-    try {
-      await user.updateCart(localCart);
-      await user.checkoutCart();      
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  
-  // creates 5 orders of length 5 on every user
-  const seedOrdersToUsers = async () =>  {
-    await Promise.all(users.map(async (user) => {
-      const randomLength = 5;
-      for(let i = 0; i < randomLength; i++) {
-        const localCart = generateLocalCart(randomLength);
-        await handleLocalCart(user, localCart);
-      }
-    }));
-  }
-
-  // adds some products in cart for users
-  const seedProductsInCartForUsers = async () => {
-    await Promise.all(users.map(async (user) => {
-      const randomLength = 5;
-      const localCart =  generateLocalCart(randomLength);
-      await user.updateCart(localCart);
-    }))
-  }
-  await seedOrdersToUsers();
-  await seedProductsInCartForUsers();
+  // --------------------------------------- orderSeed --------------------------------------- //
+  const orderSeed = new OrderSeed(users, products);
+  await orderSeed.seedOrdersToUsers();
+  await orderSeed.seedProductsInCartForUsers();
+  // --------------------------------------- orderSeed --------------------------------------- //
 
   // Defining Orders
-  const orderArray = [
-    {
-      total: 500,
-    },
-    {
-      total: 200,
-    },
-    {
-      total: 300,
-      isPaid: true,
-    },
-    {
-      total: 1000,
-    },
-    {
-      total: 150,
-      isPaid: true,
-    },
-  ];
-  const [product1, product2] = products;
+  // const orderArray = [
+  //   {
+  //     total: 500,
+  //   },
+  //   {
+  //     total: 200,
+  //   },
+  //   {
+  //     total: 300,
+  //     isPaid: true,
+  //   },
+  //   {
+  //     total: 1000,
+  //   },
+  //   {
+  //     total: 150,
+  //     isPaid: true,
+  //   },
+  // ];
+  // const [product1, product2] = products;
 
-  const orders = await Promise.all(
-    orderArray.map((order) => Order.create(order))
-  );
-  const [order1, order2] = orders;
+  // const orders = await Promise.all(
+  //   orderArray.map((order) => Order.create(order))
+  // );
+  // const [order1, order2] = orders;
 
-  await order1.addProduct(product1);
-  await order2.addProduct(product2);
-  await order1.visitorCheckout(generateLocalCart(3));
-  await order2.visitorCheckout(generateLocalCart(2));
+  // await order1.addProduct(product1);
+  // await order2.addProduct(product2);
+  // await order1.visitorCheckout(generateLocalCart(3));
+  // await order2.visitorCheckout(generateLocalCart(2));
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
-  console.log(`seeded ${orders.length} orders`);
+  // console.log(`seeded ${orders.length} orders`);
   console.log(`seeded successfully`);
   return {
     users: {
