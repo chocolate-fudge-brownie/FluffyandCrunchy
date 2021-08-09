@@ -32,10 +32,7 @@ describe('Testing Model Associations', () => {
         const tallOrder = await Order.create();
         const bear = await Product.create({ name: 'blanched almond bear', price: 54 });
         const nobear = await Product.create({ name: 'almond bear', price: 6, description: 'it\'s not a blanched almond colored bear' });
-        await tallOrder.priceUpdate(bear);
-        /* const info = await tallOrder.priceUpdate(nobear);
-           console.log(info.order, '\n', info.price); */
-        // => ensuring that update can accurately update the total and update tallOrder at the same time <=
+        await tallOrder.updateCart(bear);
         expect(tallOrder.total).to.equal(60);
         const products = await tallOrder.getProducts();
         expect(products.map(product => product.name)).to.deep.equal(['blanched almond bear', 'almond bear']);
@@ -44,8 +41,8 @@ describe('Testing Model Associations', () => {
         const smallOrder = await Order.create();
         const alsoSmallOrder = await Order.create();
         const dragon = await Product.create({ name: 'elvarg', price: 83 });
-        await smallOrder.priceUpdate(dragon);
-        await alsoSmallOrder.priceUpdate(dragon);
+        await smallOrder.updateCart(dragon);
+        await alsoSmallOrder.updateCart(dragon);
         const allOrdersOfDragons = await dragon.getOrders();
         expect(allOrdersOfDragons.map(order => order.total)).to.deep.equal([83, 83]);
 
