@@ -13,13 +13,37 @@ import SearchResults from './components/SearchResults';
 
 // Import Redux functions
 import { me } from './store';
+import { mergeCart } from './store/cart';
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData();
+  constructor() {
+    super();
+    this.state = {
+      loggedInBefore: !!window.localStorage.getItem('token'),
+    };
+  }
+
+  async componentDidMount() {
+    await this.props.loadInitialData();
+    this.props.mergeCart(this.props.userId, false);
+  }
+
+  componentDidUpdate(prevProps) {
+    // merge cart when user log in first time
+    console.log(this.state.loggedInBefore);
+    console.log('prevPops', prevProps.isLoggedIn);
+    console.log('currentProps', this.props.isLoggedIn);
+
+    if (
+      !this.state.loggedInBefore &&
+      !prevProps.isLoggedIn &&
+      this.props.isLoggedIn
+    ) {
+      this.props.mergeCart(this.props.userId, false);
+    }
   }
 
   render() {
@@ -69,14 +93,14 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    userId: state.auth.id,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData() {
-      dispatch(me());
-    },
+    loadInitialData: () => dispatch(me()),
+    mergeCart: (userId) => dispatch(mergeCart(userId)),
   };
 };
 

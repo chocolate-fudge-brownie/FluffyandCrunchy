@@ -50,28 +50,36 @@ export const getCartProducts = () => async (dispatch) => {
   }
 };
 
-// Merge carts from local storage & database when user log in
-export const mergeCart = (userId) => async (dispatch) => {
+// Get cart from database when user log in & merge with local cart
+export const mergeCart = (userId, loggedInBefore) => async (dispatch) => {
   try {
+    let mergedCart = {};
     let cart = JSON.parse(window.localStorage.getItem('cart'));
     if (!cart) cart = {};
     const token = window.localStorage.getItem('token');
-    const { data: dbCart } = await axios.get(`/api/orders/cart/${userId}`, {
-      headers: {
-        authorization: token,
-      },
-    });
 
-    // dbCart is an order object {orderid, total, products:[{product}...]}
-    // so we have to transfer it to {[productId]: quantity}
-    // and merge with local cart
-    let mergedCart = { ...cart };
-    dbCart.products.forEach((product) => {
-      const id = product.id;
-      const qty = product.OrderLine.quantity;
-      if (mergedCart[id]) mergedCart[id] += qty;
-      else mergedCart[id] = qty;
-    });
+    // get cart from database if user is logged in
+    if (token) {
+      const { data: dbCart } = await axios.get(`/api/orders/cart/${userId}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+
+      // dbCart is an order object {orderid, total, products:[{product}...]}
+      // so we have to transfer it to {[productId]: quantity}
+      dbCart.products.forEach((product) => {
+        mergedCart[product.id] = product.OrderLine.quantity;
+      });
+
+      // merge cart only if user has not logged in before
+      if (!loggedInBefore) {
+        for (let [id, qty] in cart) {
+          if (mergedCart[id]) mergedCart[id] += qty;
+          else mergedCart[id] = qty;
+        }
+      }
+    }
 
     // save merged cart in both local & database
     window.localStorage.setItem('cart', JSON.stringify(mergedCart));
@@ -80,6 +88,7 @@ export const mergeCart = (userId) => async (dispatch) => {
         authorization: token,
       },
     });
+
     dispatch(_getCartProducts(mergedCart));
   } catch (err) {
     console.log(err);
