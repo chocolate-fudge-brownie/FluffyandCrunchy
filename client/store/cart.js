@@ -122,9 +122,10 @@ export const removeProductFromCart =
   (productId, userId) => async (dispatch) => {
     try {
       let cart = JSON.parse(window.localStorage.getItem('cart'));
-      if (cart) {
+      if (cart && cart[productId]) {
         cart[productId] = Math.max(cart[productId] - 1, 0);
 
+        console.log(cart[productId]);
         if (cart[productId] <= 0) {
           delete cart[productId];
         }

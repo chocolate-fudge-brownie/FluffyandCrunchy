@@ -8,6 +8,7 @@ import { getProducts } from '../store/products';
 import {
   checkOut,
   getCartProducts,
+  addProductToCart,
   removeProductFromCart,
 } from '../store/cart';
 
@@ -60,7 +61,8 @@ class CartPreview extends React.Component {
 
   render() {
     const { isLoading, checkedOut } = this.state;
-    const { userId, products, cart, removeFromCart } = this.props;
+    const { userId, products, cart, addProductToCart, removeFromCart } =
+      this.props;
 
     if (isLoading) return <p>Loading...</p>;
     if (checkedOut) return <OrderConfirmation />;
@@ -76,7 +78,9 @@ class CartPreview extends React.Component {
         {totalItems === 0 ? (
           <div>
             <p>Your cart is empty</p>
-            <button>See More Products</button>
+            <Link to="/products">
+              <button className="btn btn-primary">See More Products</button>
+            </Link>
           </div>
         ) : (
           <div>
@@ -106,12 +110,27 @@ class CartPreview extends React.Component {
                           Quantity: {cart[product.id]}
                         </small>
                       </p>
-                      <button
-                        className="btn btn-warning"
-                        onClick={() => removeFromCart(product.id, userId)}
-                      >
-                        Remove from Cart
-                      </button>
+                      <div className="plus-minus-buttons">
+                        <button
+                          className="btn btn-success"
+                          onClick={() => {
+                            removeFromCart(product.id, userId);
+                            getCartProducts();
+                          }}
+                        >
+                          -
+                        </button>
+                        <p>{cart[product.id] || 0}</p>
+                        <button
+                          className="btn btn-success"
+                          onClick={() => {
+                            addProductToCart(product.id, userId);
+                            getCartProducts();
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -143,6 +162,8 @@ const mapDispatch = (dispatch) => {
   return {
     getProducts: () => dispatch(getProducts()),
     getCartProducts: () => dispatch(getCartProducts()),
+    addProductToCart: (productId, userId) =>
+      dispatch(addProductToCart(productId, userId)),
     removeFromCart: (productId, userId) =>
       dispatch(removeProductFromCart(productId, userId)),
     checkOut: (userId) => dispatch(checkOut(userId)),
