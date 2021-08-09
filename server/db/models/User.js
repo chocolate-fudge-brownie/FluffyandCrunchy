@@ -178,8 +178,8 @@ User.afterCreate(async (user) => {
           const fluffs = await Product.create({ name: 'fluffs', price: 450 });
           const crunchies = await Product.create({ name: 'crunchies', price: 200 });
           let cart = await user.getCart();
-          await cart.priceUpdate(fluffs);
-          await cart.priceUpdate(crunchies);
+          await cart.updateCart(fluffs);
+          await cart.updateCart(crunchies);
           cart = await User.peekCart(user);
 [#1]      console.log(cart);
   - You can also destructure the products out of the return object from peekCart()
@@ -258,6 +258,6 @@ User.afterCreate(async (user) => {
 
  - Note the fact that user.getCart() is essentially the same as user.getOrders() magic method
  - The only difference is now we are returning a singular cart and not an array of orders.
- - Note, getCart() is still returning an order. This means we can call the priceUpdate() instance method to update the total.
- - Take a look at the priceUpdate instance method on the Order model. This method returns the order object and the new price.
+ - Note, getCart() is still returning an order. This means we can call the updateCart() instance method to update the total.
+ - Take a look at the updateCart instance method on the Order model. This method returns the order object and the new price.
 */
