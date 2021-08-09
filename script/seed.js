@@ -598,7 +598,7 @@ async function seed() {
     },
   ];
 
-  const products = await Promise.all([
+  const products1 = await Promise.all([
     Product.create({
       name: 'teddy bear',
       price: 20,
@@ -651,7 +651,7 @@ async function seed() {
   const products = products1.concat(products2);
 
   // --------------------------------------- pokeSeed --------------------------------------- //
-  const pokeSeed = new PokemonSeed(1);
+  const pokeSeed = new PokemonSeed(20);
   await pokeSeed.generatePokemonProducts(products);
   // --------------------------------------- pokeSeed --------------------------------------- //
 
