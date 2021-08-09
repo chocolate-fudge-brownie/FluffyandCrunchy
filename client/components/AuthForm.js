@@ -20,6 +20,7 @@ const AuthForm = (props) => {
             type="text"
             id="username"
             className="form-control"
+            placeholder="teddybear"
             required
           />
         </div>
@@ -33,6 +34,7 @@ const AuthForm = (props) => {
               type="text"
               id="email"
               className="form-control"
+              placeholder="teddybear@gmail.com"
               required
             />
           </div>
