@@ -122,3 +122,28 @@ body {
   background-image: url('https://www.transparenttextures.com/patterns/fabric-plaid.png');
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
+
+#order-confirmation {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: auto;
+}
+
+#order-confirmation > img {
+  width: 350px;
+  height: 350px;
+}
+
+#order-confirmation-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+#homepage {
+  text-align: center;
+}
