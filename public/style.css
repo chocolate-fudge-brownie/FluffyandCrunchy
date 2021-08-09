@@ -7,6 +7,18 @@ img {
   font-size: 25px;
 }
 
+.plus-minus-buttons {
+  display: flex;
+  width: 100px;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.plus-minus-buttons > p {
+  margin: auto;
+}
+
 .alert {
   margin-top: 10px;
 }

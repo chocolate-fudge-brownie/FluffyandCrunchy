@@ -20,6 +20,7 @@ const AuthForm = (props) => {
             type="text"
             id="username"
             className="form-control"
+            required
           />
         </div>
         {name === 'signup' ? (
@@ -32,6 +33,7 @@ const AuthForm = (props) => {
               type="text"
               id="email"
               className="form-control"
+              required
             />
           </div>
         ) : null}
@@ -44,6 +46,7 @@ const AuthForm = (props) => {
             type="password"
             id="password"
             className="form-control"
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">

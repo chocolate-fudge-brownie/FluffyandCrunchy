@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
 import { getProduct } from '../store/singleProduct';
-import { addProductToCart } from '../store/cart';
+import {
+  getCartProducts,
+  addProductToCart,
+  removeProductFromCart,
+} from '../store/cart';
 
 // Define component
 class SingleProduct extends React.Component {
@@ -13,7 +17,8 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    const { product, addProductToCart } = this.props;
+    const { userId, product, cart, addProductToCart, removeFromCart } =
+      this.props;
 
     if (product.id !== Number(this.props.match.params.id))
       return <div>Loading...</div>;
@@ -33,16 +38,29 @@ class SingleProduct extends React.Component {
               <h5 className="card-title">{product.name}</h5>
               <p className="card-text">{product.description}</p>
               <p className="card-text">
-                <small className="text-muted">
-                  Product Price: ${product.price}
-                </small>
+                <small className="text-muted">Price: ${product.price}</small>
               </p>
-              <button
-                className="btn btn-success"
-                onClick={() => addProductToCart(product.id, 1)}
-              >
-                Add to Cart
-              </button>
+              <div className="plus-minus-buttons">
+                <button
+                  className="btn btn-success"
+                  onClick={() => {
+                    removeFromCart(product.id, userId);
+                    getCartProducts();
+                  }}
+                >
+                  -
+                </button>
+                <p>{cart[product.id] || 0}</p>
+                <button
+                  className="btn btn-success"
+                  onClick={() => {
+                    addProductToCart(product.id, userId);
+                    getCartProducts();
+                  }}
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -54,7 +72,9 @@ class SingleProduct extends React.Component {
 // Connect Redux store's state to props
 const mapState = (state) => {
   return {
+    userId: state.auth.id,
     product: state.singleProduct,
+    cart: state.cart,
   };
 };
 
@@ -62,8 +82,11 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProduct: (productId) => dispatch(getProduct(productId)),
-    addProductToCart: (productId, quantity) =>
-      dispatch(addProductToCart(productId, quantity)),
+    getCartProducts: () => dispatch(getCartProducts()),
+    removeFromCart: (productId, userId) =>
+      dispatch(removeProductFromCart(productId, userId)),
+    addProductToCart: (productId, userId) =>
+      dispatch(addProductToCart(productId, userId)),
   };
 };
 
