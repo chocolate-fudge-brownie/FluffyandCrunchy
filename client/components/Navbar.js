@@ -8,15 +8,27 @@ import history from '../history';
 import { logout } from '../store';
 import { getProducts } from '../store/products';
 import { clearStorage, getCartProducts } from '../store/cart';
+import { searchProducts } from '../store/search';
 
 class Navbar extends React.Component {
   constructor() {
     super();
     this.state = {
       cartHover: false,
+      value: '',
     };
     this.mouseOver = this.mouseOver.bind(this);
     this.mouseRelease = this.mouseRelease.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit() {
+    this.setState({ value: '' });
   }
 
   mouseOver() {
@@ -157,6 +169,29 @@ class Navbar extends React.Component {
                   ))}
                 </ul>
               </li>
+              <li className="nav-item">
+                <form id="search-form">
+                  <input
+                    className="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                  />
+                  <Link to={`/products/search/${this.state.value}`}>
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={() => {
+                        this.props.searchProducts(this.state.value);
+                        this.handleSubmit();
+                      }}
+                    >
+                      Search
+                    </button>
+                  </Link>
+                </form>
+              </li>
             </ul>
           </div>
         </div>
@@ -178,6 +213,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProducts: () => dispatch(getProducts()),
+    searchProducts: (query) => dispatch(searchProducts(query)),
     getCartProducts: () => dispatch(getCartProducts()),
     handleClick() {
       dispatch(logout());

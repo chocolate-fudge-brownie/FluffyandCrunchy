@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import CartDetails from './components/CartDetails';
+import SearchResults from './components/SearchResults';
 
 // Import Redux functions
 import { me } from './store';
@@ -30,6 +31,11 @@ class Routes extends Component {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/products" exact component={Products} />
+            <Route
+              path="/products/search/:query"
+              exact
+              component={SearchResults}
+            />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/cart" component={CartDetails} />
             <Redirect to="/home" />
@@ -38,6 +44,11 @@ class Routes extends Component {
           <Switch>
             <Route path="/" exact component={Products} />
             <Route path="/products" exact component={Products} />
+            <Route
+              path="/products/search/:query"
+              exact
+              component={SearchResults}
+            />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/cart" component={CartDetails} />
             <Route path="/login" component={Login} />
