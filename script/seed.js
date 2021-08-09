@@ -6,6 +6,8 @@ const {
   models: { User, Product },
 } = require('../server/db');
 const Order = require('../server/db/models/Order');
+const PokemonSeed = require("./pokeSeed");
+const OrderSeed = require("./orderSeed");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -562,6 +564,20 @@ async function seed() {
 ]);
 
 const products2 = await Promise.all(prodArray.map(product => Product.create(product)));
+  
+   // Makes sure products.length is accurate
+  const products = products1.concat(products2);
+
+  // --------------------------------------- pokeSeed --------------------------------------- //
+  const pokeSeed = new PokemonSeed(1);
+  await pokeSeed.generatePokemonProducts(products);
+  // --------------------------------------- pokeSeed --------------------------------------- //
+
+  // --------------------------------------- orderSeed --------------------------------------- //
+  const orderSeed = new OrderSeed(users, products);
+  await orderSeed.seedOrdersToUsers();
+  await orderSeed.seedProductsInCartForUsers();
+  // --------------------------------------- orderSeed -- 
 //Creating Orders
 const orderArray = [
   {

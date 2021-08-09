@@ -16,6 +16,7 @@ const Order = db.define('order', {
   },
 });
 
+
 // Update order total price
 Order.prototype.priceUpdate = async function () {
   let sum = 0;
