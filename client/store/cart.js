@@ -50,15 +50,17 @@ export const getCartProducts = () => async (dispatch) => {
   }
 };
 
-// Get cart from database when user log in & merge with local cart
+// Get cart & merge with local cart when user log in
 export const mergeCart = (userId, loggedInBefore) => async (dispatch) => {
   try {
     let mergedCart = {};
+
+    // get local cart in format of {[productId]: quantity}
     let cart = JSON.parse(window.localStorage.getItem('cart'));
     if (!cart) cart = {};
-    const token = window.localStorage.getItem('token');
 
     // get cart from database if user is logged in
+    const token = window.localStorage.getItem('token');
     if (token) {
       const { data: dbCart } = await axios.get(`/api/orders/cart/${userId}`, {
         headers: {
@@ -74,20 +76,23 @@ export const mergeCart = (userId, loggedInBefore) => async (dispatch) => {
 
       // merge cart only if user has not logged in before
       if (!loggedInBefore) {
-        for (let [id, qty] in cart) {
-          if (mergedCart[id]) mergedCart[id] += qty;
-          else mergedCart[id] = qty;
+        for (let id in cart) {
+          if (mergedCart[id]) mergedCart[id] += cart[id];
+          else mergedCart[id] = cart[id];
         }
       }
-    }
 
-    // save merged cart in both local & database
-    window.localStorage.setItem('cart', JSON.stringify(mergedCart));
-    await axios.put(`/api/orders/cart/${userId}`, mergedCart, {
-      headers: {
-        authorization: token,
-      },
-    });
+      // save merged cart in both local & database
+      window.localStorage.setItem('cart', JSON.stringify(mergedCart));
+      await axios.put(`/api/orders/cart/${userId}`, mergedCart, {
+        headers: {
+          authorization: token,
+        },
+      });
+    } else {
+      // set local cart as merged cart if user is not logged in
+      mergedCart = cart;
+    }
 
     dispatch(_getCartProducts(mergedCart));
   } catch (err) {
@@ -134,7 +139,6 @@ export const removeProductFromCart =
       if (cart && cart[productId]) {
         cart[productId] = Math.max(cart[productId] - 1, 0);
 
-        console.log(cart[productId]);
         if (cart[productId] <= 0) {
           delete cart[productId];
         }

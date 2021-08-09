@@ -28,21 +28,24 @@ class Routes extends Component {
 
   async componentDidMount() {
     await this.props.loadInitialData();
-    this.props.mergeCart(this.props.userId, false);
   }
 
   componentDidUpdate(prevProps) {
-    // merge cart when user log in first time
-    console.log(this.state.loggedInBefore);
-    console.log('prevPops', prevProps.isLoggedIn);
-    console.log('currentProps', this.props.isLoggedIn);
-
     if (
       !this.state.loggedInBefore &&
       !prevProps.isLoggedIn &&
       this.props.isLoggedIn
     ) {
+      // merge local & db cart if user log in first time
       this.props.mergeCart(this.props.userId, false);
+    } else if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+      // get cart from db only if user logged in before
+      this.props.mergeCart(this.props.userId, true);
+    }
+
+    if (prevProps.isLoggedIn && !this.props.isLoggedIn) {
+      // reset loggedInBefore status when user log out
+      this.setState({ loggedInBefore: false });
     }
   }
 
@@ -100,7 +103,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData: () => dispatch(me()),
-    mergeCart: (userId) => dispatch(mergeCart(userId)),
+    mergeCart: (userId, loggedInBefore) =>
+      dispatch(mergeCart(userId, loggedInBefore)),
   };
 };
 
