@@ -2,19 +2,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import history from '../history';
 
 // Import Redux action & thunk creators
 import { logout } from '../store';
+import { getProducts } from '../store/products';
 import { clearStorage, getCartProducts } from '../store/cart';
+import { searchProducts } from '../store/search';
 
 class Navbar extends React.Component {
   constructor() {
     super();
     this.state = {
       cartHover: false,
+      value: '',
     };
     this.mouseOver = this.mouseOver.bind(this);
     this.mouseRelease = this.mouseRelease.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit() {
+    this.setState({ value: '' });
   }
 
   mouseOver() {
@@ -25,7 +39,8 @@ class Navbar extends React.Component {
     this.setState({ cartHover: false });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.getProducts();
     this.props.getCartProducts();
   }
 
@@ -39,6 +54,7 @@ class Navbar extends React.Component {
         ...products.filter((product) => product.id === Number(productId)),
       ];
     }
+
     return (
       <nav
         className="navbar navbar-expand-lg navbar-light"
@@ -101,13 +117,13 @@ class Navbar extends React.Component {
               <li className="nav-item">
                 <Link to="/products">
                   <p className="nav-link">
-                    Products<i className="bi bi-bag"></i>
+                    Products <i className="bi bi-bag"></i>
                   </p>
                 </Link>
               </li>
               <li
                 className="nav-item"
-                onClick={() => (window.location.href = '/cart')}
+                onClick={() => history.push('/cart')}
                 onMouseOver={() => this.mouseOver()}
                 onMouseOut={() => this.mouseRelease()}
               >
@@ -140,18 +156,41 @@ class Navbar extends React.Component {
                         />
                         <p>
                           <strong className="cart-name">{product.name}</strong>
-                        </p>
+                        </p>{' '}
+                        <p>Price: ${product.price}</p>
+                        <p>Quantity: {cart[product.id]}</p>
                         <p>
-                          <strong>Amount: </strong> {cart[product.id]}
-                        </p>
-                        <p>
-                          <strong>Total price: </strong>$
-                          {cart[product.id] * product.price}
+                          <strong>
+                            Total: ${cart[product.id] * product.price}
+                          </strong>
                         </p>
                       </div>
                     </li>
                   ))}
                 </ul>
+              </li>
+              <li className="nav-item">
+                <form id="search-form">
+                  <input
+                    className="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                  />
+                  <Link to={`/products/search/${this.state.value}`}>
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={() => {
+                        this.props.searchProducts(this.state.value);
+                        this.handleSubmit();
+                      }}
+                    >
+                      Search
+                    </button>
+                  </Link>
+                </form>
               </li>
             </ul>
           </div>
@@ -173,6 +212,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
+    getProducts: () => dispatch(getProducts()),
+    searchProducts: (query) => dispatch(searchProducts(query)),
     getCartProducts: () => dispatch(getCartProducts()),
     handleClick() {
       dispatch(logout());

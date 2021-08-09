@@ -7,6 +7,27 @@ img {
   font-size: 25px;
 }
 
+.plus-minus-buttons {
+  display: flex;
+  width: 100px;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.plus-minus-buttons > p {
+  margin: auto;
+}
+
+.alert {
+  margin-top: 10px;
+}
+
+.search-image {
+  width: 70px;
+  height: 70px;
+}
+
 .container-fluid > a {
   text-decoration: none;
 }
@@ -20,6 +41,19 @@ img {
   float: right;
   width: 110px;
   height: 110px;
+}
+
+.cart-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#main-header {
+  color: #fffbdb;
+  font-weight: 1000;
+  font-size: 40px;
+  font-family: 'Just Another Hand', cursive;
 }
 
 #navbarNavDropdown {
@@ -42,9 +76,23 @@ img {
   align-items: center;
 }
 
+#search-form {
+  display: flex;
+}
+
 #single-card-component {
   margin-left: auto;
   margin-right: auto;
+}
+
+.search-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar a {
+  text-decoration: none;
 }
 
 .navbar {

@@ -8,6 +8,7 @@ import { getProducts } from '../store/products';
 import {
   checkOut,
   getCartProducts,
+  addProductToCart,
   removeProductFromCart,
 } from '../store/cart';
 
@@ -60,7 +61,8 @@ class CartPreview extends React.Component {
 
   render() {
     const { isLoading, checkedOut } = this.state;
-    const { userId, products, cart, removeFromCart } = this.props;
+    const { userId, products, cart, addProductToCart, removeFromCart } =
+      this.props;
 
     if (isLoading) return <p>Loading...</p>;
     if (checkedOut) return <OrderConfirmation />;
@@ -70,50 +72,78 @@ class CartPreview extends React.Component {
       cart
     );
 
-    if (totalItems === 0) return <p>Your cart is empty</p>;
-
     return (
-      <>
-        {cartProducts.map((product) => (
-          <div
-            key={product.id}
-            className="card mb-3"
-            style={{ maxWidth: '540px' }}
-          >
-            <div className="row g-0">
-              <div className="col-md-4">
-                <img
-                  src={product.imageUrl}
-                  className="img-fluid rounded-start"
-                />
-              </div>
-              <div className="col-md-8">
-                <div className="card-body">
-                  <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text">Price ${product.price}</p>
-                  <p className="card-text">
-                    <small className="text-muted">
-                      Quantity: {cart[product.id]}
-                    </small>
-                  </p>
-                  <button
-                    className="btn btn-warning"
-                    onClick={() => removeFromCart(product.id, userId)}
-                  >
-                    Remove from Cart
-                  </button>
+      <div className="cart-details">
+        <h1>Cart</h1>
+        {totalItems === 0 ? (
+          <div>
+            <p>Your cart is empty</p>
+            <Link to="/products">
+              <button className="btn btn-primary">See More Products</button>
+            </Link>
+          </div>
+        ) : (
+          <div>
+            {cartProducts.map((product) => (
+              <div
+                key={product.id}
+                className="card mb-3"
+                style={{ maxWidth: '540px' }}
+              >
+                <div className="row g-0">
+                  <div className="col-md-4">
+                    <Link to={`/products/${product.id}`}>
+                      <img
+                        src={product.imageUrl}
+                        className="img-fluid rounded-start"
+                      />
+                    </Link>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <Link to={`/products/${product.id}`}>
+                        <h5 className="card-title">{product.name}</h5>
+                      </Link>
+                      <p className="card-text">Price: ${product.price}</p>
+                      <p className="card-text">
+                        <small className="text-muted">
+                          Quantity: {cart[product.id]}
+                        </small>
+                      </p>
+                      <div className="plus-minus-buttons">
+                        <button
+                          className="btn btn-success"
+                          onClick={() => {
+                            removeFromCart(product.id, userId);
+                            getCartProducts();
+                          }}
+                        >
+                          -
+                        </button>
+                        <p>{cart[product.id] || 0}</p>
+                        <button
+                          className="btn btn-success"
+                          onClick={() => {
+                            addProductToCart(product.id, userId);
+                            getCartProducts();
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+            <p>Items: {totalItems}</p>
+            <p>Total Amount: ${totalPrice}</p>
+            <button onClick={this.handleCheckout} className="btn btn-success">
+              CHECKOUT
+            </button>
           </div>
-        ))}
-
-        <p>Items: {totalItems}</p>
-        <p>Total Amount: ${totalPrice}</p>
-        <button onClick={this.handleCheckout} className="btn btn-success">
-          CHECKOUT
-        </button>
-      </>
+        )}
+      </div>
     );
   }
 }
@@ -132,6 +162,8 @@ const mapDispatch = (dispatch) => {
   return {
     getProducts: () => dispatch(getProducts()),
     getCartProducts: () => dispatch(getCartProducts()),
+    addProductToCart: (productId, userId) =>
+      dispatch(addProductToCart(productId, userId)),
     removeFromCart: (productId, userId) =>
       dispatch(removeProductFromCart(productId, userId)),
     checkOut: (userId) => dispatch(checkOut(userId)),

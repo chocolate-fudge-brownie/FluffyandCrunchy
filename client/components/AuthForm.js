@@ -20,6 +20,7 @@ const AuthForm = (props) => {
             type="text"
             id="username"
             className="form-control"
+            required
           />
         </div>
         {name === 'signup' ? (
@@ -32,6 +33,7 @@ const AuthForm = (props) => {
               type="text"
               id="email"
               className="form-control"
+              required
             />
           </div>
         ) : null}
@@ -44,12 +46,31 @@ const AuthForm = (props) => {
             type="password"
             id="password"
             className="form-control"
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">
           {displayName}
         </button>
-        {error && error.response && <div> {error.response.data} </div>}
+        {error && error.response && (
+          <div>
+            {error.response.data.includes('Validation error:') ? (
+              error.response.data
+                .split('Validation error:')
+                .slice(1)
+                .map((error, index) => (
+                  <div key={index} className="alert alert-danger" role="alert">
+                    Validation error: {error.replace(',', '.')}
+                  </div>
+                ))
+            ) : (
+              <div className="alert alert-danger" role="alert">
+                {error.response.data}
+              </div>
+            )}
+            <br />
+          </div>
+        )}
       </form>
     </div>
   );

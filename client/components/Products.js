@@ -5,7 +5,11 @@ import { connect } from 'react-redux';
 
 // Import Redux action & thunk creators
 import { getProducts } from '../store/products';
-import { addProductToCart, getCartProducts } from '../store/cart';
+import {
+  addProductToCart,
+  getCartProducts,
+  removeProductFromCart,
+} from '../store/cart';
 
 // Define component
 class Products extends React.Component {
@@ -14,7 +18,15 @@ class Products extends React.Component {
   }
 
   render() {
-    const { userId, products, addProductToCart, getCartProducts } = this.props;
+    const {
+      userId,
+      products,
+      cart,
+      addProductToCart,
+      getCartProducts,
+      removeFromCart,
+    } = this.props;
+
     return (
       <div className="row row-cols-1 row-cols-md-3 g-4">
         {products.map((product) => (
@@ -28,15 +40,27 @@ class Products extends React.Component {
                   <h5 className="card-title">{product.name}</h5>
                 </Link>
                 <p className="card-text">${product.price}</p>
-                <button
-                  className="btn btn-success"
-                  onClick={() => {
-                    addProductToCart(product.id, userId);
-                    getCartProducts();
-                  }}
-                >
-                  Add to Cart
-                </button>
+                <div className="plus-minus-buttons">
+                  <button
+                    className="btn btn-success"
+                    onClick={() => {
+                      removeFromCart(product.id, userId);
+                      getCartProducts();
+                    }}
+                  >
+                    -
+                  </button>
+                  <p>{cart[product.id] || 0}</p>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => {
+                      addProductToCart(product.id, userId);
+                      getCartProducts();
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -51,6 +75,7 @@ const mapState = (state) => {
   return {
     userId: state.auth.id,
     products: state.products,
+    cart: state.cart,
   };
 };
 
@@ -61,6 +86,8 @@ const mapDispatch = (dispatch) => {
     getProducts: () => dispatch(getProducts()),
     addProductToCart: (productId, userId) =>
       dispatch(addProductToCart(productId, userId)),
+    removeFromCart: (productId, userId) =>
+      dispatch(removeProductFromCart(productId, userId)),
   };
 };
 
