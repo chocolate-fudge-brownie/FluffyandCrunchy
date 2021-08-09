@@ -555,12 +555,8 @@ async function seed() {
   await pokeSeed.generatePokemonProducts(products);
   // --------------------------------------- pokeSeed --------------------------------------- //
 
+
   // Creating Paid Orders For Users
-
-  // Generating Random Unique Integers to represent what a localCart may look like, based on argument value
-
-  // Given a product.length of 6. Math.floor gives us numbers from 0 to 5, so we will add 1 so we ensure that it is 1 to 6 - DOCS
-  // const randomId = Math.floor(Math.random() * products.length) + 1; - DOCS
   // NOTE: if maxProductsLength is greater than products.length we will get an infinite loop as we will never reach the case where the set.size(),
   // which is AT MOST equal to products.length, is equal maxProductsLength which is necessary for the loop to break
   // We use a set to avoid duplicate inputs, yet to be honest, we could've used an array since we are checking for uniqueness before appending anyways
@@ -581,6 +577,7 @@ async function seed() {
     }
     return localCart;
   }
+
   // .updateCart() and .checkoutCart()
   const handleLocalCart = async (user, localCart) => {
     try {
@@ -590,6 +587,7 @@ async function seed() {
       console.log(err);
     }
   }
+  
   // creates 5 orders of length 5 on every user
   const seedOrdersToUsers = async () =>  {
     await Promise.all(users.map(async (user) => {
@@ -600,7 +598,18 @@ async function seed() {
       }
     }));
   }
+
+  // adds some products in cart for users
+  const seedProductsInCartForUsers = async () => {
+    await Promise.all(users.map(async (user) => {
+      const randomLength = 5;
+      const localCart =  generateLocalCart(randomLength);
+      await user.updateCart(localCart);
+    }))
+  }
   await seedOrdersToUsers();
+  await seedProductsInCartForUsers();
+
   // Defining Orders
   const orderArray = [
     {
