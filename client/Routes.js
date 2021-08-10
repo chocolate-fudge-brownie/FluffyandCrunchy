@@ -29,12 +29,13 @@ class Routes extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props
-      .loadInitialData()
-      .then(() =>
-        this.setState({ isLoading: false }).catch((err) => console.log(err))
-      );
+  async componentDidMount() {
+    try {
+      await this.props.loadInitialData();
+      this.setState({ isLoading: false });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   componentDidUpdate(prevProps) {
