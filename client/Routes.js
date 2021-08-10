@@ -10,6 +10,7 @@ import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import CartDetails from './components/CartDetails';
 import SearchResults from './components/SearchResults';
+import UserProfile from './components/UserProfile';
 
 // Import Redux functions
 import { me } from './store';
@@ -38,6 +39,7 @@ class Routes extends Component {
             />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/cart" component={CartDetails} />
+            <Route path="/account" component={UserProfile} />
             <Redirect to="/home" />
           </Switch>
         ) : (

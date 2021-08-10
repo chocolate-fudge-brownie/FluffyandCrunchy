@@ -37,6 +37,11 @@ img {
   right: 30px;
 }
 
+#account-dropdown > .dropdown-menu {
+  position: relative;
+  left: 30px;
+}
+
 .cart-preview-image {
   float: right;
   width: 110px;
@@ -146,4 +151,24 @@ body {
 
 #homepage {
   text-align: center;
+}
+
+#user-profile {
+  border-color: '#6e3900';
+  border-width: 4px;
+  padding: 30px;
+  border-style: dashed;
+  border-radius: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px;
+}
+
+#user-profile .col-sm-10 {
+  padding-left: 30px;
+}
+
+#user-profile-title {
+  display: flex;
+  justify-content: space-between;
 }

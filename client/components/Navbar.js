@@ -15,6 +15,7 @@ class Navbar extends React.Component {
     super();
     this.state = {
       cartHover: false,
+      accountHover: false,
       value: '',
     };
     this.mouseOver = this.mouseOver.bind(this);
@@ -37,6 +38,14 @@ class Navbar extends React.Component {
 
   mouseRelease() {
     this.setState({ cartHover: false });
+  }
+
+  mouseOverAccount() {
+    this.setState({ accountHover: true });
+  }
+
+  mouseReleaseAccount() {
+    this.setState({ accountHover: false });
   }
 
   async componentDidMount() {
@@ -86,12 +95,42 @@ class Navbar extends React.Component {
                       <p className="nav-link">Home</p>
                     </Link>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <Link to="#">
                       <p className="nav-link" href="#" onClick={handleClick}>
                         Logout
                       </p>
                     </Link>
+                  </li> */}
+                  <li
+                    className="nav-item"
+                    id="account-dropdown"
+                    onMouseOver={() => this.mouseOverAccount()}
+                    onMouseOut={() => this.mouseReleaseAccount()}
+                  >
+                    <Link to="/account">
+                      <p className="nav-link dropdown-toggle">
+                        Account <i className="bi bi-person-circle"></i>
+                      </p>
+                    </Link>
+                    <ul
+                      className={`dropdown-menu ${
+                        this.state.accountHover ? 'show' : null
+                      }`}
+                      aria-labelledby="dropdownMenuLink"
+                    >
+                      <li className="dropdown-item">
+                        <Link to="#">
+                          <p
+                            className="nav-link"
+                            href="#"
+                            onClick={handleClick}
+                          >
+                            Logout
+                          </p>
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
                 </>
               ) : (
@@ -123,20 +162,23 @@ class Navbar extends React.Component {
               </li>
               <li
                 className="nav-item"
-                onClick={() => history.push('/cart')}
+                // onClick={() => history.push('/cart')}
                 onMouseOver={() => this.mouseOver()}
                 onMouseOut={() => this.mouseRelease()}
               >
-                <p
-                  className={`nav-link dropdown-toggle ${
-                    this.state.cartHover ? 'show' : null
-                  }`}
-                  id="dropdownMenuOffset"
-                  data-bs-toggle="dropdown"
-                  aria-expanded={this.state.cartHover ? 'true' : 'false'}
-                >
-                  Cart <i className="bi bi-cart2"></i>
-                </p>
+                <Link to="/cart">
+                  <p
+                    className="nav-link dropdown-toggle"
+                    // className={`nav-link dropdown-toggle ${
+                    //   this.state.cartHover ? 'show' : null
+                    // }`}
+                    // id="dropdownMenuOffset"
+                    // data-bs-toggle="dropdown"
+                    // aria-expanded={this.state.cartHover ? 'true' : 'false'}
+                  >
+                    Cart <i className="bi bi-cart2"></i>
+                  </p>
+                </Link>
                 <ul
                   className={`dropdown-menu ${
                     this.state.cartHover ? 'show' : null
@@ -149,22 +191,26 @@ class Navbar extends React.Component {
                   {cartProducts.map((product) => (
                     <li key={product.id}>
                       <hr />
-                      <div className="dropdown-item">
-                        <img
-                          src={product.imageUrl}
-                          className="cart-preview-image"
-                        />
-                        <p>
-                          <strong className="cart-name">{product.name}</strong>
-                        </p>{' '}
-                        <p>Price: ${product.price}</p>
-                        <p>Quantity: {cart[product.id]}</p>
-                        <p>
-                          <strong>
-                            Total: ${cart[product.id] * product.price}
-                          </strong>
-                        </p>
-                      </div>
+                      <Link to={`/products/${product.id}`}>
+                        <div className="dropdown-item">
+                          <img
+                            src={product.imageUrl}
+                            className="cart-preview-image"
+                          />
+                          <p>
+                            <strong className="cart-name">
+                              {product.name}
+                            </strong>
+                          </p>{' '}
+                          <p>Price: ${product.price}</p>
+                          <p>Quantity: {cart[product.id]}</p>
+                          <p>
+                            <strong>
+                              Total: ${cart[product.id] * product.price}
+                            </strong>
+                          </p>
+                        </div>
+                      </Link>
                     </li>
                   ))}
                 </ul>

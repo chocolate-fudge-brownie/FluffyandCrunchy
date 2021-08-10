@@ -14,7 +14,7 @@ export const Home = (props) => {
       <div className="row row-cols-1 row-cols-md-3 g-4">
         <div className="col" style={{ marginTop: '40px' }}>
           <div className="card">
-            <Link to={`/products`}>
+            <Link to="/products">
               <img
                 src="https://4.imimg.com/data4/PH/LD/MY-16439721/soft-toys-500x500.jpg"
                 className="card-img-top"
@@ -27,7 +27,7 @@ export const Home = (props) => {
         </div>
         <div className="col" style={{ marginTop: '40px' }}>
           <div className="card">
-            <Link to={`/products`}>
+            <Link to="/products">
               <img
                 src="https://blog.radioflyer.com/media/catalog/product/cache/15/image/800x800/9df78eab33525d08d6e5fb8d27136e95/l/i/little-red-toy-wagon-stuffed-animals-inset-w5_5.jpg"
                 className="card-img-top"
@@ -40,14 +40,14 @@ export const Home = (props) => {
         </div>
         <div className="col" style={{ marginTop: '40px' }}>
           <div className="card">
-            <Link to={`/products`}>
+            <Link to="/account">
               <img
                 src="https://m.media-amazon.com/images/I/51r9cd24QPL._AC_SX425_.jpg"
                 className="card-img-top"
               />
             </Link>
             <div className="card-body">
-              <h5 className="card-title">Account Details</h5>
+              <h5 className="card-title">You Account</h5>
             </div>
           </div>
         </div>
