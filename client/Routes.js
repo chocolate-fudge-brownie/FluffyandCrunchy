@@ -13,13 +13,40 @@ import SearchResults from './components/SearchResults';
 
 // Import Redux functions
 import { me } from './store';
+import { mergeCart } from './store/cart';
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData();
+  constructor() {
+    super();
+    this.state = {
+      loggedInBefore: !!window.localStorage.getItem('token'),
+    };
+  }
+
+  async componentDidMount() {
+    await this.props.loadInitialData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      !this.state.loggedInBefore &&
+      !prevProps.isLoggedIn &&
+      this.props.isLoggedIn
+    ) {
+      // merge local & db cart if user log in first time
+      this.props.mergeCart(this.props.userId, false);
+    } else if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+      // get cart from db only if user logged in before
+      this.props.mergeCart(this.props.userId, true);
+    }
+
+    if (prevProps.isLoggedIn && !this.props.isLoggedIn) {
+      // reset loggedInBefore status when user log out
+      this.setState({ loggedInBefore: false });
+    }
   }
 
   render() {
@@ -69,14 +96,15 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    userId: state.auth.id,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData() {
-      dispatch(me());
-    },
+    loadInitialData: () => dispatch(me()),
+    mergeCart: (userId, loggedInBefore) =>
+      dispatch(mergeCart(userId, loggedInBefore)),
   };
 };
 
