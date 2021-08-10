@@ -43,6 +43,8 @@ export default class ProductCard extends React.Component {
                     ? { display: 'none' }
                     : {
                         display: 'inline-block',
+                        width: '200px',
+                        height: '200px',
                       }
                 }
               >
