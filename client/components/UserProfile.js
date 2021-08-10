@@ -1,7 +1,7 @@
 // Import modules
 import React from 'react';
 import { connect } from 'react-redux';
-import { authenticate } from '../store';
+import { updateAccount } from '../store';
 
 // Define component
 class UserProfile extends React.Component {
@@ -20,7 +20,7 @@ class UserProfile extends React.Component {
   render() {
     const { changeEditMode } = this;
     const { editMode } = this.state;
-    const { username, email, error } = this.props.auth;
+    const { id, username, email, error } = this.props.auth;
     const { handleSubmit } = this.props;
 
     return (
@@ -32,7 +32,7 @@ class UserProfile extends React.Component {
           )}
         </div>
         <hr />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(evt) => handleSubmit(evt, id)}>
           <div className="mb-3 row">
             <label htmlFor="username" className="col-sm-2 col-form-label">
               Username:
@@ -54,7 +54,7 @@ class UserProfile extends React.Component {
                   id="username"
                   className="form-control-plaintext"
                   readOnly
-                  value={username}
+                  placeholder={username}
                 />
               )}
             </div>
@@ -80,7 +80,7 @@ class UserProfile extends React.Component {
                   id="email"
                   className="form-control-plaintext"
                   readOnly
-                  value={email}
+                  placeholder={email}
                 />
               )}
             </div>
@@ -159,13 +159,12 @@ const mapState = (state) => {
 // Connect Redux store's action/thunk creators to props
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit(evt) {
+    handleSubmit(evt, id) {
       evt.preventDefault();
-      const formName = evt.target.name;
       const username = evt.target.username.value;
-      const email = evt.target.email;
+      const email = evt.target.email.value;
       const password = evt.target.password.value;
-      dispatch(authenticate(username, email, password, formName));
+      dispatch(updateAccount(username, email, password, id));
     },
   };
 };

@@ -45,6 +45,34 @@ export const authenticate =
     }
   };
 
+export const updateAccount =
+  (username, email, password, userId) => async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem(TOKEN);
+      console.log('received', {
+        username,
+        email,
+        password,
+      });
+      const res = await axios.put(
+        `/users/${userId}`,
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      dispatch(setAuth(res.data));
+    } catch (authError) {
+      return dispatch(setAuth({ error: authError }));
+    }
+  };
+
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   history.push('/login');
