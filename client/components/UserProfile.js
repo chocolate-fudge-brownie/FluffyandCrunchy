@@ -5,7 +5,21 @@ import { authenticate } from '../store';
 
 // Define component
 class UserProfile extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      editMode: false,
+    };
+    this.changeEditMode = this.changeEditMode.bind(this);
+  }
+
+  changeEditMode() {
+    this.setState({ editMode: !this.state.editMode });
+  }
+
   render() {
+    const { changeEditMode } = this;
+    const { editMode } = this.state;
     const { username, email, error } = this.props.auth;
     const { handleSubmit } = this.props;
 
@@ -13,7 +27,9 @@ class UserProfile extends React.Component {
       <div id="user-profile">
         <div id="user-profile-title">
           <h2>Account Details</h2>
-          <i className="bi bi-pencil-square"></i>
+          {editMode ? null : (
+            <i className="bi bi-pencil-square" onClick={changeEditMode}></i>
+          )}
         </div>
         <hr />
         <form onSubmit={handleSubmit}>
@@ -22,15 +38,25 @@ class UserProfile extends React.Component {
               Username:
             </label>
             <div className="col-sm-10">
-              <input
-                name="username"
-                type="text"
-                id="username"
-                readOnly
-                className="form-control-plaintext"
-                required
-                value={username}
-              />
+              {editMode ? (
+                <input
+                  name="username"
+                  type="text"
+                  id="username"
+                  className="form-control"
+                  required
+                  defaultValue={username}
+                />
+              ) : (
+                <input
+                  name="username"
+                  type="text"
+                  id="username"
+                  className="form-control-plaintext"
+                  readOnly
+                  value={username}
+                />
+              )}
             </div>
           </div>
           <div className="mb-3 row">
@@ -38,15 +64,25 @@ class UserProfile extends React.Component {
               Email:
             </label>
             <div className="col-sm-10">
-              <input
-                name="email"
-                type="text"
-                id="email"
-                readOnly
-                className="form-control-plaintext"
-                required
-                value={email}
-              />
+              {editMode ? (
+                <input
+                  name="email"
+                  type="text"
+                  id="email"
+                  className="form-control"
+                  required
+                  defaultValue={email}
+                />
+              ) : (
+                <input
+                  name="email"
+                  type="text"
+                  id="email"
+                  className="form-control-plaintext"
+                  readOnly
+                  value={email}
+                />
+              )}
             </div>
           </div>
           <div className="mb-3 row">
@@ -54,25 +90,36 @@ class UserProfile extends React.Component {
               Password:
             </label>
             <div className="col-sm-10">
-              <input
-                name="password"
-                type="password"
-                id="password"
-                readOnly
-                className="form-control-plaintext"
-                required
-                value="********"
-              />
+              {editMode ? (
+                <input
+                  name="password"
+                  type="password"
+                  id="password"
+                  className="form-control"
+                  required
+                />
+              ) : (
+                <input
+                  name="password"
+                  type="password"
+                  id="password"
+                  className="form-control-plaintext"
+                  readOnly
+                  placeholder="********"
+                />
+              )}
             </div>
           </div>
-          <div>
-            <button type="submit" className="btn btn-primary">
-              Cancel
-            </button>
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
+          {editMode ? (
+            <div>
+              <button className="btn btn-primary" onClick={changeEditMode}>
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            </div>
+          ) : null}
           {error && error.response && (
             <div>
               {error.response.data.includes('Validation error:') ? (

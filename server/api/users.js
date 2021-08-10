@@ -37,4 +37,24 @@ router.get('/:userId', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
+// PUT /api/users/:userId
+// Update single user (user only)
+router.put('/:userId', requireToken, async (req, res, next) => {
+  try {
+    if (req.user.id === Number(req.params.userId)) {
+      const { username, email, password } = req.body; // to protect against injection
+      const updatedUser = await req.user.update({ username, email, password });
+      res.json(updatedUser);
+    } else {
+      res.status(404).send('User Not Found');
+    }
+  } catch (err) {
+    if (err.name === 'SequelizeUniqueConstraintError') {
+      res.status(401).send('User already exists');
+    } else {
+      next(err);
+    }
+  }
+});
+
 module.exports = router;
