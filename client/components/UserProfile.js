@@ -159,12 +159,12 @@ const mapState = (state) => {
 // Connect Redux store's action/thunk creators to props
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit(evt, id) {
+    handleSubmit(evt, userId) {
       evt.preventDefault();
       const username = evt.target.username.value;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
-      dispatch(updateAccount(username, email, password, id));
+      dispatch(updateAccount(username, email, password, userId));
     },
   };
 };

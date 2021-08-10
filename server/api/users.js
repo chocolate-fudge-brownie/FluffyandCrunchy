@@ -43,10 +43,17 @@ router.put('/:userId', requireToken, async (req, res, next) => {
   try {
     if (req.user.id === Number(req.params.userId)) {
       const { username, email, password } = req.body; // to protect against injection
-      const updatedUser = await req.user.update({ username, email, password });
-      res.json(updatedUser);
+      const user = await User.findByPk(req.params.userId);
+      console.log(user);
+      if (user) {
+        const updatedUser = await user.update({ username, email, password });
+        console.log(updatedUser);
+        res.json(updatedUser);
+      } else {
+        res.status(404).send('User Not Found');
+      }
     } else {
-      res.status(404).send('User Not Found');
+      res.status(404).send('Not Authorized');
     }
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
