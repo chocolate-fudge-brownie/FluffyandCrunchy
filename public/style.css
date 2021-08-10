@@ -3,6 +3,12 @@ img {
   height: 500px;
 }
 
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cart-name {
   font-size: 25px;
 }
