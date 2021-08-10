@@ -1,6 +1,5 @@
 import axios from 'axios';
 import history from '../history';
-import { mergeCart } from './cart';
 
 const TOKEN = 'token';
 
@@ -25,7 +24,6 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
-    await dispatch(mergeCart(res.data.id));
     return dispatch(setAuth(res.data));
   }
 };

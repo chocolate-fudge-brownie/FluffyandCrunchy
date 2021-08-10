@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import ProductCard from './ProductCard';
 
 // Import Redux action & thunk creators
 import { getProducts } from '../store/products';
@@ -30,40 +31,15 @@ class Products extends React.Component {
     return (
       <div className="row row-cols-1 row-cols-md-3 g-4">
         {products.map((product) => (
-          <div className="col" key={product.id} style={{ marginTop: '40px' }}>
-            <div className="card">
-              <Link to={`/products/${product.id}`}>
-                <img src={product.imageUrl} className="card-img-top" />
-              </Link>
-              <div className="card-body">
-                <Link to={`/products/${product.id}`}>
-                  <h5 className="card-title">{product.name}</h5>
-                </Link>
-                <p className="card-text">${product.price}</p>
-                <div className="plus-minus-buttons">
-                  <button
-                    className="btn btn-success"
-                    onClick={() => {
-                      removeFromCart(product.id, userId);
-                      getCartProducts();
-                    }}
-                  >
-                    -
-                  </button>
-                  <p>{cart[product.id] || 0}</p>
-                  <button
-                    className="btn btn-success"
-                    onClick={() => {
-                      addProductToCart(product.id, userId);
-                      getCartProducts();
-                    }}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProductCard
+            key={product.id}
+            product={product}
+            userId={userId}
+            addProductToCart={addProductToCart}
+            getCartProducts={getCartProducts}
+            cart={cart}
+            removeFromCart={removeFromCart}
+          />
         ))}
       </div>
     );

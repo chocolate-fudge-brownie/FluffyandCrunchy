@@ -3,6 +3,21 @@ img {
   height: 500px;
 }
 
+body,
+html {
+  cursor: url('./cursor.png'), auto;
+}
+
+.card {
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cart-name {
   font-size: 25px;
 }
@@ -101,6 +116,8 @@ img {
 }
 
 .navbar {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   margin-bottom: 20px;
   background-color: #b5915a;
   background-image: url('https://www.transparenttextures.com/patterns/clean-textile.png');

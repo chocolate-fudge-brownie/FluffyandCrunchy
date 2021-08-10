@@ -50,36 +50,50 @@ export const getCartProducts = () => async (dispatch) => {
   }
 };
 
-// Merge carts from local storage & database when user log in
-export const mergeCart = (userId) => async (dispatch) => {
+// Get cart & merge with local cart when user log in
+export const mergeCart = (userId, loggedInBefore) => async (dispatch) => {
   try {
+    let mergedCart = {};
+
+    // get local cart in format of {[productId]: quantity}
     let cart = JSON.parse(window.localStorage.getItem('cart'));
     if (!cart) cart = {};
+
+    // get cart from database if user is logged in
     const token = window.localStorage.getItem('token');
-    const { data: dbCart } = await axios.get(`/api/orders/cart/${userId}`, {
-      headers: {
-        authorization: token,
-      },
-    });
+    if (token) {
+      const { data: dbCart } = await axios.get(`/api/orders/cart/${userId}`, {
+        headers: {
+          authorization: token,
+        },
+      });
 
-    // dbCart is an order object {orderid, total, products:[{product}...]}
-    // so we have to transfer it to {[productId]: quantity}
-    // and merge with local cart
-    let mergedCart = { ...cart };
-    dbCart.products.forEach((product) => {
-      const id = product.id;
-      const qty = product.OrderLine.quantity;
-      if (mergedCart[id]) mergedCart[id] += qty;
-      else mergedCart[id] = qty;
-    });
+      // dbCart is an order object {orderid, total, products:[{product}...]}
+      // so we have to transfer it to {[productId]: quantity}
+      dbCart.products.forEach((product) => {
+        mergedCart[product.id] = product.OrderLine.quantity;
+      });
 
-    // save merged cart in both local & database
-    window.localStorage.setItem('cart', JSON.stringify(mergedCart));
-    await axios.put(`/api/orders/cart/${userId}`, mergedCart, {
-      headers: {
-        authorization: token,
-      },
-    });
+      // merge cart only if user has not logged in before
+      if (!loggedInBefore) {
+        for (let id in cart) {
+          if (mergedCart[id]) mergedCart[id] += cart[id];
+          else mergedCart[id] = cart[id];
+        }
+      }
+
+      // save merged cart in both local & database
+      window.localStorage.setItem('cart', JSON.stringify(mergedCart));
+      await axios.put(`/api/orders/cart/${userId}`, mergedCart, {
+        headers: {
+          authorization: token,
+        },
+      });
+    } else {
+      // set local cart as merged cart if user is not logged in
+      mergedCart = cart;
+    }
+
     dispatch(_getCartProducts(mergedCart));
   } catch (err) {
     console.log(err);
@@ -125,7 +139,6 @@ export const removeProductFromCart =
       if (cart && cart[productId]) {
         cart[productId] = Math.max(cart[productId] - 1, 0);
 
-        console.log(cart[productId]);
         if (cart[productId] <= 0) {
           delete cart[productId];
         }
