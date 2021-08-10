@@ -48,7 +48,7 @@ export const Home = (props) => {
               />
             </Link>
             <div className="card-body">
-              <h5 className="card-title">You Account</h5>
+              <h5 className="card-title">Your Account</h5>
             </div>
           </div>
         </div>

@@ -138,16 +138,14 @@ class Navbar extends React.Component {
                   <li className="nav-item">
                     <Link to="/login">
                       <p className="nav-link">
-                        Login
-                        <i className="bi bi-box-arrow-right"></i>
+                        Login <i className="bi bi-box-arrow-right"></i>
                       </p>
                     </Link>
                   </li>
                   <li className="nav-item">
                     <Link to="/signup">
                       <p className="nav-link">
-                        Sign Up
-                        <i className="bi bi-check-circle"></i>
+                        Sign Up <i className="bi bi-check-circle"></i>
                       </p>
                     </Link>
                   </li>
