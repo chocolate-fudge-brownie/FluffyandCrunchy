@@ -10,6 +10,7 @@ import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import CartDetails from './components/CartDetails';
 import SearchResults from './components/SearchResults';
+import Loader from 'react-loader-spinner';
 
 // Import Redux functions
 import { me } from './store';
@@ -18,13 +19,27 @@ import { me } from './store';
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData();
+  constructor() {
+    super();
+    this.state = {
+      isLoading: true
+    }
   }
-
+  componentDidMount() {
+    this.props.loadInitialData()
+    .then(() => this.setState({ isLoading: false })
+    .catch((err) => console.log(err)))
+  }
   render() {
     const { isLoggedIn } = this.props;
-
+    const { isLoading } = this.state;
+    if(isLoading) { 
+      return (
+        <div className='d-flex justify-content-center'>
+          <Loader type="ThreeDots" />
+        </div>
+      )
+    }
     return (
       <>
         {isLoggedIn ? (
@@ -74,8 +89,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData() {
-      dispatch(me());
+    async loadInitialData() {
+      await dispatch(me());
     },
   };
 };

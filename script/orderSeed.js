@@ -36,8 +36,8 @@ class orderSeed {
     }
   }
 
-  // creates n orders of length m on every user, creates 5 random orders with 5 products on each order for every user by default.
-  async seedOrdersToUsers(numOfOrders = 5, amountOfProducts = 5) {
+  // creates n orders of length m on every user, creates 5 random orders with 3 products on each order for every user by default.
+  async seedOrdersToUsers(numOfOrders = 5, amountOfProducts = 3) {
     await Promise.all(
       this.users.map(async (user) => {
         for (let i = 0; i < numOfOrders; i++) {
@@ -48,10 +48,12 @@ class orderSeed {
     );
   }
 
-  // adds n products in cart for every user, Creates a localCart with 5 products for every user by default
-  async seedProductsInCartForUsers(amountOfProducts = 5) {
+  // adds n products in cart for every user, Creates a localCart with 3 products for every user by default
+  async seedProductsInCartForUsers(amountOfProducts = 3) {
     await Promise.all(
       this.users.map(async (user) => {
+        const cart = await user.getCart();
+        if(cart) return cart;
         const localCart = this.generateLocalCart(amountOfProducts);
         await user.updateCart(localCart);
       })
