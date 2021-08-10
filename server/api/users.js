@@ -41,6 +41,7 @@ router.get('/:userId', requireToken, isAdmin, async (req, res, next) => {
 // Update single user (user only)
 router.put('/:userId', requireToken, async (req, res, next) => {
   try {
+    // only the user of that user id could have access to updating their info
     if (req.user.id === Number(req.params.userId)) {
       const { username, email, password } = req.body; // to protect against injection
       const user = await User.findByPk(req.params.userId);

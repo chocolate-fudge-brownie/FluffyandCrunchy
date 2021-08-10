@@ -44,7 +44,7 @@ export const authenticate =
   };
 
 export const updateAccount =
-  (username, email, password, userId) => async (dispatch) => {
+  (username, email, password, userId) => async (dispatch, getState) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
       const { data } = await axios.put(
@@ -62,7 +62,7 @@ export const updateAccount =
       );
       await dispatch(setAuth(data));
     } catch (authError) {
-      return dispatch(setAuth({ error: authError }));
+      return dispatch(setAuth({ ...getState().auth, error: authError }));
     }
   };
 
