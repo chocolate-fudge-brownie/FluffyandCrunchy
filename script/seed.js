@@ -189,7 +189,7 @@ async function seed() {
 
   // Creating Users
 
-  const users = await Promise.all(userArray.map((user) => User.create(user)));
+  const users = await Promise.all(userArray.map(async (user) => await User.create(user)));
   /* const users = await Promise.all([
     User.create({
       username: 'cody',

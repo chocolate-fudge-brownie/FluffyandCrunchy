@@ -10,6 +10,7 @@ import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import CartDetails from './components/CartDetails';
 import SearchResults from './components/SearchResults';
+import Loader from 'react-loader-spinner';
 
 // Import Redux functions
 import { me } from './store';
@@ -22,12 +23,15 @@ class Routes extends Component {
   constructor() {
     super();
     this.state = {
+      isLoading: true,
       loggedInBefore: !!window.localStorage.getItem('token'),
-    };
+    }
   }
-
-  async componentDidMount() {
-    await this.props.loadInitialData();
+  
+  componentDidMount() {
+    this.props.loadInitialData()
+    .then(() => this.setState({ isLoading: false })
+    .catch((err) => console.log(err)))
   }
 
   componentDidUpdate(prevProps) {
@@ -48,10 +52,16 @@ class Routes extends Component {
       this.setState({ loggedInBefore: false });
     }
   }
-
   render() {
     const { isLoggedIn } = this.props;
-
+    const { isLoading } = this.state;
+    if(isLoading) { 
+      return (
+        <div className='d-flex justify-content-center'>
+          <Loader type="ThreeDots" />
+        </div>
+      )
+    }
     return (
       <>
         {isLoggedIn ? (
