@@ -22,7 +22,10 @@ export default class ProductCard extends React.Component {
   render() {
     return (
       <div className="col" style={{ marginTop: '40px' }}>
-        <div className="card">
+        <div
+          className="card"
+          style={{ borderStyle: 'solid', borderWidth: '5px' }}
+        >
           <Link to={`/products/${this.props.product.id}`}>
             <img
               onLoad={this.handleLoad}

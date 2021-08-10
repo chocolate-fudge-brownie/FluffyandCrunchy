@@ -11,7 +11,7 @@ class SearchResults extends React.Component {
     return (
       <div className="search-filter">
         <h1>Search Results:</h1>
-        {this.props.filter.length && this.props.match.params.query ? (
+        {this.props.filter.length ? (
           <h3>
             Found {this.props.filter.length}{' '}
             {this.props.filter.length === 1 ? 'product' : 'products'} that
