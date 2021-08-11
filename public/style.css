@@ -215,10 +215,10 @@ body {
   color: grey;
 }
 
-#account-dropdown > .dropdown-menu {
-  position: absolute;
-  left: 20px;
-  right: 20px;
+#logout-dropdown {
+  width: 100px;
+  margin: auto;
+  margin-right: 450px;
 }
 
 #logout-dropdown p {
