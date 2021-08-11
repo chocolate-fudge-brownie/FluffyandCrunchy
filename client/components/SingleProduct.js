@@ -17,7 +17,9 @@ class SingleProduct extends React.Component {
     super();
     this.state = {
       isLoading: true,
+      imgLoaded: false,
     };
+    this.handleLoad = this.handleLoad.bind(this);
   }
 
   async componentDidMount() {
@@ -27,6 +29,10 @@ class SingleProduct extends React.Component {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  handleLoad() {
+    this.setState({ loaded: true });
   }
 
   render() {
@@ -46,12 +52,35 @@ class SingleProduct extends React.Component {
     return (
       <div className="card mb-3" id="single-card-component">
         <div className="row g-0" id="card-header">
-          <div className="col-md-4">
+          <div className="col-md-4" id="card-header-img">
             <img
+              onLoad={this.handleLoad}
               src={product.imageUrl}
               className="img-fluid rounded-start"
               alt="..."
+              style={
+                this.state.loaded
+                  ? { display: 'inline-block' }
+                  : { display: 'none' }
+              }
             />
+            <div className="spinner-container">
+              <div
+                className="spinner-border text-primary"
+                role="status"
+                style={
+                  this.state.loaded
+                    ? { display: 'none' }
+                    : {
+                        display: 'inline-block',
+                        width: '200px',
+                        height: '200px',
+                      }
+                }
+              >
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
           </div>
           <div className="col-md-8">
             <div className="card-body" id="single-body">
