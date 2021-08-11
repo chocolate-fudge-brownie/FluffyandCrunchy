@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import history from '../history';
 
 // Import Redux action & thunk creators
 import { logout } from '../store';
@@ -53,8 +52,15 @@ class Navbar extends React.Component {
     this.props.getCartProducts();
   }
 
+  componentDidUpdate(prevProps) {
+    // make accountHover state back to false when user log out
+    if (prevProps.isLoggedIn && !this.props.isLoggedIn) {
+      this.setState({ accountHover: false });
+    }
+  }
+
   render() {
-    const { handleClick, isLoggedIn, cart, products } = this.props;
+    const { handleLogout, isLoggedIn, cart, products } = this.props;
 
     let cartProducts = [];
     for (let productId in cart) {
@@ -95,13 +101,6 @@ class Navbar extends React.Component {
                       <p className="nav-link">Home</p>
                     </Link>
                   </li>
-                  {/* <li className="nav-item">
-                    <Link to="#">
-                      <p className="nav-link" href="#" onClick={handleClick}>
-                        Logout
-                      </p>
-                    </Link>
-                  </li> */}
                   <li
                     className="nav-item"
                     id="account-dropdown"
@@ -124,7 +123,7 @@ class Navbar extends React.Component {
                           <p
                             className="nav-link"
                             href="#"
-                            onClick={handleClick}
+                            onClick={handleLogout}
                           >
                             Logout
                           </p>
@@ -160,20 +159,11 @@ class Navbar extends React.Component {
               </li>
               <li
                 className="nav-item"
-                // onClick={() => history.push('/cart')}
                 onMouseOver={() => this.mouseOver()}
                 onMouseOut={() => this.mouseRelease()}
               >
                 <Link to="/cart">
-                  <p
-                    className="nav-link dropdown-toggle"
-                    // className={`nav-link dropdown-toggle ${
-                    //   this.state.cartHover ? 'show' : null
-                    // }`}
-                    // id="dropdownMenuOffset"
-                    // data-bs-toggle="dropdown"
-                    // aria-expanded={this.state.cartHover ? 'true' : 'false'}
-                  >
+                  <p className="nav-link dropdown-toggle">
                     Cart <i className="bi bi-cart2"></i>
                   </p>
                 </Link>
@@ -183,34 +173,47 @@ class Navbar extends React.Component {
                   }`}
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <li className="dropdown-item">
-                    <h1>Currently Added</h1>
-                  </li>
-                  {cartProducts.map((product) => (
-                    <li key={product.id}>
+                  <Link to="/cart">
+                    <li className="dropdown-item">
+                      <h1>Currently Added</h1>
+                    </li>
+                  </Link>
+                  {cartProducts.length > 0 ? (
+                    cartProducts.map((product) => (
+                      <li key={product.id}>
+                        <hr />
+                        <Link to={`/products/${product.id}`}>
+                          <div className="dropdown-item">
+                            <img
+                              src={product.imageUrl}
+                              className="cart-preview-image"
+                            />
+                            <p>
+                              <strong className="cart-name">
+                                {product.name}
+                              </strong>
+                            </p>{' '}
+                            <p>Price: ${product.price}</p>
+                            <p>Quantity: {cart[product.id]}</p>
+                            <p>
+                              <strong>
+                                Total: ${cart[product.id] * product.price}
+                              </strong>
+                            </p>
+                          </div>
+                        </Link>
+                      </li>
+                    ))
+                  ) : (
+                    <li>
                       <hr />
-                      <Link to={`/products/${product.id}`}>
+                      <Link to="/cart">
                         <div className="dropdown-item">
-                          <img
-                            src={product.imageUrl}
-                            className="cart-preview-image"
-                          />
-                          <p>
-                            <strong className="cart-name">
-                              {product.name}
-                            </strong>
-                          </p>{' '}
-                          <p>Price: ${product.price}</p>
-                          <p>Quantity: {cart[product.id]}</p>
-                          <p>
-                            <strong>
-                              Total: ${cart[product.id] * product.price}
-                            </strong>
-                          </p>
+                          <p>Empty Cart</p>
                         </div>
                       </Link>
                     </li>
-                  ))}
+                  )}
                 </ul>
               </li>
               <li className="nav-item">
@@ -259,7 +262,7 @@ const mapDispatch = (dispatch) => {
     getProducts: () => dispatch(getProducts()),
     searchProducts: (query) => dispatch(searchProducts(query)),
     getCartProducts: () => dispatch(getCartProducts()),
-    handleClick() {
+    handleLogout() {
       dispatch(logout());
       dispatch(clearStorage());
     },
