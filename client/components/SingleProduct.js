@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
+import history from '../history';
 
 // Import Redux action & thunk creators
 import { getProduct } from '../store/singleProduct';
@@ -24,10 +25,19 @@ class SingleProduct extends React.Component {
 
   async componentDidMount() {
     try {
-      await this.props.getProduct(this.props.match.params.id);
-      this.setState({ isLoading: false });
+      // fetch for product if params is a valid number (e.g. /products/1)
+      const { id } = this.props.match.params;
+      if (Number(id)) {
+        await this.props.getProduct(id);
+        this.setState({ isLoading: false });
+      } else {
+        // redirect to all-products page if params not a valid number (e.g. /products/banana)
+        history.push('/products');
+      }
     } catch (err) {
+      // redirect to all-products page if no products found with given id
       console.log(err);
+      history.push('/products');
     }
   }
 

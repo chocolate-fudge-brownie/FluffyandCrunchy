@@ -1,5 +1,4 @@
 import axios from 'axios';
-import history from '../history';
 
 /**
  * ACTION TYPES
@@ -18,12 +17,12 @@ const _getProduct = (product) => ({ type: GET_PRODUCT, product });
  */
 
 export const getProduct = (id) => async (dispatch) => {
-    try {
-        const { data } = await axios.get(`/api/products/${id}`);
-        dispatch(_getProduct(data));
-    } catch (err) {
-        console.error(err);
-    }
+  try {
+    const { data } = await axios.get(`/api/products/${id}`);
+    dispatch(_getProduct(data));
+  } catch (err) {
+    throw err;
+  }
 };
 
 /**
@@ -31,10 +30,10 @@ export const getProduct = (id) => async (dispatch) => {
  */
 
 export default function (state = {}, action) {
-    switch (action.type) {
-        case GET_PRODUCT:
-            return action.product;
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case GET_PRODUCT:
+      return action.product;
+    default:
+      return state;
+  }
 }
