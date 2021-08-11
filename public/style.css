@@ -52,11 +52,6 @@ html {
   right: 30px;
 }
 
-#account-dropdown > .dropdown-menu {
-  position: relative;
-  left: 30px;
-}
-
 .cart-preview-image {
   float: right;
   width: 110px;
@@ -218,4 +213,14 @@ body {
 
 #edit-icon:hover {
   color: grey;
+}
+
+#account-dropdown > .dropdown-menu {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+}
+
+#logout-dropdown p {
+  margin: auto;
 }

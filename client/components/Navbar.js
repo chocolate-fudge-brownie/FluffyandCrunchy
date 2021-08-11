@@ -102,8 +102,8 @@ class Navbar extends React.Component {
                     </Link>
                   </li>
                   <li
-                    className="nav-item"
                     id="account-dropdown"
+                    className="nav-item"
                     onMouseOver={() => this.mouseOverAccount()}
                     onMouseOut={() => this.mouseReleaseAccount()}
                   >
@@ -113,6 +113,7 @@ class Navbar extends React.Component {
                       </p>
                     </Link>
                     <ul
+                      id="logout-dropdown"
                       className={`dropdown-menu ${
                         this.state.accountHover ? 'show' : null
                       }`}
