@@ -41,6 +41,17 @@ class SingleProduct extends React.Component {
     }
   }
 
+  async componentDidUpdate(prevProps) {
+    // fetch product again if url params changes to diff product id
+    const prevId = prevProps.match.params.id;
+    const currentId = this.props.match.params.id;
+    if (prevId !== currentId) {
+      this.setState({ isLoading: true, loaded: false });
+      await this.props.getProduct(currentId);
+      this.setState({ isLoading: false });
+    }
+  }
+
   handleLoad() {
     this.setState({ loaded: true });
   }
