@@ -62,6 +62,8 @@ class CartPreview extends React.Component {
   render() {
     const { isLoading, checkedOut } = this.state;
     if (checkedOut) return <OrderConfirmation />;
+
+    // show loading spinner when fetching data
     if (isLoading) {
       return (
         <div className="d-flex justify-content-center">

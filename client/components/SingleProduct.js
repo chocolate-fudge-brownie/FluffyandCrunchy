@@ -1,6 +1,7 @@
 // Import modules
 import React from 'react';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 
 // Import Redux action & thunk creators
 import { getProduct } from '../store/singleProduct';
@@ -12,16 +13,35 @@ import {
 
 // Define component
 class SingleProduct extends React.Component {
-  componentDidMount() {
-    this.props.getProduct(this.props.match.params.id);
+  constructor() {
+    super();
+    this.state = {
+      isLoading: true,
+    };
+  }
+
+  async componentDidMount() {
+    try {
+      await this.props.getProduct(this.props.match.params.id);
+      this.setState({ isLoading: false });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {
     const { userId, product, cart, addProductToCart, removeFromCart } =
       this.props;
+    const { isLoading } = this.state;
 
-    if (product.id !== Number(this.props.match.params.id))
-      return <div>Loading...</div>;
+    // show loading spinner when fetching data
+    if (isLoading) {
+      return (
+        <div className="d-flex justify-content-center">
+          <Loader type="ThreeDots" />
+        </div>
+      );
+    }
 
     return (
       <div className="card mb-3" id="single-card-component">

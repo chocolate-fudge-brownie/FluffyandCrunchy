@@ -2,6 +2,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import Loader from 'react-loader-spinner';
 
 // Import components
 import { Login, Signup } from './components/AuthForm';
@@ -11,7 +12,6 @@ import SingleProduct from './components/SingleProduct';
 import CartDetails from './components/CartDetails';
 import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
-import Loader from 'react-loader-spinner';
 
 // Import Redux functions
 import { me } from './store';
@@ -59,6 +59,8 @@ class Routes extends Component {
   render() {
     const { isLoggedIn } = this.props;
     const { isLoading } = this.state;
+
+    // show loading spinner when fetching data
     if (isLoading) {
       return (
         <div className="d-flex justify-content-center">
@@ -66,6 +68,7 @@ class Routes extends Component {
         </div>
       );
     }
+
     return (
       <>
         {isLoggedIn ? (
