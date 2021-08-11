@@ -13,7 +13,7 @@ class orderSeed {
     const localCart = {};
     if (maxProductsLength > this.products.length) {
       return new Error(
-        `input size for generateLocalCart must be less than or equal to the amount of products seeded. Amount of products seeded => ${products.length}`
+        `input size for generateLocalCart must be less than or equal to the amount of products seeded. Amount of products seeded => ${this.products.length}`
       );
     }
     while (set.size < maxProductsLength) {
@@ -52,8 +52,6 @@ class orderSeed {
   async seedProductsInCartForUsers(amountOfProducts = 3) {
     await Promise.all(
       this.users.map(async (user) => {
-        const cart = await user.getCart();
-        if(cart) return cart;
         const localCart = this.generateLocalCart(amountOfProducts);
         await user.updateCart(localCart);
       })
