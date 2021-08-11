@@ -69,6 +69,16 @@ html {
   align-items: center;
 }
 
+#empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#empty-cart p {
+  margin: 30px;
+}
+
 #main-header {
   color: #fffbdb;
   font-weight: 1000;

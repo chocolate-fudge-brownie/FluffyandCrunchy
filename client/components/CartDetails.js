@@ -76,7 +76,7 @@ class CartPreview extends React.Component {
       <div className="cart-details">
         <h1>Cart</h1>
         {totalItems === 0 ? (
-          <div>
+          <div id="empty-cart">
             <p>Your cart is empty</p>
             <Link to="/products">
               <button className="btn btn-primary">See More Products</button>
