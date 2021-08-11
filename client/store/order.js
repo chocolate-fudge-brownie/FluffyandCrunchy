@@ -41,7 +41,7 @@ export const getOrders = (userId) => {
 export default function(state = [], action) {
     switch (action.type){
         case GET_ORDERS:
-            return action.orders;
+            return action.orders.filter((order) => order.isPaid === true);
         default:
             return state;        
     }

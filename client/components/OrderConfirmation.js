@@ -11,7 +11,7 @@ export default class OrderConfirmation extends React.Component {
           <Link to="/products">
             <button className="btn btn-primary">See More Products</button>
           </Link>
-          <Link to="/products">
+          <Link to="/history">
             <button className="btn btn-primary">View All Orders</button>
           </Link>
         </div>
