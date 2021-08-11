@@ -21,10 +21,8 @@ class History extends React.Component {
 	render() {
 		const { isLoading } = this.state;
 		const { orders, setOrder } = this.props;
-		console.log(this.props.orders);
 
-		// this.props.orders[0].isPaid
-		if (isLoading) {
+        if (isLoading) {
 			return (
 				<div className="d-flex justify-content-center">
 					<Loader type="ThreeDots" />
