@@ -11,8 +11,8 @@ import SingleProduct from './components/SingleProduct';
 import CartDetails from './components/CartDetails';
 import SearchResults from './components/SearchResults';
 import History from './components/History';
+import Details from './components/Details';
 import Loader from 'react-loader-spinner';
-
 // Import Redux functions
 import { me } from './store';
 import { mergeCart } from './store/cart';
@@ -29,7 +29,7 @@ class Routes extends Component {
     }
     this.onSuccess = this.onSuccess.bind(this);
   }
-  
+
   onSuccess() {
     this.setState({ isLoading: false });
   }
@@ -84,6 +84,7 @@ class Routes extends Component {
             />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/history" component={History} />
+            <Route path="/details" component={Details} />
             <Route path="/cart" component={CartDetails} />
             <Redirect to="/home" />
           </Switch>
