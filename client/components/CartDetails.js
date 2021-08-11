@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 
 // Import Redux action & thunk creators
 import { getProducts } from '../store/products';
@@ -27,13 +28,12 @@ class CartPreview extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.getProducts();
-    this.props.getCartProducts();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.products !== this.props.products) {
+    try {
+      await this.props.getProducts();
+      await this.props.getCartProducts();
       this.setState({ isLoading: false });
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -61,12 +61,17 @@ class CartPreview extends React.Component {
 
   render() {
     const { isLoading, checkedOut } = this.state;
+    if (checkedOut) return <OrderConfirmation />;
+    if (isLoading) {
+      return (
+        <div className="d-flex justify-content-center">
+          <Loader type="ThreeDots" />
+        </div>
+      );
+    }
+
     const { userId, products, cart, addProductToCart, removeFromCart } =
       this.props;
-
-    if (isLoading) return <p>Loading...</p>;
-    if (checkedOut) return <OrderConfirmation />;
-
     const [cartProducts, totalItems, totalPrice] = this.handleCart(
       products,
       cart
