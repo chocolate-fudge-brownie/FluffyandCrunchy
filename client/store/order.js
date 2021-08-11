@@ -19,20 +19,18 @@ const _getOrders = (orders) => ({
 
 export const getOrders = (userId) => {  
     const token = window.localStorage.getItem('token');
-    console.log(token);
     const config = {
         headers: {
             authorization: token,
         },
     }
-    console.log(typeof userId)
 	return async(dispatch) => {
 		try {
-			const { res: orders } = await axios.get(`http://localhost:8080/api/orders/user/${userId}/`, config);
-			console.log(orders);
-            dispatch(_getOrders(orders));
-            
-		} catch (err) {}
+			const { data: orders } = await axios.get(`http://localhost:8080/api/orders/user/${userId}/`, config);
+            dispatch(_getOrders(orders));     
+		} catch (err) {
+            console.log('Unable to get user orders.')
+        }
 	};
 };
 
