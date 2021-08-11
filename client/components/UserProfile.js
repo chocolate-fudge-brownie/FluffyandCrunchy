@@ -44,7 +44,11 @@ class UserProfile extends React.Component {
         <div id="user-profile-title">
           <h2>Account Details</h2>
           {editMode ? null : (
-            <i className="bi bi-pencil-square" onClick={changeToEditMode}></i>
+            <i
+              id="edit-icon"
+              className="bi bi-pencil-square"
+              onClick={changeToEditMode}
+            ></i>
           )}
         </div>
         <hr />

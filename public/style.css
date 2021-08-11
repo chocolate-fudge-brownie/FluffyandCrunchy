@@ -211,3 +211,11 @@ body {
   justify-content: space-between;
   margin: 0 0 0 auto;
 }
+
+#edit-icon {
+  font-size: 1.5rem;
+}
+
+#edit-icon:hover {
+  color: grey;
+}
