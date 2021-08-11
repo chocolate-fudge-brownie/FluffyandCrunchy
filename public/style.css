@@ -204,3 +204,10 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+#cancel-submit-buttons {
+  display: flex;
+  width: 170px;
+  justify-content: space-between;
+  margin: 0 0 0 auto;
+}
