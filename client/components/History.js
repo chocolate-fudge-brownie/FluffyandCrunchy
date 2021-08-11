@@ -73,7 +73,7 @@ class History extends React.Component {
 								</div>
 								<div className="card-footer text-dark border-success">
 									<Link to="/details">
-										<button type="button" className="btn btn-secondary btn-md" onClick={(order) => setOrder(order)} >
+										<button type="button" className="btn btn-secondary btn-md" onClick={() => setOrder(order)} >
 											View Order Details
 										</button>
 									</Link>
@@ -91,7 +91,6 @@ class History extends React.Component {
 const mapState = (state) => ({
 	userId: state.auth.id,
 	orders: state.orders,
-    order: state.order
 });
 
 const mapDispatch = (dispatch) => ({

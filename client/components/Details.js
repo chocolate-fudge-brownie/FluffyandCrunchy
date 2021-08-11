@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { setOrder } from '../store/singleOrder';
 
 class Details extends React.Component {
     constructor() {
