@@ -1,7 +1,7 @@
 // Import modules
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateAccount } from '../store';
+import { me, updateAccount } from '../store';
 
 // Define component
 class UserProfile extends React.Component {
@@ -10,15 +10,31 @@ class UserProfile extends React.Component {
     this.state = {
       editMode: false,
     };
-    this.changeEditMode = this.changeEditMode.bind(this);
+    this.changeToEditMode = this.changeToEditMode.bind(this);
+    this.cancelEditMode = this.cancelEditMode.bind(this);
   }
 
-  changeEditMode() {
-    this.setState({ editMode: !this.state.editMode });
+  componentDidUpdate(prevProps) {
+    // back to non-editing mode after user update their info successfully
+    if (prevProps.auth !== this.props.auth && !this.props.auth.error) {
+      document.getElementById('update-user-form').reset();
+      this.setState({ editMode: false });
+    }
+  }
+
+  changeToEditMode() {
+    this.setState({ editMode: true });
+  }
+
+  async cancelEditMode() {
+    // reset the auth state when canceling submission with error in state
+    await this.props.cancelSubmit();
+    document.getElementById('update-user-form').reset();
+    this.setState({ editMode: false });
   }
 
   render() {
-    const { changeEditMode } = this;
+    const { changeToEditMode, cancelEditMode } = this;
     const { editMode } = this.state;
     const { id, username, email, error } = this.props.auth;
     const { handleSubmit } = this.props;
@@ -28,35 +44,26 @@ class UserProfile extends React.Component {
         <div id="user-profile-title">
           <h2>Account Details</h2>
           {editMode ? null : (
-            <i className="bi bi-pencil-square" onClick={changeEditMode}></i>
+            <i className="bi bi-pencil-square" onClick={changeToEditMode}></i>
           )}
         </div>
         <hr />
-        <form onSubmit={(evt) => handleSubmit(evt, id)}>
+        <form id="update-user-form" onSubmit={(evt) => handleSubmit(evt, id)}>
           <div className="mb-3 row">
             <label htmlFor="username" className="col-sm-2 col-form-label">
               Username:
             </label>
             <div className="col-sm-10">
-              {editMode ? (
-                <input
-                  name="username"
-                  type="text"
-                  id="username"
-                  className="form-control"
-                  required
-                  defaultValue={username}
-                />
-              ) : (
-                <input
-                  name="username"
-                  type="text"
-                  id="username"
-                  className="form-control-plaintext"
-                  readOnly
-                  placeholder={username}
-                />
-              )}
+              <input
+                name="username"
+                type="text"
+                id="username"
+                className={editMode ? 'form-control' : 'form-control-plaintext'}
+                required={editMode}
+                readOnly={!editMode}
+                placeholder={editMode ? null : username}
+                defaultValue={editMode ? username : null}
+              />
             </div>
           </div>
           <div className="mb-3 row">
@@ -64,25 +71,16 @@ class UserProfile extends React.Component {
               Email:
             </label>
             <div className="col-sm-10">
-              {editMode ? (
-                <input
-                  name="email"
-                  type="text"
-                  id="email"
-                  className="form-control"
-                  required
-                  defaultValue={email}
-                />
-              ) : (
-                <input
-                  name="email"
-                  type="text"
-                  id="email"
-                  className="form-control-plaintext"
-                  readOnly
-                  placeholder={email}
-                />
-              )}
+              <input
+                name="email"
+                type="text"
+                id="email"
+                className={editMode ? 'form-control' : 'form-control-plaintext'}
+                required={editMode}
+                readOnly={!editMode}
+                placeholder={editMode ? null : email}
+                defaultValue={editMode ? email : null}
+              />
             </div>
           </div>
           <div className="mb-3 row">
@@ -90,29 +88,24 @@ class UserProfile extends React.Component {
               Password:
             </label>
             <div className="col-sm-10">
-              {editMode ? (
-                <input
-                  name="password"
-                  type="password"
-                  id="password"
-                  className="form-control"
-                  required
-                />
-              ) : (
-                <input
-                  name="password"
-                  type="password"
-                  id="password"
-                  className="form-control-plaintext"
-                  readOnly
-                  placeholder="********"
-                />
-              )}
+              <input
+                name="password"
+                type="password"
+                id="password"
+                className={editMode ? 'form-control' : 'form-control-plaintext'}
+                required={editMode}
+                readOnly={!editMode}
+                placeholder={editMode ? null : '********'}
+              />
             </div>
           </div>
           {editMode ? (
             <div>
-              <button className="btn btn-primary" onClick={changeEditMode}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={cancelEditMode}
+              >
                 Cancel
               </button>
               <button type="submit" className="btn btn-primary">
@@ -165,6 +158,9 @@ const mapDispatch = (dispatch) => {
       const email = evt.target.email.value;
       const password = evt.target.password.value;
       dispatch(updateAccount(username, email, password, userId));
+    },
+    cancelSubmit() {
+      dispatch(me());
     },
   };
 };
