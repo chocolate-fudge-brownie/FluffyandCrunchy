@@ -2,6 +2,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import Loader from 'react-loader-spinner';
 
 // Import components
 import { Login, Signup } from './components/AuthForm';
@@ -10,7 +11,7 @@ import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import CartDetails from './components/CartDetails';
 import SearchResults from './components/SearchResults';
-import Loader from 'react-loader-spinner';
+import UserProfile from './components/UserProfile';
 
 // Import Redux functions
 import { me } from './store';
@@ -25,15 +26,15 @@ class Routes extends Component {
     this.state = {
       isLoading: true,
       loggedInBefore: !!window.localStorage.getItem('token'),
-    }
+    };
   }
-  
+
   async componentDidMount() {
     try {
       await this.props.loadInitialData();
-      this.setState({ isLoading: false }); 
+      this.setState({ isLoading: false });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -58,13 +59,16 @@ class Routes extends Component {
   render() {
     const { isLoggedIn } = this.props;
     const { isLoading } = this.state;
-    if(isLoading) { 
+
+    // show loading spinner when fetching data
+    if (isLoading) {
       return (
-        <div className='d-flex justify-content-center'>
+        <div className="d-flex justify-content-center">
           <Loader type="ThreeDots" />
         </div>
-      )
+      );
     }
+
     return (
       <>
         {isLoggedIn ? (
@@ -78,6 +82,7 @@ class Routes extends Component {
             />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/cart" component={CartDetails} />
+            <Route path="/account" component={UserProfile} />
             <Redirect to="/home" />
           </Switch>
         ) : (

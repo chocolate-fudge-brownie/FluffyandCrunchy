@@ -64,6 +64,16 @@ html {
   align-items: center;
 }
 
+#empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#empty-cart p {
+  margin: 30px;
+}
+
 #main-header {
   color: #fffbdb;
   font-weight: 1000;
@@ -89,6 +99,11 @@ html {
   align-content: stretch;
   justify-content: center;
   align-items: center;
+}
+
+#card-header-img {
+  display: flex;
+  justify-content: center;
 }
 
 #search-form {
@@ -163,4 +178,49 @@ body {
 
 #homepage {
   text-align: center;
+}
+
+#user-profile {
+  border-color: '#6e3900';
+  border-width: 4px;
+  padding: 30px;
+  border-style: dashed;
+  border-radius: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px;
+}
+
+#user-profile .col-sm-10 {
+  padding-left: 30px;
+}
+
+#user-profile-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+#cancel-submit-buttons {
+  display: flex;
+  width: 170px;
+  justify-content: space-between;
+  margin: 0 0 0 auto;
+}
+
+#edit-icon {
+  font-size: 1.5rem;
+}
+
+#edit-icon:hover {
+  color: grey;
+}
+
+#logout-dropdown {
+  width: 100px;
+  margin: auto;
+  margin-right: 450px;
+}
+
+#logout-dropdown p {
+  margin: auto;
 }

@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import history from '../history';
 
 // Import Redux action & thunk creators
 import { logout } from '../store';
@@ -15,6 +14,7 @@ class Navbar extends React.Component {
     super();
     this.state = {
       cartHover: false,
+      accountHover: false,
       value: '',
     };
     this.mouseOver = this.mouseOver.bind(this);
@@ -39,13 +39,28 @@ class Navbar extends React.Component {
     this.setState({ cartHover: false });
   }
 
+  mouseOverAccount() {
+    this.setState({ accountHover: true });
+  }
+
+  mouseReleaseAccount() {
+    this.setState({ accountHover: false });
+  }
+
   async componentDidMount() {
     await this.props.getProducts();
     this.props.getCartProducts();
   }
 
+  componentDidUpdate(prevProps) {
+    // make accountHover state back to false when user log out
+    if (prevProps.isLoggedIn && !this.props.isLoggedIn) {
+      this.setState({ accountHover: false });
+    }
+  }
+
   render() {
-    const { handleClick, isLoggedIn, cart, products } = this.props;
+    const { handleLogout, isLoggedIn, cart, products } = this.props;
 
     let cartProducts = [];
     for (let productId in cart) {
@@ -57,7 +72,7 @@ class Navbar extends React.Component {
 
     return (
       <nav
-        className="navbar navbar-expand-lg navbar-light"
+        className="navbar navbar-expand-lg navbar-light sticky-top"
         style={{ backgroundColor: '#c79e5f' }}
       >
         <div className="container-fluid">
@@ -86,12 +101,36 @@ class Navbar extends React.Component {
                       <p className="nav-link">Home</p>
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link to="#">
-                      <p className="nav-link" href="#" onClick={handleClick}>
-                        Logout
+                  <li
+                    id="account-dropdown"
+                    className="nav-item"
+                    onMouseOver={() => this.mouseOverAccount()}
+                    onMouseOut={() => this.mouseReleaseAccount()}
+                  >
+                    <Link to="/account">
+                      <p className="nav-link dropdown-toggle">
+                        Account <i className="bi bi-person-circle"></i>
                       </p>
                     </Link>
+                    <ul
+                      id="logout-dropdown"
+                      className={`dropdown-menu ${
+                        this.state.accountHover ? 'show' : null
+                      }`}
+                      aria-labelledby="dropdownMenuLink"
+                    >
+                      <li className="dropdown-item">
+                        <Link to="#">
+                          <p
+                            className="nav-link"
+                            href="#"
+                            onClick={handleLogout}
+                          >
+                            Logout
+                          </p>
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
                 </>
               ) : (
@@ -99,16 +138,14 @@ class Navbar extends React.Component {
                   <li className="nav-item">
                     <Link to="/login">
                       <p className="nav-link">
-                        Login
-                        <i className="bi bi-box-arrow-right"></i>
+                        Login <i className="bi bi-box-arrow-right"></i>
                       </p>
                     </Link>
                   </li>
                   <li className="nav-item">
                     <Link to="/signup">
                       <p className="nav-link">
-                        Sign Up
-                        <i className="bi bi-check-circle"></i>
+                        Sign Up <i className="bi bi-check-circle"></i>
                       </p>
                     </Link>
                   </li>
@@ -123,50 +160,61 @@ class Navbar extends React.Component {
               </li>
               <li
                 className="nav-item"
-                onClick={() => history.push('/cart')}
                 onMouseOver={() => this.mouseOver()}
                 onMouseOut={() => this.mouseRelease()}
               >
-                <p
-                  className={`nav-link dropdown-toggle ${
-                    this.state.cartHover ? 'show' : null
-                  }`}
-                  id="dropdownMenuOffset"
-                  data-bs-toggle="dropdown"
-                  aria-expanded={this.state.cartHover ? 'true' : 'false'}
-                >
-                  Cart <i className="bi bi-cart2"></i>
-                </p>
+                <Link to="/cart">
+                  <p className="nav-link dropdown-toggle">
+                    Cart <i className="bi bi-cart2"></i>
+                  </p>
+                </Link>
                 <ul
                   className={`dropdown-menu ${
                     this.state.cartHover ? 'show' : null
                   }`}
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <li className="dropdown-item">
-                    <h1>Currently Added</h1>
-                  </li>
-                  {cartProducts.map((product) => (
-                    <li key={product.id}>
-                      <hr />
-                      <div className="dropdown-item">
-                        <img
-                          src={product.imageUrl}
-                          className="cart-preview-image"
-                        />
-                        <p>
-                          <strong className="cart-name">{product.name}</strong>
-                        </p>{' '}
-                        <p>Price: ${product.price}</p>
-                        <p>Quantity: {cart[product.id]}</p>
-                        <p>
-                          <strong>
-                            Total: ${cart[product.id] * product.price}
-                          </strong>
-                        </p>
-                      </div>
+                  <Link to="/cart">
+                    <li className="dropdown-item">
+                      <h1>Currently Added</h1>
                     </li>
-                  ))}
+                  </Link>
+                  {cartProducts.length > 0 ? (
+                    cartProducts.map((product) => (
+                      <li key={product.id}>
+                        <hr />
+                        <Link to={`/products/${product.id}`}>
+                          <div className="dropdown-item">
+                            <img
+                              src={product.imageUrl}
+                              className="cart-preview-image"
+                            />
+                            <p>
+                              <strong className="cart-name">
+                                {product.name}
+                              </strong>
+                            </p>{' '}
+                            <p>Price: ${product.price}</p>
+                            <p>Quantity: {cart[product.id]}</p>
+                            <p>
+                              <strong>
+                                Total: ${cart[product.id] * product.price}
+                              </strong>
+                            </p>
+                          </div>
+                        </Link>
+                      </li>
+                    ))
+                  ) : (
+                    <li>
+                      <hr />
+                      <Link to="/cart">
+                        <div className="dropdown-item">
+                          <p>Empty Cart</p>
+                        </div>
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </li>
               <li className="nav-item">
@@ -215,7 +263,7 @@ const mapDispatch = (dispatch) => {
     getProducts: () => dispatch(getProducts()),
     searchProducts: (query) => dispatch(searchProducts(query)),
     getCartProducts: () => dispatch(getCartProducts()),
-    handleClick() {
+    handleLogout() {
       dispatch(logout());
       dispatch(clearStorage());
     },
