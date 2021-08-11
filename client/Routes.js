@@ -10,6 +10,7 @@ import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import CartDetails from './components/CartDetails';
 import SearchResults from './components/SearchResults';
+import History from './components/History';
 import Loader from 'react-loader-spinner';
 
 // Import Redux functions
@@ -26,8 +27,13 @@ class Routes extends Component {
       isLoading: true,
       loggedInBefore: !!window.localStorage.getItem('token'),
     }
+    this.onSuccess = this.onSuccess.bind(this);
   }
   
+  onSuccess() {
+    this.setState({ isLoading: false });
+  }
+
   async componentDidMount() {
     try {
       await this.props.loadInitialData();
@@ -77,6 +83,7 @@ class Routes extends Component {
               component={SearchResults}
             />
             <Route path="/products/:id" component={SingleProduct} />
+            <Route path="/history" component={History} />
             <Route path="/cart" component={CartDetails} />
             <Redirect to="/home" />
           </Switch>

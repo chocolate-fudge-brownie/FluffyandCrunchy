@@ -28,7 +28,7 @@ export const Home = (props) => {
         </div>
         <div className="col" style={{ marginTop: '40px' }}>
           <div className="card">
-            <Link to={`/products`}>
+            <Link to={`/history`}>
               <img
                 src="https://blog.radioflyer.com/media/catalog/product/cache/15/image/800x800/9df78eab33525d08d6e5fb8d27136e95/l/i/little-red-toy-wagon-stuffed-animals-inset-w5_5.jpg"
                 className="card-img-top"
